@@ -1,0 +1,40 @@
+{
+  "name": "@camunda/linting",
+  "version": "0.1.0",
+  "description": "Linting for Camunda Platform",
+  "main": "index.js",
+  "scripts": {
+    "all": "npm run lint && npm test",
+    "lint": "eslint .",
+    "test": "mocha -r esm --reporter=spec --recursive test/spec",
+    "test:watch": "npm run test -- --watch"
+  },
+  "keywords": [
+    "bpmnlint",
+    "camunda"
+  ],
+  "author": {
+    "name": "Philipp Fromme",
+    "url": "https://github.com/philippfromme"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bpmnlint": "^7.8.0",
+    "bpmnlint-plugin-camunda-compat": "^0.7.0",
+    "bpmnlint-utils": "^1.0.2"
+  },
+  "devDependencies": {
+    "bpmn-moddle": "^7.1.2",
+    "chai": "^4.3.6",
+    "eslint": "^4.11.0",
+    "eslint-plugin-bpmn-io": "^0.4.1",
+    "esm": "^3.2.25",
+    "min-dash": "^3.8.1",
+    "mocha": "^4.0.1",
+    "modeler-moddle": "^0.2.0",
+    "zeebe-bpmn-moddle": "^0.12.1"
+  },
+  "files": [
+    "lib"
+  ]
+}
