@@ -1,0 +1,1 @@
+export { Linter } from './lib/Linter';
