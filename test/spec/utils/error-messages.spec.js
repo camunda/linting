@@ -1,13 +1,6 @@
 import { expect } from 'chai';
 
-import { flatten } from 'min-dash';
-
-import { ERROR_TYPES } from 'bpmnlint-plugin-camunda-compat/rules/utils/error-types';
-
-import {
-  adjustErrorMessage,
-  adjustErrorMessages
-} from '../../../lib/utils/error-messages';
+import { getErrorMessage } from '../../../lib/utils/error-messages';
 
 import { createElement } from '../../helper';
 
@@ -15,43 +8,7 @@ import { getLintError } from './lint-helper';
 
 describe('utils/error-messages', function() {
 
-  describe('#adjustErrorMessages', function() {
-
-    it('should adjust error messages', function() {
-
-      // given
-      const reports = {
-        'foo': [
-          createReport({
-            error: {
-              type: ERROR_TYPES.ELEMENT_TYPE_NOT_ALLOWED,
-              node: createElement('bpmn:Task'),
-            }
-          }),
-          createReport({
-            error: {
-              type: ERROR_TYPES.EXTENSION_ELEMENT_REQUIRED,
-              node: createElement('bpmn:ServiceTask'),
-              requiredExtensionElement: 'zeebe:TaskDefinition'
-            }
-          })
-        ]
-      };
-
-      // when
-      const adjusted = adjustErrorMessages(reports, 'Camunda Fox');
-
-      // then
-      expect(getErrorMessages(adjusted)).to.eql([
-        'An <Undefined Task> is not supported by Camunda Fox',
-        'A <Service Task> must have a <Task definition type>'
-      ]);
-    });
-
-  });
-
-
-  describe('#adjustErrorMessage', function() {
+  describe('#getErrorMessage', function() {
 
     describe('element type not allowed', function() {
 
@@ -65,7 +22,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report, 'Camunda Fox');
+        const errorMessage = getErrorMessage(report, 'Camunda Fox');
 
         // then
         expect(errorMessage).to.equal('An <Undefined Task> is not supported by Camunda Fox');
@@ -82,7 +39,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report, 'Camunda Fox');
+        const errorMessage = getErrorMessage(report, 'Camunda Fox');
 
         // then
         expect(errorMessage).to.equal('An <Undefined Intermediate Catch Event> is not supported by Camunda Fox');
@@ -111,7 +68,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report, 'Camunda Fox');
+        const errorMessage = getErrorMessage(report, 'Camunda Fox');
 
         // then
         expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: DMN decision> is not supported by Camunda Fox');
@@ -132,7 +89,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Call Activity> must have a defined <Called element>');
@@ -151,7 +108,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with <Multi-instance marker> must have a defined <Input collection>');
@@ -170,7 +127,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Receive Task> with <Message Reference> must have a defined <Subscription correlation key>');
@@ -189,7 +146,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Service Task> must have a <Task definition type>');
@@ -208,7 +165,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Business Rule Task> must have a defined <Implementation>');
@@ -240,7 +197,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with <Multi-instance marker> and defined <Output element> must have a defined <Output collection>');
@@ -268,7 +225,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with <Multi-instance marker> and defined <Output collection> must have a defined <Output element>');
@@ -299,7 +256,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: DMN decision> must have a defined <Called decision ID>');
@@ -326,7 +283,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: DMN decision> must have a defined <Result variable>');
@@ -351,7 +308,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: Job worker> must have a defined <Task definition type>');
@@ -374,7 +331,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Call Activity> must have a defined <Called element>');
@@ -397,7 +354,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('An <Error End Event> with <Error Reference> must have a defined <Error code>');
@@ -416,7 +373,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report, 'Camunda Fox');
+        const errorMessage = getErrorMessage(report, 'Camunda Fox');
 
         // then
         expect(errorMessage).to.equal('An <Undefined Intermediate Throw Event> is not supported by Camunda Fox');
@@ -441,7 +398,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with <Multi-instance marker> must have a defined <Input collection>');
@@ -464,7 +421,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Message Intermediate Catch Event> with <Message Reference> must have a defined <Name>');
@@ -494,7 +451,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Message Intermediate Catch Event> with <Message Reference> must have a defined <Subscription correlation key>');
@@ -519,7 +476,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with <Implementation: Job worker> must have a defined <Task definition type>');
@@ -540,7 +497,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('An <Error End Event> must have a defined <Error Reference>');
@@ -561,7 +518,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const errorMessage = adjustErrorMessage(report);
+        const errorMessage = getErrorMessage(report);
 
         // then
         expect(errorMessage).to.equal('A <Message Intermediate Catch Event> must have a defined <Message Reference>');
@@ -588,7 +545,7 @@ describe('utils/error-messages', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const errorMessage = adjustErrorMessage(report, 'Camunda Fox');
+        const errorMessage = getErrorMessage(report, 'Camunda Fox');
 
         // then
         expect(errorMessage).to.equal('A <Message Intermediate Throw Event> is not supported by Camunda Fox');
@@ -599,14 +556,3 @@ describe('utils/error-messages', function() {
   });
 
 });
-
-function createReport(options) {
-  return {
-    type: 'error',
-    ...options
-  };
-}
-
-function getErrorMessages(reports) {
-  return flatten(Object.values(reports)).map(({ message }) => message);
-}
