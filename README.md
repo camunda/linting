@@ -15,13 +15,16 @@ The BPMN linter used by the Camunda Desktop and Web Modeler. Batteries included.
 import { Linter } from '@camunda/linting';
 import { getErrors } from '@camunda/linting/properties-panel';
 
-...
+// configure to be used with desktop or web modeler
+const linter = new Linter({
+  modeler: 'web'
+});
 
 // lint by passing definitions
-const reports = await Linter.lint(definitions);
+const reports = await linter.lint(definitions);
 
 // or passing XML
-const reports = await Linter.lint(xml);
+const reports = await linter.lint(xml);
 
 ...
 

@@ -590,6 +590,48 @@ describe('utils/error-messages', function() {
 
     describe('property type not allowed', function() {
 
+      describe('modeler template', function() {
+
+        it('should adjust (desktop modeler)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            modelerTemplate: 'foo'
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Fox', 'desktop');
+
+          // then
+          expect(errorMessage).to.equal('A <Template Service Task> is not supported by Camunda Fox');
+        });
+
+
+        it('should adjust (web modeler)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            modelerTemplate: 'foo'
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Fox', 'web');
+
+          // then
+          expect(errorMessage).to.equal('A <Connector Service Task> is not supported by Camunda Fox');
+        });
+
+      });
+
+
       it('should adjust (event definitions)', async function() {
 
         // given
