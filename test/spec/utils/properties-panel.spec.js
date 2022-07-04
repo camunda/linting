@@ -492,9 +492,11 @@ describe('utils/properties-panel', function() {
     it('should return errors', async function() {
 
       // given
+      const linter = new Linter();
+
       const { root } = await readModdle('test/spec/utils/properties-panel.bpmn');
 
-      const reports = await Linter.lint(root);
+      const reports = await linter.lint(root);
 
       // when
       let element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'ServiceTask_1');
