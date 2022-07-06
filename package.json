@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "bpmnlint": "^7.8.0",
-    "bpmnlint-plugin-camunda-compat": "^0.8.0",
+    "bpmnlint-plugin-camunda-compat": "^0.9.0",
     "bpmnlint-utils": "^1.0.2"
   },
   "devDependencies": {
