@@ -423,6 +423,67 @@ describe('utils/properties-panel', function() {
 
     });
 
+
+    it('customFormKey', async function() {
+
+      // given
+      const node = createElement('bpmn:UserTask', {
+        extensionElements: createElement('bpmn:ExtensionElements', {
+          values: [
+            createElement('zeebe:FormDefinition')
+          ]
+        })
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/user-task-form');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryId = getEntryId(report);
+
+      // then
+      expect(entryId).to.equal('customFormKey');
+    });
+
+
+    it('formConfiguration', async function() {
+
+      // given
+      const process = createElement('bpmn:Process', {
+        flowElements: [
+          createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition', {
+                  formKey: 'camunda-forms:bpmn:userTaskForm_1'
+                })
+              ]
+            })
+          })
+        ],
+        extensionElements: createElement('bpmn:ExtensionElements', {
+          values: [
+            createElement('zeebe:UserTaskForm', {
+              id: 'userTaskForm_1'
+            })
+          ]
+        })
+      });
+
+      const node = process.get('flowElements')[ 0 ];
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/user-task-form');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryId = getEntryId(report);
+
+      // then
+      expect(entryId).to.equal('formConfiguration');
+    });
+
   });
 
 
@@ -498,6 +559,12 @@ describe('utils/properties-panel', function() {
 
 
     expectErrorMessage('messageSubscriptionCorrelationKey', 'Subscription correlation key must be defined.');
+
+
+    expectErrorMessage('customFormKey', 'Form key must be defined.');
+
+
+    expectErrorMessage('formConfiguration', 'Form JSON configuration must be defined.');
 
   });
 

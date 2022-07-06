@@ -524,6 +524,67 @@ describe('utils/error-messages', function() {
         expect(errorMessage).to.equal('A <Message Intermediate Catch Event> must have a defined <Message Reference>');
       });
 
+
+      it('should adjust (form key)', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:FormDefinition')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/user-task-form');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <User Task> with <Form type: Custom form key> must have a defined <Form key>');
+      });
+
+
+      it('should adjust (body)', async function() {
+
+        // given
+        const process = createElement('bpmn:Process', {
+          flowElements: [
+            createElement('bpmn:UserTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:FormDefinition', {
+                    formKey: 'camunda-forms:bpmn:userTaskForm_1'
+                  })
+                ]
+              })
+            })
+          ],
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:UserTaskForm', {
+                id: 'userTaskForm_1'
+              })
+            ]
+          })
+        });
+
+        const node = process.get('flowElements')[ 0 ];
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/user-task-form');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda forms> must have a defined <Form JSON configuration>');
+      });
+
     });
 
 
