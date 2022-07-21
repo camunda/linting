@@ -524,7 +524,7 @@ describe('utils/properties-panel', function() {
 
   describe('#getErrorMessage', function() {
 
-    expectErrorMessage('businessRuleTaskImplementation', 'Implementation must be defined.');
+    expectErrorMessage('businessRuleImplementation', 'Implementation must be defined.');
 
 
     expectErrorMessage('errorRef', 'Global error reference must be defined.');
