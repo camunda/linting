@@ -43,7 +43,8 @@
     }
   },
   "files": [
-    "lib"
+    "lib",
+    "properties-panel.js"
   ],
   "publishConfig": {
     "access": "public"
