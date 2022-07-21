@@ -17,7 +17,7 @@ import { getLintError } from './lint-helper';
 
 describe('utils/properties-panel', function() {
 
-  describe('#getEntryId', function() {
+  describe('#getEntryId and #getErrorMessage', function() {
 
     it('businessRuleImplementation', async function() {
 
@@ -35,6 +35,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('businessRuleImplementation');
+
+      expectErrorMessage(entryId, 'Implementation must be defined.');
     });
 
 
@@ -56,6 +58,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('errorRef');
+
+      expectErrorMessage(entryId, 'Global error reference must be defined.');
     });
 
 
@@ -77,6 +81,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('messageRef');
+
+      expectErrorMessage(entryId, 'Global message reference must be defined.');
     });
 
 
@@ -104,6 +110,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('decisionId');
+
+      expectErrorMessage(entryId, 'Decision ID must be defined.');
     });
 
 
@@ -131,6 +139,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('resultVariable');
+
+      expectErrorMessage(entryId, 'Result variable must be defined.');
     });
 
 
@@ -154,6 +164,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('errorCode');
+
+      expectErrorMessage(entryId, 'Code must be defined.');
     });
 
 
@@ -177,6 +189,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('messageName');
+
+      expectErrorMessage(entryId, 'Name must be defined.');
     });
 
 
@@ -198,6 +212,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('multiInstance-inputCollection');
+
+        expectErrorMessage(entryId, 'Input collection must be defined.');
       });
 
 
@@ -223,6 +239,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('multiInstance-inputCollection');
+
+        expectErrorMessage(entryId, 'Input collection must be defined.');
       });
 
     });
@@ -253,6 +271,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('multiInstance-outputCollection');
+
+      expectErrorMessage(entryId, 'Output collection must be defined.');
     });
 
 
@@ -281,6 +301,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('multiInstance-outputElement');
+
+      expectErrorMessage(entryId, 'Output element must be defined.');
     });
 
 
@@ -300,6 +322,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('targetProcessId');
+
+        expectErrorMessage(entryId, 'Process ID must be defined.');
       });
 
 
@@ -323,6 +347,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('targetProcessId');
+
+        expectErrorMessage(entryId, 'Process ID must be defined.');
       });
 
     });
@@ -346,6 +372,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('taskDefinitionType');
+
+        expectErrorMessage(entryId, 'Type must be defined.');
       });
 
 
@@ -371,6 +399,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('taskDefinitionType');
+
+        expectErrorMessage(entryId, 'Type must be defined.');
       });
 
     });
@@ -394,6 +424,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('messageSubscriptionCorrelationKey');
+
+        expectErrorMessage(entryId, 'Subscription correlation key must be defined.');
       });
 
 
@@ -419,6 +451,8 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryId).to.equal('messageSubscriptionCorrelationKey');
+
+        expectErrorMessage(entryId, 'Subscription correlation key must be defined.');
       });
 
     });
@@ -444,6 +478,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('customFormKey');
+
+      expectErrorMessage(entryId, 'Form key must be defined.');
     });
 
 
@@ -482,6 +518,8 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryId).to.equal('formConfiguration');
+
+      expectErrorMessage(entryId, 'Form JSON configuration must be defined.');
     });
 
   });
@@ -518,55 +556,6 @@ describe('utils/properties-panel', function() {
         targetProcessId: 'Process ID must be defined.'
       });
     });
-
-  });
-
-
-  describe('#getErrorMessage', function() {
-
-    expectErrorMessage('businessRuleImplementation', 'Implementation must be defined.');
-
-
-    expectErrorMessage('errorRef', 'Global error reference must be defined.');
-
-
-    expectErrorMessage('messageRef', 'Global message reference must be defined.');
-
-
-    expectErrorMessage('decisionId', 'Decision ID must be defined.');
-
-
-    expectErrorMessage('resultVariable', 'Result variable must be defined.');
-
-
-    expectErrorMessage('errorCode', 'Code must be defined.');
-
-
-    expectErrorMessage('messageName', 'Name must be defined.');
-
-
-    expectErrorMessage('multiInstance-inputCollection', 'Input collection must be defined.');
-
-
-    expectErrorMessage('multiInstance-outputCollection', 'Output collection must be defined.');
-
-
-    expectErrorMessage('multiInstance-outputElement', 'Output element must be defined.');
-
-
-    expectErrorMessage('targetProcessId', 'Process ID must be defined.');
-
-
-    expectErrorMessage('taskDefinitionType', 'Type must be defined.');
-
-
-    expectErrorMessage('messageSubscriptionCorrelationKey', 'Subscription correlation key must be defined.');
-
-
-    expectErrorMessage('customFormKey', 'Form key must be defined.');
-
-
-    expectErrorMessage('formConfiguration', 'Form JSON configuration must be defined.');
 
   });
 
