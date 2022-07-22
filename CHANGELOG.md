@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.3.4
+
+* `FIX`: make `bpmn-moddle` and `zeebe-bpmn-moddle` production dependencies ([#9](https://github.com/camunda/linting/pull/9))
+
 ## 0.3.3
 
 * `FIX`: fix business rule task error message in properties panel ([#8](https://github.com/camunda/linting/pull/8))
