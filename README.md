@@ -8,12 +8,24 @@ The BPMN linter used by the Camunda Desktop and Web Modeler. Batteries included.
 * configures linter based on `modeler:executionPlatform` and `modeler:executionPlatformVersion`
 * creates error messages to be shown in desktop and web modeler
 * creates errors to be shown in properties panel
+* creates error overlays to be shown on canvas 
 
 # Usage
 
 ```javascript
+import Modeler from 'bpmn-js/lib/Modeler';
+
 import { Linter } from '@camunda/linting';
-import { getErrors } from '@camunda/linting/properties-panel';
+
+import lintingModule from '@camunda/linting/modeler';
+
+import '@camunda/linting/assets/linting.css';
+
+const modeler = new Modeler({
+  additionalModules: [
+    lintingModule
+  ]
+});
 
 // configure to be used with desktop or web modeler
 const linter = new Linter({
@@ -28,10 +40,8 @@ const reports = await linter.lint(xml);
 
 ...
 
-const errors = getErrors(reports, element);
-
-// bpmn-js-properties-panel >=1.3.0
-eventBus.fire('propertiesPanel.setErrors', { errors });
+// update errors on canvas and in properties panel (requires bpmn-js-properties-panel >= 1.3.0)
+modeler.get('linting').update(reports);
 ```
 
 # License
