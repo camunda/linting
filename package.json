@@ -17,6 +17,10 @@
     "name": "Philipp Fromme",
     "url": "https://github.com/philippfromme"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/camunda/linting"
+  },
   "license": "MIT",
   "dependencies": {
     "bpmn-moddle": "^7.1.2",
