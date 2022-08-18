@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Linter } from '../../..';
 
 import {
-  getEntryId,
+  getEntryIds,
   getErrorMessage,
   getErrors
 } from '../../../lib/utils/properties-panel';
@@ -31,12 +31,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule, config);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('businessRuleImplementation');
+      expect(entryIds).to.eql([ 'businessRuleImplementation' ]);
 
-      expectErrorMessage(entryId, 'Implementation must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Implementation must be defined.');
     });
 
 
@@ -54,12 +54,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('errorRef');
+      expect(entryIds).to.eql([ 'errorRef' ]);
 
-      expectErrorMessage(entryId, 'Global error reference must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Global error reference must be defined.');
     });
 
 
@@ -77,12 +77,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('messageRef');
+      expect(entryIds).to.eql([ 'messageRef' ]);
 
-      expectErrorMessage(entryId, 'Global message reference must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Global message reference must be defined.');
     });
 
 
@@ -106,12 +106,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule, config);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('decisionId');
+      expect(entryIds).to.eql([ 'decisionId' ]);
 
-      expectErrorMessage(entryId, 'Decision ID must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Decision ID must be defined.');
     });
 
 
@@ -135,12 +135,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule, config);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('resultVariable');
+      expect(entryIds).to.eql([ 'resultVariable' ]);
 
-      expectErrorMessage(entryId, 'Result variable must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Result variable must be defined.');
     });
 
 
@@ -160,12 +160,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('errorCode');
+      expect(entryIds).to.eql([ 'errorCode' ]);
 
-      expectErrorMessage(entryId, 'Code must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Code must be defined.');
     });
 
 
@@ -185,12 +185,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('messageName');
+      expect(entryIds).to.eql([ 'messageName' ]);
 
-      expectErrorMessage(entryId, 'Name must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Name must be defined.');
     });
 
 
@@ -208,12 +208,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('multiInstance-inputCollection');
+        expect(entryIds).to.eql([ 'multiInstance-inputCollection' ]);
 
-        expectErrorMessage(entryId, 'Input collection must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.');
       });
 
 
@@ -235,12 +235,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('multiInstance-inputCollection');
+        expect(entryIds).to.eql([ 'multiInstance-inputCollection' ]);
 
-        expectErrorMessage(entryId, 'Input collection must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.');
       });
 
     });
@@ -267,12 +267,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('multiInstance-outputCollection');
+      expect(entryIds).to.eql([ 'multiInstance-outputCollection' ]);
 
-      expectErrorMessage(entryId, 'Output collection must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Output collection must be defined.');
     });
 
 
@@ -297,12 +297,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('multiInstance-outputElement');
+      expect(entryIds).to.eql([ 'multiInstance-outputElement' ]);
 
-      expectErrorMessage(entryId, 'Output element must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.');
     });
 
 
@@ -318,12 +318,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('targetProcessId');
+        expect(entryIds).to.eql([ 'targetProcessId' ]);
 
-        expectErrorMessage(entryId, 'Process ID must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.');
       });
 
 
@@ -343,12 +343,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('targetProcessId');
+        expect(entryIds).to.eql([ 'targetProcessId' ]);
 
-        expectErrorMessage(entryId, 'Process ID must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.');
       });
 
     });
@@ -368,12 +368,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('taskDefinitionType');
+        expect(entryIds).to.eql([ 'taskDefinitionType' ]);
 
-        expectErrorMessage(entryId, 'Type must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Type must be defined.');
       });
 
 
@@ -395,12 +395,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule, config);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('taskDefinitionType');
+        expect(entryIds).to.eql([ 'taskDefinitionType' ]);
 
-        expectErrorMessage(entryId, 'Type must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Type must be defined.');
       });
 
     });
@@ -420,12 +420,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('messageSubscriptionCorrelationKey');
+        expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-        expectErrorMessage(entryId, 'Subscription correlation key must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.');
       });
 
 
@@ -447,12 +447,12 @@ describe('utils/properties-panel', function() {
         const report = await getLintError(node, rule);
 
         // when
-        const entryId = getEntryId(report);
+        const entryIds = getEntryIds(report);
 
         // then
-        expect(entryId).to.equal('messageSubscriptionCorrelationKey');
+        expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-        expectErrorMessage(entryId, 'Subscription correlation key must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.');
       });
 
     });
@@ -474,12 +474,12 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('customFormKey');
+      expect(entryIds).to.eql([ 'customFormKey' ]);
 
-      expectErrorMessage(entryId, 'Form key must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Form key must be defined.');
     });
 
 
@@ -514,12 +514,46 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule);
 
       // when
-      const entryId = getEntryId(report);
+      const entryIds = getEntryIds(report);
 
       // then
-      expect(entryId).to.equal('formConfiguration');
+      expect(entryIds).to.eql([ 'formConfiguration' ]);
 
-      expectErrorMessage(entryId, 'Form JSON configuration must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Form JSON configuration must be defined.');
+    });
+
+
+    it('headerKey', async function() {
+
+      // given
+      const node = createElement('bpmn:ServiceTask', {
+        id: 'ServiceTask_1',
+        extensionElements: createElement('bpmn:ExtensionElements', {
+          values: [
+            createElement('zeebe:TaskHeaders', {
+              values: [
+                createElement('zeebe:Header', { key: 'foo' }),
+                createElement('zeebe:Header', { key: 'foo' })
+              ]
+            })
+          ]
+        })
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/duplicate-task-headers');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([
+        'ServiceTask_1-header-0-key',
+        'ServiceTask_1-header-1-key'
+      ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Must be unique.');
     });
 
   });
@@ -562,12 +596,10 @@ describe('utils/properties-panel', function() {
 });
 
 function expectErrorMessage(id, expectedErrorMessage) {
-  it(id, function() {
 
-    // when
-    const errorMessage = getErrorMessage(id);
+  // when
+  const errorMessage = getErrorMessage(id);
 
-    // then
-    expect(errorMessage).to.equal(expectedErrorMessage);
-  });
+  // then
+  expect(errorMessage).to.equal(expectedErrorMessage);
 }
