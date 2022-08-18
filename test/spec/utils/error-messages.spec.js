@@ -656,6 +656,38 @@ describe('utils/error-messages', function() {
 
     });
 
+
+    describe('property value duplicated', function() {
+
+      it('should adjust (two headers with same key)', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:TaskHeaders', {
+                values: [
+                  createElement('zeebe:Header', { key: 'foo' }),
+                  createElement('zeebe:Header', { key: 'foo' })
+                ]
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/duplicate-task-headers');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <Service Task> with two or more <Headers> with the same <Key> (foo) is not supported');
+      });
+
+    });
+
   });
 
 });

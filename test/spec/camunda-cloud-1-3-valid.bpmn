@@ -11,6 +11,10 @@
     <bpmn:serviceTask id="Activity_0tmvr8k" name="foo">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="foo" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="foo" />
+          <zeebe:header key="bar" />
+        </zeebe:taskHeaders>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1c9prry</bpmn:incoming>
       <bpmn:outgoing>Flow_04jud3f</bpmn:outgoing>
