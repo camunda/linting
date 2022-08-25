@@ -47,6 +47,22 @@ modeler.get('linting').setErrors(reports);
 modeler.get('linting').showError(report);
 ```
 
+# Development
+
+```sh
+# install
+npm i
+
+# run tests
+npm t
+
+# run tests in watch mode
+npm run test:watch
+
+# run example
+npm start
+```
+
 # License
 
 MIT
