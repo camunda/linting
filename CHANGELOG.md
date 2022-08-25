@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.4.1
+
+* `DEPS`: broaden supported versions range of `bpmn-js-properties-panel`
+
 ## 0.4.0
 
 * `FEAT`: add duplicate task headers rule ([#41](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/41))
