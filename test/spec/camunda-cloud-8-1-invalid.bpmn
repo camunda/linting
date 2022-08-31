@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1vc92ax" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1vc92ax" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0">
   <bpmn:collaboration id="Collaboration_013oh0t">
     <bpmn:participant id="Participant_1lhpzkq" processRef="Process_07pko08" />
   </bpmn:collaboration>
@@ -80,9 +80,7 @@
       </bpmn:startEvent>
       <bpmn:sequenceFlow id="Flow_0ydr2ya" sourceRef="Event_0ijiazl" targetRef="Activity_15d1o2q" />
       <bpmn:businessRuleTask id="Activity_15d1o2q">
-        <bpmn:extensionElements>
-          <zeebe:taskDefinition type="foo" />
-        </bpmn:extensionElements>
+        <bpmn:extensionElements />
         <bpmn:incoming>Flow_0ydr2ya</bpmn:incoming>
       </bpmn:businessRuleTask>
     </bpmn:subProcess>
@@ -107,6 +105,8 @@
       <bpmn:incoming>Flow_0wkb4hq</bpmn:incoming>
       <bpmn:outgoing>Flow_1gvflfp</bpmn:outgoing>
       <bpmn:outgoing>Flow_08k7vbr</bpmn:outgoing>
+      <bpmn:outgoing>Flow_19rqft2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0n84ml1</bpmn:outgoing>
     </bpmn:complexGateway>
     <bpmn:sequenceFlow id="Flow_0wkb4hq" sourceRef="Gateway_03oxb21" targetRef="Gateway_1adft3c" />
     <bpmn:sequenceFlow id="Flow_11x8rdy" sourceRef="Event_1j12ud3" targetRef="Event_0el3zk8" />
@@ -143,6 +143,16 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1c7yptg</bpmn:incoming>
     </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_19rqft2" sourceRef="Gateway_1adft3c" targetRef="Event_0s4ygc1" />
+    <bpmn:intermediateThrowEvent id="Event_0s4ygc1">
+      <bpmn:incoming>Flow_19rqft2</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1odggmr" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_0n84ml1" sourceRef="Gateway_1adft3c" targetRef="Event_1yqxsot" />
+    <bpmn:endEvent id="Event_1yqxsot">
+      <bpmn:incoming>Flow_0n84ml1</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_04t0675" />
+    </bpmn:endEvent>
     <bpmn:textAnnotation id="TextAnnotation_092byka">
       <bpmn:text>foo</bpmn:text>
     </bpmn:textAnnotation>
@@ -159,6 +169,15 @@
       <bpmndi:BPMNShape id="Participant_1lhpzkq_di" bpmnElement="Participant_1lhpzkq" isHorizontal="true">
         <dc:Bounds x="129" y="80" width="1601" height="650" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0n84ml1_di" bpmnElement="Flow_0n84ml1">
+        <di:waypoint x="740" y="405" />
+        <di:waypoint x="740" y="630" />
+        <di:waypoint x="842" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19rqft2_di" bpmnElement="Flow_19rqft2">
+        <di:waypoint x="740" y="405" />
+        <di:waypoint x="740" y="612" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1c7yptg_di" bpmnElement="Flow_1c7yptg">
         <di:waypoint x="510" y="630" />
         <di:waypoint x="560" y="630" />
@@ -315,6 +334,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0iuc6yg_di" bpmnElement="Activity_1d00s75">
         <dc:Bounds x="560" y="590" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13yl25e_di" bpmnElement="Event_0s4ygc1">
+        <dc:Bounds x="722" y="612" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1deoy07_di" bpmnElement="Event_1yqxsot">
+        <dc:Bounds x="842" y="612" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_092byka_di" bpmnElement="TextAnnotation_092byka">
         <dc:Bounds x="370" y="140" width="100" height="30" />

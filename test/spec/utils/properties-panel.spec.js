@@ -19,7 +19,7 @@ describe('utils/properties-panel', function() {
 
   describe('#getEntryId and #getErrorMessage', function() {
 
-    it('businessRuleImplementation', async function() {
+    it('called-decision-or-task-definition - Implementation', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask');
@@ -40,7 +40,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('errorRef', async function() {
+    it('error-reference - Global error reference', async function() {
 
       // given
       const node = createElement('bpmn:EndEvent', {
@@ -63,7 +63,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('messageRef', async function() {
+    it('message-reference - Global message reference', async function() {
 
       // given
       const node = createElement('bpmn:IntermediateCatchEvent', {
@@ -86,7 +86,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('decisionId', async function() {
+    it('called-decision-or-task-definition - Decision ID', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask', {
@@ -115,7 +115,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('resultVariable', async function() {
+    it('called-decision-or-task-definition - Result variable', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask', {
@@ -144,7 +144,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('errorCode', async function() {
+    it('error-reference - Code', async function() {
 
       // given
       const node = createElement('bpmn:EndEvent', {
@@ -169,7 +169,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('messageName', async function() {
+    it('message-reference - Name', async function() {
 
       // given
       const node = createElement('bpmn:IntermediateCatchEvent', {
@@ -194,9 +194,9 @@ describe('utils/properties-panel', function() {
     });
 
 
-    describe('multiInstance-inputCollection', function() {
+    describe('loop-characteristics', function() {
 
-      it('no loop characteristics', async function() {
+      it('Input collection (no loop characteristics)', async function() {
 
         // given
         const node = createElement('bpmn:ServiceTask', {
@@ -217,7 +217,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('no input collection', async function() {
+      it('Input collection (no input collection)', async function() {
 
         // given
         const node = createElement('bpmn:ServiceTask', {
@@ -246,7 +246,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('multiInstance-outputCollection', async function() {
+    it('loop-characteristics - Output collection', async function() {
 
       // given
       const node = createElement('bpmn:ServiceTask', {
@@ -276,7 +276,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('multiInstance-outputElement', async function() {
+    it('loop-characteristics - Output element', async function() {
 
       // given
       const node = createElement('bpmn:ServiceTask', {
@@ -306,9 +306,9 @@ describe('utils/properties-panel', function() {
     });
 
 
-    describe('targetProcessId', function() {
+    describe('called-element', function() {
 
-      it('no called element', async function() {
+      it('Process ID (no called element)', async function() {
 
         // given
         const node = createElement('bpmn:CallActivity');
@@ -327,7 +327,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('no process ID', async function() {
+      it('Process ID (no process ID)', async function() {
 
         // given
         const node = createElement('bpmn:CallActivity', {
@@ -354,9 +354,9 @@ describe('utils/properties-panel', function() {
     });
 
 
-    describe('taskDefinitionType', function() {
+    describe('called-decision-or-task-definition', function() {
 
-      it('no task definition', async function() {
+      it('Type (no task definition)', async function() {
 
         // given
         const node = createElement('bpmn:ServiceTask');
@@ -377,7 +377,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('no type', async function() {
+      it('Type (no type)', async function() {
 
         // given
         const node = createElement('bpmn:ServiceTask', {
@@ -406,9 +406,9 @@ describe('utils/properties-panel', function() {
     });
 
 
-    describe('messageSubscriptionCorrelationKey', function() {
+    describe('subscription', function() {
 
-      it('no subscription', async function() {
+      it('Subscription correlation key (no subscription)', async function() {
 
         // given
         const node = createElement('bpmn:ReceiveTask', {
@@ -429,7 +429,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('no correlation key', async function() {
+      it('Subscription correlation key (no correlation key)', async function() {
 
         // given
         const node = createElement('bpmn:ReceiveTask', {
@@ -458,7 +458,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('customFormKey', async function() {
+    it('user-task-form - Form key', async function() {
 
       // given
       const node = createElement('bpmn:UserTask', {
@@ -483,7 +483,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('formConfiguration', async function() {
+    it('user-task-form - Form JSON configuration', async function() {
 
       // given
       const process = createElement('bpmn:Process', {
@@ -523,7 +523,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('headerKey', async function() {
+    it('duplicate-task-headers - Key', async function() {
 
       // given
       const node = createElement('bpmn:ServiceTask', {
@@ -554,6 +554,40 @@ describe('utils/properties-panel', function() {
       ]);
 
       expectErrorMessage(entryIds[ 0 ], 'Must be unique.');
+    });
+
+
+    it('no-zeebe-properties - Name', async function() {
+
+      // given
+      const node = createElement('bpmn:ServiceTask', {
+        id: 'ServiceTask_1',
+        extensionElements: createElement('bpmn:ExtensionElements', {
+          values: [
+            createElement('zeebe:Properties', {
+              properties: [
+                createElement('zeebe:Property'),
+                createElement('zeebe:Property')
+              ]
+            })
+          ]
+        })
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-zeebe-properties');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([
+        'ServiceTask_1-extensionProperty-0-name',
+        'ServiceTask_1-extensionProperty-1-name'
+      ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Not supported.');
     });
 
   });

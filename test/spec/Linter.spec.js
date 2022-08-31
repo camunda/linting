@@ -183,6 +183,32 @@ describe('Linter', function() {
         expect(reports).not.to.be.empty;
       });
 
+
+      it('should lint without errors (Camunda Cloud 8.1.0)', async function() {
+
+        // given
+        const { root } = await readModdle('test/spec/camunda-cloud-8-1-valid.bpmn');
+
+        // when
+        const reports = await linter.lint(root);
+
+        // then
+        expect(reports).to.be.empty;
+      });
+
+
+      it('should lint with errors (Camunda Cloud 8.1.0)', async function() {
+
+        // given
+        const { root } = await readModdle('test/spec/camunda-cloud-8-1-invalid.bpmn');
+
+        // when
+        const reports = await linter.lint(root);
+
+        // then
+        expect(reports).not.to.be.empty;
+      });
+
     });
 
 
