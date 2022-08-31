@@ -15,6 +15,9 @@
           <zeebe:header key="foo" />
           <zeebe:header key="foo" />
         </zeebe:taskHeaders>
+        <zeebe:Properties>
+          <zeebe:Property name="foo" value="bar" />
+        </zeebe:Properties>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1c9prry</bpmn:incoming>
       <bpmn:outgoing>Flow_04jud3f</bpmn:outgoing>

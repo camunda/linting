@@ -74,6 +74,29 @@ describe('utils/error-messages', function() {
         expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: DMN decision> is not supported by Camunda Fox');
       });
 
+
+      it('should adjust (zeebe:Properties)', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:Properties')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-zeebe-properties');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report, 'Camunda Fox');
+
+        // then
+        expect(errorMessage).to.equal('A <Service Task> with <Extension properties> is not supported by Camunda Fox');
+      });
+
     });
 
 
