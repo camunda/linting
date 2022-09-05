@@ -5,14 +5,6 @@ import { isArray } from 'min-dash';
 import modelerModdleSchema from 'modeler-moddle/resources/modeler.json';
 import zeebeModdleSchema from 'zeebe-bpmn-moddle/resources/zeebe.json';
 
-import { readFileSync } from 'fs';
-
-export function readModdle(filePath) {
-  const contents = readFileSync(filePath, 'utf8');
-
-  return createModdle(contents);
-}
-
 export async function createModdle(xml) {
   const moddle = new BpmnModdle({
     modeler: modelerModdleSchema,
