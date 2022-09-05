@@ -10,10 +10,12 @@ import {
 
 import {
   createElement,
-  readModdle
+  createModdle
 } from '../../helper';
 
 import { getLintError } from './lint-helper';
+
+import propertiesPanelXML from './properties-panel.bpmn';
 
 describe('utils/properties-panel', function() {
 
@@ -600,7 +602,7 @@ describe('utils/properties-panel', function() {
       // given
       const linter = new Linter();
 
-      const { root } = await readModdle('test/spec/utils/properties-panel.bpmn');
+      const { root } = await createModdle(propertiesPanelXML);
 
       const reports = await linter.lint(root);
 
