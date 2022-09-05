@@ -41,7 +41,10 @@ const reports = await linter.lint(xml);
 ...
 
 // update errors on canvas and in properties panel (requires bpmn-js-properties-panel >= 1.3.0)
-modeler.get('linting').update(reports);
+modeler.get('linting').setErrors(reports);
+
+// show error by selecting element and properties panel entry
+modeler.get('linting').showError(report);
 ```
 
 # License
