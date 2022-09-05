@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.5.0-alpha.2
+
+* `FIX`: publish assets
+
 ## 0.5.0-alpha.1
 
 * `FIX`: publish modeler.js
