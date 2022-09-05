@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.5.0-alpha.0
+
+* `FEAT`: add bpmn-js plugin for canvas and properties panel errors ([#11](https://github.com/camunda/linting/pull/11))
+* `FEAT`: add no-zeebe-properties rule ([#43](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/43))
+
 ## 0.4.1
 
 * `DEPS`: broaden supported versions range of `bpmn-js-properties-panel`
