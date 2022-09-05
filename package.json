@@ -63,7 +63,7 @@
   },
   "files": [
     "lib",
-    "properties-panel.js"
+    "modeler.js"
   ],
   "publishConfig": {
     "access": "public"
