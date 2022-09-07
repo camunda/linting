@@ -6,11 +6,11 @@
   --linting-annotation-fill-color: var(--color-white);
 }
 
-.djs-overlays:not(.hover) .bjs-linting-annotation {
+.djs-overlays:not(.selected) .bjs-linting-annotation {
   opacity: 0.5;
 }
 
-.djs-overlays.hover .bjs-linting-annotation,
+.djs-overlays.selected .bjs-linting-annotation,
 .djs-overlays .bjs-linting-annotation:hover {
   opacity: 1;
 }
