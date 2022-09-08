@@ -71,11 +71,32 @@ describe('Linting', function() {
   }));
 
 
-  it('should be deactivated by default', inject(function(overlays) {
+  it('should not be active by default', inject(function(linting) {
 
     // then
-    expect(overlays.get({ type: 'linting' })).to.be.empty;
+    expect(linting.isActive()).to.be.false;
   }));
+
+
+  describe('config', function() {
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      additionalModules: [
+        lintingModule
+      ],
+      linting: {
+        active: true
+      }
+    }));
+
+
+    it('should be active if configured', inject(function(linting) {
+
+      // then
+      expect(linting.isActive()).to.be.true;
+    }));
+
+  });
 
 
   it('should activate', inject(
@@ -161,7 +182,7 @@ describe('Linting', function() {
   ));
 
 
-  it('should update on selection.changed', inject(
+  it('should update linting annotations on selection.changed (active)', inject(
     async function(bpmnjs, elementRegistry, eventBus, linting, lintingAnnotations, overlays, selection) {
 
       // given
@@ -195,6 +216,44 @@ describe('Linting', function() {
       });
 
       expect(overlays.get({ type: 'linting' })).to.have.length(1);
+    }
+  ));
+
+
+  it('should not update linting annotations on selection.changed (not active)', inject(
+    async function(bpmnjs, elementRegistry, eventBus, linting, lintingAnnotations, overlays, selection) {
+
+      // given
+      const serviceTask = elementRegistry.get('ServiceTask_1');
+
+      const reports = await linter.lint(bpmnjs.getDefinitions());
+
+      // assume
+      expect(reports).to.have.length(1);
+
+      linting.setErrors(reports);
+
+      linting.deactivate();
+
+      const setErrorsSpy = sinon.spy(lintingAnnotations, 'setErrors');
+
+      const propertiesPanelSetErrorSpy = sinon.spy();
+
+      eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+
+      // when
+      selection.select(serviceTask);
+
+      // then
+      expect(setErrorsSpy).to.have.been.calledOnce;
+      expect(setErrorsSpy).to.have.been.calledWithMatch([]);
+
+      expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
+      expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
+        errors: getErrors(reports, serviceTask)
+      });
+
+      expect(overlays.get({ type: 'linting' })).to.have.length(0);
     }
   ));
 
