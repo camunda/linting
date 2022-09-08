@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.5.0
+
+* `FIX`: do not show annotations on update if inactive ([#16](https://github.com/camunda/linting/pull/16))
+
 ## 0.5.0-alpha.3
 
 * `CHORE`: highlight linting annotation on selected instead of hover ([f481cf22](https://github.com/camunda/linting/commit/f481cf22b9e5c7da3161ab70861b604dc7ec7f89))
