@@ -1,8 +1,10 @@
 # @camunda/linting
 
+[![CI](https://github.com/camunda/linting/actions/workflows/CI.yml/badge.svg)](https://github.com/camunda/linting/actions/workflows/CI.yml)
+
 The BPMN linter used by the Camunda Desktop and Web Modeler. Batteries included. 🔋
 
-# Features
+## Features
 
 * bundles [bpmnlint](https://github.com/bpmn-io/bpmnlint) and [bpmnlint-plugin-camunda-compat](https://github.com/camunda/bpmnlint-plugin-camunda-compat/)
 * configures linter based on `modeler:executionPlatform` and `modeler:executionPlatformVersion`
@@ -10,7 +12,7 @@ The BPMN linter used by the Camunda Desktop and Web Modeler. Batteries included.
 * creates errors to be shown in properties panel
 * creates error overlays to be shown on canvas 
 
-# Usage
+## Usage
 
 ```javascript
 import Modeler from 'bpmn-js/lib/Modeler';
@@ -47,7 +49,7 @@ modeler.get('linting').setErrors(reports);
 modeler.get('linting').showError(report);
 ```
 
-# Development
+## Development
 
 ```sh
 # install
@@ -63,6 +65,6 @@ npm run test:watch
 npm start
 ```
 
-# License
+## License
 
 MIT
