@@ -13,7 +13,10 @@ import {
   createModdle
 } from '../../helper';
 
-import { getLintError } from './lint-helper';
+import {
+  getLintError,
+  getLintErrors
+} from './lint-helper';
 
 import propertiesPanelXML from './properties-panel.bpmn';
 
@@ -590,6 +593,36 @@ describe('utils/properties-panel', function() {
       ]);
 
       expectErrorMessage(entryIds[ 0 ], 'Not supported.');
+    });
+
+
+    it('inclusive-gateway (no condition expression)', async function() {
+
+      // given
+      const node = createElement('bpmn:InclusiveGateway', {
+        outgoing: [
+          createElement('bpmn:SequenceFlow', {
+            id: 'SequenceFlow_1'
+          }),
+          createElement('bpmn:SequenceFlow', {
+            id: 'SequenceFlow_2'
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/inclusive-gateway');
+
+      const reports = await getLintErrors(node, rule);
+
+      // when
+      reports.forEach(report => {
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'conditionExpression' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Condition expression must be defined.');
+      });
     });
 
   });
