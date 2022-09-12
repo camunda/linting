@@ -4,7 +4,10 @@ import { getErrorMessage } from '../../../lib/utils/error-messages';
 
 import { createElement } from '../../helper';
 
-import { getLintError } from './lint-helper';
+import {
+  getLintError,
+  getLintErrors
+} from './lint-helper';
 
 describe('utils/error-messages', function() {
 
@@ -252,6 +255,74 @@ describe('utils/error-messages', function() {
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with <Multi-instance marker> and defined <Output collection> must have a defined <Output element>');
+      });
+
+    });
+
+
+    describe('property not allowed', function() {
+
+      describe('modeler template', function() {
+
+        it('should adjust (desktop modeler)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            modelerTemplate: 'foo'
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Fox', 'desktop');
+
+          // then
+          expect(errorMessage).to.equal('A <Template Service Task> is not supported by Camunda Fox');
+        });
+
+
+        it('should adjust (web modeler)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            modelerTemplate: 'foo'
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Fox', 'web');
+
+          // then
+          expect(errorMessage).to.equal('A <Connector Service Task> is not supported by Camunda Fox');
+        });
+
+      });
+
+
+      it('inclusive gateway (incoming)', async function() {
+
+        // given
+        const node = createElement('bpmn:InclusiveGateway', {
+          incoming: [
+            createElement('bpmn:SequenceFlow'),
+            createElement('bpmn:SequenceFlow')
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/inclusive-gateway');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report, 'Camunda Fox');
+
+        // then
+        expect(errorMessage).to.equal('An <Inclusive Gateway> with more than one incoming <Sequence Flow> is not supported by Camunda Fox');
       });
 
     });
@@ -608,52 +679,37 @@ describe('utils/error-messages', function() {
         expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda forms> must have a defined <Form JSON configuration>');
       });
 
+
+      it('should adjust (condition expression)', async function() {
+
+        // given
+        const node = createElement('bpmn:InclusiveGateway', {
+          outgoing: [
+            createElement('bpmn:SequenceFlow'),
+            createElement('bpmn:SequenceFlow')
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/inclusive-gateway');
+
+        const reports = await getLintErrors(node, rule);
+
+        // assume
+        expect(reports).to.have.length(2);
+
+        // when
+        const errorMessages = reports.map(getErrorMessage);
+
+        // then
+        errorMessages.forEach(errorMessage => {
+          expect(errorMessage).to.equal('A <Sequence Flow> must have a defined <Condition expression> or be the default <Sequence Flow>');
+        });
+      });
+
     });
 
 
     describe('property type not allowed', function() {
-
-      describe('modeler template', function() {
-
-        it('should adjust (desktop modeler)', async function() {
-
-          // given
-          const node = createElement('bpmn:ServiceTask', {
-            modelerTemplate: 'foo'
-          });
-
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
-
-          const report = await getLintError(node, rule);
-
-          // when
-          const errorMessage = getErrorMessage(report, 'Camunda Fox', 'desktop');
-
-          // then
-          expect(errorMessage).to.equal('A <Template Service Task> is not supported by Camunda Fox');
-        });
-
-
-        it('should adjust (web modeler)', async function() {
-
-          // given
-          const node = createElement('bpmn:ServiceTask', {
-            modelerTemplate: 'foo'
-          });
-
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
-
-          const report = await getLintError(node, rule);
-
-          // when
-          const errorMessage = getErrorMessage(report, 'Camunda Fox', 'web');
-
-          // then
-          expect(errorMessage).to.equal('A <Connector Service Task> is not supported by Camunda Fox');
-        });
-
-      });
-
 
       it('should adjust (event definitions)', async function() {
 
