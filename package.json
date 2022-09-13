@@ -30,11 +30,12 @@
     "bpmnlint-utils": "^1.0.2",
     "min-dash": "^3.8.1",
     "min-dom": "^3.2.1",
-    "modeler-moddle": "^0.2.0",
-    "zeebe-bpmn-moddle": "^0.14.0"
+    "zeebe-bpmn-moddle": "^0.15.0"
   },
   "devDependencies": {
+    "@bpmn-io/properties-panel": "^0.20.2",
     "bpmn-js": "^9.4.0",
+    "bpmn-js-properties-panel": "^1.6.1",
     "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "eslint": "^4.11.0",
@@ -48,6 +49,7 @@
     "karma-webpack": "^5.0.0",
     "mocha": "^4.0.1",
     "mocha-test-container-support": "^0.2.0",
+    "modeler-moddle": "^0.2.0",
     "puppeteer": "^16.2.0",
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
