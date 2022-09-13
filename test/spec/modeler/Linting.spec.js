@@ -4,6 +4,18 @@ import {
   insertCSS
 } from 'bpmn-js/test/helper';
 
+import zeebeModdleExtension from 'zeebe-bpmn-moddle/resources/zeebe';
+import modelerModdleExtension from 'modeler-moddle/resources/modeler';
+
+import {
+  BpmnPropertiesPanelModule as propertiesPanelModule,
+  BpmnPropertiesProviderModule as bpmnPropertiesProviderModule,
+  ZeebePropertiesProviderModule as zeebePropertiesProviderModule,
+  CloudElementTemplatesPropertiesProviderModule as cloudElementTemplatesPropertiesProvider
+} from 'bpmn-js-properties-panel';
+
+import { domify } from 'min-dom';
+
 import sinon from 'sinon';
 
 import { Linter } from '../../..';
@@ -15,6 +27,8 @@ import { getErrors } from '../../../lib/utils/properties-panel';
 import diagramCSS from 'bpmn-js/dist/assets/diagram-js.css';
 import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
 import bpmnFont from  'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import propertiesPanelCSS from 'bpmn-js-properties-panel/dist/assets/properties-panel.css';
+import elementTemplatesCSS from 'bpmn-js-properties-panel/dist/assets/element-templates.css';
 import lintingCSS from '../../../assets/linting.css';
 
 import diagramXML from './linting.bpmn';
@@ -22,7 +36,58 @@ import diagramXML from './linting.bpmn';
 insertCSS('diagram-js.css', diagramCSS);
 insertCSS('bpmn-js.css', bpmnCSS);
 insertCSS('bpmn-embedded.css', bpmnFont);
+insertCSS('properties-panel.css', propertiesPanelCSS);
+insertCSS('element-templates.css', elementTemplatesCSS);
 insertCSS('linting.css', lintingCSS);
+
+insertCSS('test.css', `
+  .test-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .properties-panel-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    border-left: solid 1px #ccc;
+    background-color: #f7f7f8;
+  }
+
+  .panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 250px - 1px);
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f7f7f8;
+    padding: 5px;
+    box-sizing: border-box;
+    border-top: solid 1px #ccc;
+    font-family: sans-serif;
+  }
+
+  .panel textarea {
+    resize: none;
+    flex-grow: 1;
+    background-color: #f7f7f8;
+    border: none;
+    margin-bottom: 5px;
+    font-family: sans-serif;
+    line-height: 1.5;
+    outline: none;
+  }
+
+  .panel button,
+  .panel input {
+    width: 200px;
+  }
+`);
+
 
 const singleStart = window.__env__ && window.__env__.SINGLE_START;
 
@@ -32,42 +97,82 @@ describe('Linting', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     additionalModules: [
-      lintingModule
-    ]
+      lintingModule,
+      propertiesPanelModule,
+      bpmnPropertiesProviderModule,
+      zeebePropertiesProviderModule,
+      cloudElementTemplatesPropertiesProvider
+    ],
+    moddleExtensions: {
+      modeler: modelerModdleExtension,
+      zeebe: zeebeModdleExtension
+    }
   }));
 
 
-  (singleStart ? it.only : it)('example', inject(function(bpmnjs, linting) {
-    linting.setErrors([
-      {
-        id: 'StartEvent_1',
-        message: 'foo'
-      }
-    ]);
+  (singleStart ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
+
+    // given
+    const linter = new Linter();
+
+    const lint = () => {
+      const definitions = bpmnjs.getDefinitions();
+
+      linter.lint(definitions).then(reports => {
+        console.log('reports', reports);
+
+        linting.setErrors(reports);
+
+        panel.querySelector('textarea').textContent = reports.map(({ message }) => message).join('\n');
+      });
+    };
+
+    lint();
+
+    eventBus.on('elements.changed', lint);
 
     linting.activate();
 
-    const button = document.createElement('button');
+    const propertiesPanelParent = domify('<div class="properties-panel-container"></div>');
 
-    button.style.position = 'absolute';
-    button.style.top = '20px';
-    button.style.right = '20px';
+    bpmnjs._container.appendChild(propertiesPanelParent);
 
-    button.textContent = 'Toggle Linting';
+    propertiesPanel.attachTo(propertiesPanelParent);
 
-    let lintingActive = true;
+    const panel = domify(`
+      <div class="panel">
+        <textarea></textarea>
+        <div>
+          <label>Execution Platform Version</label>
+          <input type="text" />
+          <button>Deactivate Linting</button>
+        </div>
+      </div>
+    `);
 
-    button.addEventListener('click', () => {
-      if (lintingActive) {
-        linting.deactivate();
-      } else {
-        linting.activate();
-      }
+    bpmnjs._container.appendChild(panel);
 
-      lintingActive = !lintingActive;
+    panel.querySelector('input').value = bpmnjs.getDefinitions().get('executionPlatformVersion');
+
+    panel.querySelector('input').addEventListener('input', ({ target }) => {
+      modeling.updateModdleProperties(
+        canvas.getRootElement(),
+        bpmnjs.getDefinitions(),
+        { executionPlatformVersion: target.value }
+      );
     });
 
-    bpmnjs._container.appendChild(button);
+    panel.querySelector('button').addEventListener('click', () => {
+      if (linting.isActive()) {
+        linting.deactivate();
+
+        panel.querySelector('button').textContent = 'Activate Linting';
+      } else {
+        linting.activate();
+
+        panel.querySelector('button').textContent = 'Deactivate Linting';
+      }
+    });
   }));
 
 
