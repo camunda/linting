@@ -110,7 +110,7 @@ describe('Linting', function() {
   }));
 
 
-  (singleStart ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
+  (singleStart ? it.only : it.skip)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
 
     // given
     const linter = new Linter();
@@ -363,88 +363,107 @@ describe('Linting', function() {
   ));
 
 
-  it('should show error', inject(
-    async function(bpmnjs, elementRegistry, eventBus, linting, selection) {
+  describe('show error', function() {
 
-      // given
-      const serviceTask = elementRegistry.get('ServiceTask_1');
+    let clock;
 
-      const reports = await linter.lint(bpmnjs.getDefinitions());
+    beforeEach(function() {
+      clock = sinon.useFakeTimers();
+    });
 
-      // assume
-      expect(reports).to.have.length(1);
-
-      linting.setErrors(reports);
-
-      linting.activate();
-
-      const propertiesPanelSetErrorSpy = sinon.spy();
-
-      eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
-
-      const propertiesPanelShowEntrySpy = sinon.spy();
-
-      eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
-
-      // when
-      linting.showError(reports[ 0 ]);
-
-      // then
-      expect(selection.get()).to.eql([ serviceTask ]);
-
-      expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
-      expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-        errors: getErrors(reports, serviceTask)
-      });
-
-      expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
-      expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
-        id: 'taskDefinitionType'
-      });
-    }
-  ));
+    afterEach(function() {
+      clock.restore();
+    });
 
 
-  it('should show error on lintingAnnotations.click', inject(
-    async function(bpmnjs, elementRegistry, eventBus, linting, selection) {
+    it('should show error', inject(
+      async function(bpmnjs, elementRegistry, eventBus, linting, selection) {
 
-      // given
-      const serviceTask = elementRegistry.get('ServiceTask_1');
+        // given
+        const serviceTask = elementRegistry.get('ServiceTask_1');
 
-      const reports = await linter.lint(bpmnjs.getDefinitions());
+        const reports = await linter.lint(bpmnjs.getDefinitions());
 
-      // assume
-      expect(reports).to.have.length(1);
+        // assume
+        expect(reports).to.have.length(1);
 
-      linting.setErrors(reports);
+        linting.setErrors(reports);
 
-      linting.activate();
+        linting.activate();
 
-      const propertiesPanelSetErrorSpy = sinon.spy();
+        const propertiesPanelSetErrorSpy = sinon.spy();
 
-      eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+        eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
 
-      const propertiesPanelShowEntrySpy = sinon.spy();
+        const propertiesPanelShowEntrySpy = sinon.spy();
 
-      eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
+        eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
 
-      // when
-      eventBus.fire('lintingAnnotations.click', { report: reports[ 0 ] });
+        // when
+        linting.showError(reports[ 0 ]);
 
-      // then
-      expect(selection.get()).to.eql([ serviceTask ]);
+        clock.tick();
 
-      expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
-      expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-        errors: getErrors(reports, serviceTask)
-      });
+        // then
+        expect(selection.get()).to.eql([ serviceTask ]);
 
-      expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
-      expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
-        id: 'taskDefinitionType'
-      });
-    }
-  ));
+        expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
+        expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
+          errors: getErrors(reports, serviceTask)
+        });
+
+        expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
+        expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
+          id: 'taskDefinitionType'
+        });
+      }
+    ));
+
+
+    it('should show error on lintingAnnotations.click', inject(
+      async function(bpmnjs, elementRegistry, eventBus, linting, selection) {
+
+        // given
+        const serviceTask = elementRegistry.get('ServiceTask_1');
+
+        const reports = await linter.lint(bpmnjs.getDefinitions());
+
+        // assume
+        expect(reports).to.have.length(1);
+
+        linting.setErrors(reports);
+
+        linting.activate();
+
+        const propertiesPanelSetErrorSpy = sinon.spy();
+
+        eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+
+        const propertiesPanelShowEntrySpy = sinon.spy();
+
+        eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
+
+        // when
+        eventBus.fire('lintingAnnotations.click', { report: reports[ 0 ] });
+
+        clock.tick();
+
+        // then
+        expect(selection.get()).to.eql([ serviceTask ]);
+
+        expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
+        expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
+          errors: getErrors(reports, serviceTask)
+        });
+
+        expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
+        expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
+          id: 'taskDefinitionType'
+        });
+      }
+    ));
+
+  });
 
 
   describe('canvas scrolling', function() {
