@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.6.0
+
+* `FEAT`: add inclusive-gateway rule ([#44](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/44))
+
 ## 0.5.0
 
 * `FIX`: do not show annotations on update if inactive ([#16](https://github.com/camunda/linting/pull/16))
