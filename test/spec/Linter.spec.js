@@ -1,9 +1,12 @@
 import { expect } from 'chai';
 
+import StaticResolver from 'bpmnlint/lib/resolver/static-resolver';
+
 import { createModdle } from '../helper';
 
 import { Linter } from '../..';
 
+import simpleXML from './simple.bpmn';
 import noExecutionPlatformXML from './no-execution-platform.bpmn';
 import camundaCloud10ValidXML from './camunda-cloud-1-0-valid.bpmn';
 import camundaCloud10InvalidXML from './camunda-cloud-1-0-invalid.bpmn';
@@ -241,6 +244,116 @@ describe('Linter', function() {
         expect(reports).to.be.empty;
       });
 
+    });
+
+  });
+
+
+  describe('plugins', function() {
+
+    const FooPlugin = {
+      config: {
+        rules: {
+          'foo/fake-join': 'error'
+        }
+      },
+      resolver: new StaticResolver({
+        'rule:bpmnlint-plugin-foo/fake-join': require('bpmnlint/rules/fake-join')
+      })
+    };
+
+    const BarPlugin = {
+      config: {
+        extends: 'plugin:foo/recommended',
+        rules: {
+          'bar/single-blank-start-event': 'error'
+        }
+      },
+      resolver: new StaticResolver({
+        'config:bpmnlint-plugin-foo/recommended': {
+          rules: {
+            'foo/fake-join': 'error'
+          }
+        },
+        'rule:bpmnlint-plugin-foo/fake-join': require('bpmnlint/rules/fake-join'),
+        'rule:bpmnlint-plugin-bar/single-blank-start-event': require('bpmnlint/rules/single-blank-start-event')
+      })
+    };
+
+    const BazPlugin = {
+      config: {
+        rules: {
+          'foo/fake-join': 'off'
+        }
+      },
+      resolver: new StaticResolver({})
+    };
+
+
+    it('should add rules (rules)', async function() {
+
+      // given
+      const linter = new Linter({
+        plugins: [
+          FooPlugin
+        ]
+      });
+
+      const { root } = await createModdle(simpleXML);
+
+      // when
+      const reports = await linter.lint(root);
+
+      // then
+      expect(reports).to.have.length(2);
+
+      expect(reports.find(({ message }) => message === 'Incoming flows do not join')).to.exist;
+    });
+
+
+    it('should add rules (extends)', async function() {
+
+      // given
+      const linter = new Linter({
+        plugins: [
+          BarPlugin
+        ]
+      });
+
+      const { root } = await createModdle(simpleXML);
+
+      // when
+      const reports = await linter.lint(root);
+
+      // then
+      expect(reports).to.have.length(3);
+
+      expect(reports.find(({ message }) => message === 'Incoming flows do not join')).to.exist;
+      expect(reports.find(({ message }) => message === 'Process has multiple blank start events')).to.exist;
+    });
+
+
+    it('should disable rules', async function() {
+
+      // given
+      const linter = new Linter({
+        plugins: [
+          FooPlugin,
+          BarPlugin,
+          BazPlugin
+        ]
+      });
+
+      const { root } = await createModdle(simpleXML);
+
+      // when
+      const reports = await linter.lint(root);
+
+      // then
+      expect(reports).to.have.length(2);
+
+      expect(reports.find(({ message }) => message === 'Incoming flows do not join')).not.to.exist;
+      expect(reports.find(({ message }) => message === 'Process has multiple blank start events')).to.exist;
     });
 
   });
