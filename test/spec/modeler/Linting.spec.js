@@ -365,6 +365,7 @@ describe('Linting', function() {
 
   describe('show error', function() {
 
+    // TODO(philippfromme): remove timeout once properties panel is fixed
     let clock;
 
     beforeEach(function() {
