@@ -110,7 +110,7 @@ describe('Linting', function() {
   }));
 
 
-  (singleStart ? it.only : it.skip)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
+  (singleStart ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
 
     // given
     const linter = new Linter();
