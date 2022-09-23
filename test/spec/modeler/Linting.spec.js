@@ -446,6 +446,7 @@ describe('Linting', function() {
         // when
         eventBus.fire('lintingAnnotations.click', { report: reports[ 0 ] });
 
+        // TODO(philippfromme): remove timeout once properties panel is fixed
         clock.tick();
 
         // then
