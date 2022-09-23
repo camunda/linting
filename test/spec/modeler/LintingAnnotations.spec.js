@@ -10,7 +10,7 @@ import lintingModule from '../../../modeler';
 
 import diagramCSS from 'bpmn-js/dist/assets/diagram-js.css';
 import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
-import bpmnFont from  'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import bpmnFont from 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import lintingCSS from '../../../assets/linting.css';
 
 import diagramXML from './linting.bpmn';

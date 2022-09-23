@@ -66,7 +66,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud11: config } = await  import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
+        const { camundaCloud11: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
 
         const report = await getLintError(node, rule, config);
 
