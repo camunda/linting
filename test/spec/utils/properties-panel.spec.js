@@ -31,7 +31,7 @@ describe('utils/properties-panel', function() {
 
       const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-      const { camundaCloud13: config } = await  import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
+      const { camundaCloud13: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
 
       const report = await getLintError(node, rule, config);
 
@@ -106,7 +106,7 @@ describe('utils/properties-panel', function() {
 
       const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-      const { camundaCloud13: config } = await  import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
+      const { camundaCloud13: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
 
       const report = await getLintError(node, rule, config);
 
@@ -135,7 +135,7 @@ describe('utils/properties-panel', function() {
 
       const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-      const { camundaCloud13: config } = await  import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
+      const { camundaCloud13: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
 
       const report = await getLintError(node, rule, config);
 
