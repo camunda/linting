@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.7.0
+
+* `DEPS`: update production dependencies
+
 ## 0.6.1
 
 * `FIX`: use setTimeout to work around properties panel focus issue ([#19](https://github.com/camunda/linting/pull/19))
