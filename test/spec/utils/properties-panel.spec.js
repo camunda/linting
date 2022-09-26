@@ -41,7 +41,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'businessRuleImplementation' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Implementation must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Implementation must be defined.', report);
     });
 
 
@@ -64,7 +64,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'errorRef' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Global error reference must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Global error reference must be defined.', report);
     });
 
 
@@ -87,7 +87,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'messageRef' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Global message reference must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Global message reference must be defined.', report);
     });
 
 
@@ -116,7 +116,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'decisionId' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Decision ID must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Decision ID must be defined.', report);
     });
 
 
@@ -145,7 +145,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'resultVariable' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Result variable must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Result variable must be defined.', report);
     });
 
 
@@ -170,7 +170,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'errorCode' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Code must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Code must be defined.', report);
     });
 
 
@@ -195,7 +195,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'messageName' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Name must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Name must be defined.', report);
     });
 
 
@@ -218,7 +218,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'multiInstance-inputCollection' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.', report);
       });
 
 
@@ -245,7 +245,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'multiInstance-inputCollection' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.', report);
       });
 
     });
@@ -277,7 +277,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'multiInstance-outputCollection' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Output collection must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Output collection must be defined.', report);
     });
 
 
@@ -307,7 +307,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'multiInstance-outputElement' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.', report);
     });
 
 
@@ -328,7 +328,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'targetProcessId' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.', report);
       });
 
 
@@ -353,7 +353,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'targetProcessId' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.', report);
       });
 
     });
@@ -378,7 +378,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'taskDefinitionType' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Type must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
       });
 
 
@@ -405,7 +405,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'taskDefinitionType' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Type must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
       });
 
     });
@@ -430,7 +430,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.', report);
       });
 
 
@@ -457,7 +457,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.', report);
       });
 
     });
@@ -484,7 +484,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'customFormKey' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Form key must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Form key must be defined.', report);
     });
 
 
@@ -524,7 +524,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'formConfiguration' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Form JSON configuration must be defined.');
+      expectErrorMessage(entryIds[ 0 ], 'Form JSON configuration must be defined.', report);
     });
 
 
@@ -558,7 +558,7 @@ describe('utils/properties-panel', function() {
         'ServiceTask_1-header-1-key'
       ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Must be unique.');
+      expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
     });
 
 
@@ -592,7 +592,7 @@ describe('utils/properties-panel', function() {
         'ServiceTask_1-extensionProperty-1-name'
       ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Not supported.');
+      expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
     });
 
 
@@ -621,8 +621,249 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'conditionExpression' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Condition expression must be defined.');
+        expectErrorMessage(entryIds[ 0 ], 'Condition expression must be defined.', report);
       });
+    });
+
+
+    it('timer (no type)', async function() {
+
+      // given
+      const node = createElement('bpmn:BoundaryEvent', {
+        attachedToRef: createElement('bpmn:Task'),
+        cancelActivity: false,
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition')
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionType' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
+    });
+
+
+    it('timer (no duration value)', async function() {
+
+      // given
+      const node = createElement('bpmn:BoundaryEvent', {
+        attachedToRef: createElement('bpmn:Task'),
+        cancelActivity: false,
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeDuration: createElement('bpmn:FormalExpression')
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
+    });
+
+
+    it('timer (no duration value - no timer selection)', async function() {
+
+      // given
+      const node = createElement('bpmn:IntermediateCatchEvent', {
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeDuration: createElement('bpmn:FormalExpression')
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionDurationValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Duration must be defined.', report);
+    });
+
+
+    it('timer (no time cycle value)', async function() {
+
+      // given
+      const node = createElement('bpmn:BoundaryEvent', {
+        attachedToRef: createElement('bpmn:Task'),
+        cancelActivity: false,
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeCycle: createElement('bpmn:FormalExpression')
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
+    });
+
+
+    it('timer (no time date value)', async function() {
+
+      // given
+      const node = createElement('bpmn:StartEvent', {
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeDate: createElement('bpmn:FormalExpression')
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
+    });
+
+
+    it('timer (invalid time cycle value)', async function() {
+
+      // given
+      const node = createElement('bpmn:BoundaryEvent', {
+        attachedToRef: createElement('bpmn:Task'),
+        cancelActivity: false,
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeCycle: createElement('bpmn:FormalExpression', {
+              body: 'INVALID'
+            })
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression.', report);
+    });
+
+
+    it('timer (invalid time date value)', async function() {
+
+      // given
+      const node = createElement('bpmn:StartEvent', {
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeDate: createElement('bpmn:FormalExpression', {
+              body: 'INVALID'
+            })
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 date.', report);
+    });
+
+
+    it('timer (invalid time duration value)', async function() {
+
+      // given
+      const node = createElement('bpmn:BoundaryEvent', {
+        attachedToRef: createElement('bpmn:Task'),
+        cancelActivity: false,
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeDuration: createElement('bpmn:FormalExpression', {
+              body: 'INVALID'
+            })
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 interval.', report);
+    });
+
+
+    it('timer (invalid time duration - no timer selection)', async function() {
+
+      // given
+      const node = createElement('bpmn:IntermediateCatchEvent', {
+        eventDefinitions: [
+          createElement('bpmn:TimerEventDefinition', {
+            timeDuration: createElement('bpmn:FormalExpression', {
+              body: 'INVALID'
+            })
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'timerEventDefinitionDurationValue' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 interval.', report);
     });
 
   });
@@ -664,10 +905,10 @@ describe('utils/properties-panel', function() {
 
 });
 
-function expectErrorMessage(id, expectedErrorMessage) {
+function expectErrorMessage(id, expectedErrorMessage, report) {
 
   // when
-  const errorMessage = getErrorMessage(id);
+  const errorMessage = getErrorMessage(id, report);
 
   // then
   expect(errorMessage).to.equal(expectedErrorMessage);

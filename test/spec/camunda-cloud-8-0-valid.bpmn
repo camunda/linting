@@ -61,7 +61,9 @@
     <bpmn:intermediateCatchEvent id="Event_0cyp3nd">
       <bpmn:incoming>Flow_1dj62p6</bpmn:incoming>
       <bpmn:outgoing>Flow_0uqdyxp</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1vu1hns" />
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1vu1hns">
+        <bpmn:timeDuration>=myTimer</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:receiveTask id="Activity_0v05780" name="bar" messageRef="Message_0inbjmp">
       <bpmn:incoming>Flow_1hk0gog</bpmn:incoming>
