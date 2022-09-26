@@ -52,6 +52,7 @@ module.exports = function(karma) {
 
     webpack: {
       mode: 'development',
+      devtool: 'eval-source-map',
       module: {
         rules: [
           {
