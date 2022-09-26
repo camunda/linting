@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "all": "npm run lint && npm test",
+    "dev": "npm run test:watch",
     "lint": "eslint .",
     "start": "cross-env SINGLE_START=modeler npm run test:watch",
     "test": "karma start",
