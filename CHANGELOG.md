@@ -8,6 +8,8 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 0.7.0
 
+* `FEAT`: support `bpmnlint` plugins ([#20](https://github.com/camunda/linting/pull/20))
+* `FEAT`: add `timer` rule ([#45](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/45))
 * `DEPS`: update production dependencies
 
 ## 0.6.1
