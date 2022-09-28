@@ -13,6 +13,22 @@ describe('utils/error-messages', function() {
 
   describe('#getErrorMessage', function() {
 
+    it('should return original error messsage', async function() {
+
+      // given
+      const report = {
+        id: 'Task_1',
+        message: 'foo'
+      };
+
+      // when
+      const errorMessage = getErrorMessage(report);
+
+      // then
+      expect(errorMessage).to.equal('foo');
+    });
+
+
     describe('element type not allowed', function() {
 
       it('should adjust (undefined task)', async function() {
