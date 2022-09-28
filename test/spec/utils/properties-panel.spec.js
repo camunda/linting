@@ -780,7 +780,7 @@ describe('utils/properties-panel', function() {
       // then
       expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-      expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression.', report);
+      expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression (Camunda Platform 8.1 or newer).', report);
     });
 
 

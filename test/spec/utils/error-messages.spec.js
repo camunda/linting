@@ -825,7 +825,7 @@ describe('utils/error-messages', function() {
         const errorMessage = getErrorMessage(report);
 
         // then
-        expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> should be an expression, an ISO 8601 repeating interval, or a cron expression');
+        expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> should be an expression, an ISO 8601 repeating interval, or a cron expression (Camunda Platform 8.1 or newer)');
       });
 
 
