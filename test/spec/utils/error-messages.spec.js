@@ -938,7 +938,7 @@ describe('utils/error-messages', function() {
       [ 'Camunda Cloud', '1.1', 'Camunda 8 (Zeebe 1.1)' ],
       [ 'Camunda Cloud', '1.2', 'Camunda 8 (Zeebe 1.2)' ],
       [ 'Camunda Cloud', '1.3', 'Camunda 8 (Zeebe 1.3)' ],
-      [ 'Camunda Cloud', '8.0', 'Camunda 8' ],
+      [ 'Camunda Cloud', '8.0', 'Camunda 8.0' ],
       [ 'Camunda Cloud', '8.1', 'Camunda 8.1' ],
       [ 'Camunda Cloud', '8.15', 'Camunda 8.15' ],
       [ 'Camunda Platform', '7.15', 'Camunda Platform 7.15' ],
