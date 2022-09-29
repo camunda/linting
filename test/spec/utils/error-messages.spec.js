@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { getErrorMessage } from '../../../lib/utils/error-messages';
+import { getErrorMessage, getExecutionPlatformLabel } from '../../../lib/utils/error-messages';
 
 import { createElement } from '../../helper';
 
@@ -922,6 +922,39 @@ describe('utils/error-messages', function() {
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with two or more <Headers> with the same <Key> (foo) is not supported');
+      });
+
+    });
+
+  });
+
+
+  describe('#getExecutionPlatformLabel', function() {
+
+    // given
+    // [ executionPlatform, executionPlatformVersion, expectedLabel ]
+    const labelCombinations = [
+      [ 'Camunda Cloud', '1.0', 'Camunda 8 (Zeebe 1.0)' ],
+      [ 'Camunda Cloud', '1.1', 'Camunda 8 (Zeebe 1.1)' ],
+      [ 'Camunda Cloud', '1.2', 'Camunda 8 (Zeebe 1.2)' ],
+      [ 'Camunda Cloud', '1.3', 'Camunda 8 (Zeebe 1.3)' ],
+      [ 'Camunda Cloud', '8.0', 'Camunda 8' ],
+      [ 'Camunda Cloud', '8.1', 'Camunda 8.1' ],
+      [ 'Camunda Cloud', '8.15', 'Camunda 8.15' ],
+      [ 'Camunda Platform', '7.15', 'Camunda Platform 7.15' ],
+      [ 'Camunda Fox', 'Foobar', 'Camunda Fox Foobar' ]
+    ];
+
+    labelCombinations.forEach(([ executionPlatform, executionPlatformVersion, expectedLabel ]) => {
+
+      it(`should return label for ${expectedLabel}`, function() {
+
+        // when
+        const label = getExecutionPlatformLabel(executionPlatform, executionPlatformVersion);
+
+        // then
+        expect(label).to.equal(expectedLabel);
+
       });
 
     });
