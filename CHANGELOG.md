@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.7.1
+
+* `FIX`: use correct label for Camunda 8.1 ([#26](https://github.com/camunda/linting/issues/26))
+
 ## 0.7.0
 
 * `FEAT`: support `bpmnlint` plugins ([#20](https://github.com/camunda/linting/pull/20))
