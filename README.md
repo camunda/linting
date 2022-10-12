@@ -47,6 +47,10 @@ modeler.get('linting').setErrors(reports);
 
 // show error by selecting element and properties panel entry
 modeler.get('linting').showError(report);
+
+// activate and deactivate errors on canvas
+modeler.get('linting').activate();
+modeler.get('linting').deactivate();
 ```
 
 ## Development
