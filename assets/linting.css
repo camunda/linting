@@ -15,15 +15,6 @@
   --linting-annotation-warning-stroke-color: var(--color-grey-225-10-15);
 }
 
-.djs-overlays:not(.selected) .bjs-linting-annotation {
-  opacity: 0.5;
-}
-
-.djs-overlays.selected .bjs-linting-annotation,
-.djs-overlays .bjs-linting-annotation:hover {
-  opacity: 1;
-}
-
 .bjs-linting-annotation {
   display: flex;
   flex-direction: row;
