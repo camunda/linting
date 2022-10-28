@@ -18,6 +18,8 @@ import { domify } from 'min-dom';
 
 import sinon from 'sinon';
 
+import StaticResolver from 'bpmnlint/lib/resolver/static-resolver';
+
 import { Linter } from '../../..';
 
 import lintingModule from '../../../modeler';
@@ -113,7 +115,22 @@ describe('Linting', function() {
   (singleStart ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
 
     // given
-    const linter = new Linter();
+    const FooPlugin = {
+      config: {
+        rules: {
+          'foo/fake-join': 'warn'
+        }
+      },
+      resolver: new StaticResolver({
+        'rule:bpmnlint-plugin-foo/fake-join': require('bpmnlint/rules/fake-join')
+      })
+    };
+
+    const linter = new Linter({
+      plugins: [
+        FooPlugin
+      ]
+    });
 
     const lint = () => {
       const definitions = bpmnjs.getDefinitions();
