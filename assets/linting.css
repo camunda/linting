@@ -1,9 +1,18 @@
 :root {
+  --color-grey-225-10-15: hsl(225, 10%, 15%);
+
   --color-red-360-100-45: hsl(360, 100%, 45%);
+
   --color-white: hsl(0, 0%, 100%);
 
-  --linting-annotation-background-color: var(--color-red-360-100-45);
-  --linting-annotation-fill-color: var(--color-white);
+  --color-yellow-47-88-53: hsl(47, 88%, 53%);
+
+  --linting-annotation-error-background-color: var(--color-red-360-100-45);
+  --linting-annotation-error-fill-color: var(--color-white);
+  
+  --linting-annotation-warning-background-color: var(--color-yellow-47-88-53);
+  --linting-annotation-warning-fill-color: var(--color-white);
+  --linting-annotation-warning-stroke-color: var(--color-grey-225-10-15);
 }
 
 .djs-overlays:not(.selected) .bjs-linting-annotation {
@@ -19,15 +28,16 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 1px;
+  padding: 2px;
   border-radius: 2px;
-  background-color: var(--linting-annotation-background-color);
   cursor: default;
   z-index: 100000;
 }
 
-.bjs-linting-annotation > svg {
-  fill: var(--linting-annotation-fill-color);
-  width: 18px;
-  height: 18px;
+.bjs-linting-annotation--error {
+  background-color: var(--linting-annotation-error-background-color);
+}
+
+.bjs-linting-annotation--warning {
+  background-color: var(--linting-annotation-warning-background-color);
 }

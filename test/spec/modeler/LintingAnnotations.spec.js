@@ -38,11 +38,13 @@ describe('LintingAnnotations', function() {
     const reports = [
       {
         id: 'StartEvent_1',
-        message: 'foo'
+        message: 'foo',
+        category: 'error'
       },
       {
         id: 'ServiceTask_1',
-        message: 'bar'
+        message: 'bar',
+        category: 'warn'
       }
     ];
 
@@ -51,8 +53,16 @@ describe('LintingAnnotations', function() {
 
     // then
     expect(overlays.get({ type: 'linting' })).to.have.length(2);
-    expect(overlays.get({ element: serviceTask })).to.have.length(1);
-    expect(overlays.get({ element: startEvent })).to.have.length(1);
+
+    const serviceTaskOverlays = overlays.get({ element: serviceTask });
+
+    expect(serviceTaskOverlays).to.have.length(1);
+    expect(serviceTaskOverlays[ 0 ].html.classList.contains('bjs-linting-annotation--warning')).to.be.true;
+
+    const startEventOverlays = overlays.get({ element: startEvent });
+
+    expect(startEventOverlays).to.have.length(1);
+    expect(startEventOverlays[ 0 ].html.classList.contains('bjs-linting-annotation--error')).to.be.true;
   }));
 
 
