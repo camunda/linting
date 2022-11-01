@@ -459,23 +459,6 @@ describe('utils/error-messages', function() {
       });
 
 
-      it('should adjust (event definitions)', async function() {
-
-        // given
-        const node = createElement('bpmn:IntermediateThrowEvent');
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
-
-        const report = await getLintError(node, rule, { version: '1.0' });
-
-        // when
-        const errorMessage = getErrorMessage(report, 'Camunda Fox');
-
-        // then
-        expect(errorMessage).to.equal('An <Undefined Intermediate Throw Event> is not supported by Camunda Fox');
-      });
-
-
       it('should adjust (input collection)', async function() {
 
         // given
@@ -780,27 +763,6 @@ describe('utils/error-messages', function() {
 
 
     describe('property type not allowed', function() {
-
-      it('should adjust (event definitions)', async function() {
-
-        // given
-        const node = createElement('bpmn:IntermediateThrowEvent', {
-          eventDefinitions: [
-            createElement('bpmn:MessageEventDefinition')
-          ]
-        });
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
-
-        const report = await getLintError(node, rule, { version: '1.0' });
-
-        // when
-        const errorMessage = getErrorMessage(report, 'Camunda Fox');
-
-        // then
-        expect(errorMessage).to.equal('A <Message Intermediate Throw Event> is not supported by Camunda Fox');
-      });
-
 
       it('should adjust (time cycle)', async function() {
 
