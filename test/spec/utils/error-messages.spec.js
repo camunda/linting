@@ -38,7 +38,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const errorMessage = getErrorMessage(report, 'Camunda Fox');
@@ -55,7 +55,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const errorMessage = getErrorMessage(report, 'Camunda Fox');
@@ -82,9 +82,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud11: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.1' });
 
         // when
         const errorMessage = getErrorMessage(report, 'Camunda Fox');
@@ -183,9 +181,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud10: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -202,9 +198,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud13: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.3' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -361,9 +355,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud13: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.3' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -388,9 +380,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud13: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.3' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -413,9 +403,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud13: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.3' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -478,9 +466,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
 
-        const { camundaCloud10: config } = await import('bpmnlint-plugin-camunda-compat/rules/element-type/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const errorMessage = getErrorMessage(report, 'Camunda Fox');
@@ -581,9 +567,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
 
-        const { camundaCloud10: config } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -808,9 +792,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
 
-        const { camundaCloud10: config } = await import('bpmnlint-plugin-camunda-compat/rules/element-type/config');
-
-        const report = await getLintError(node, rule, config);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const errorMessage = getErrorMessage(report, 'Camunda Fox');
