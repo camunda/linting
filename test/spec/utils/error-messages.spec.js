@@ -381,7 +381,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, '1.0', 'desktop');
 
           // then
-          expect(errorMessage).to.equal('A <Template Service Task> is not supported by Camunda 8 (Zeebe 1.0)');
+          expect(errorMessage).to.equal('A <Template Service Task> is only supported by Camunda 8.0 or newer');
         });
 
 
@@ -400,7 +400,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, '1.0', 'web');
 
           // then
-          expect(errorMessage).to.equal('A <Connector Service Task> is not supported by Camunda 8 (Zeebe 1.0)');
+          expect(errorMessage).to.equal('A <Connector Service Task> is only supported by Camunda 8.0 or newer');
         });
 
       });
