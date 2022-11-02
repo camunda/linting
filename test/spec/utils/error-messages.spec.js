@@ -178,7 +178,7 @@ describe('utils/error-messages', function() {
         const errorMessage = getErrorMessage(report, version);
 
         // then
-        expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: DMN decision> is not supported by Camunda 8 (Zeebe 1.1)');
+        expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: DMN decision> is only supported by Camunda 8 (Zeebe 1.3) or newer');
       });
 
 
@@ -203,7 +203,7 @@ describe('utils/error-messages', function() {
         const errorMessage = getErrorMessage(report, version);
 
         // then
-        expect(errorMessage).to.equal('A <Service Task> with <Extension properties> is not supported by Camunda 8 (Zeebe 1.0)');
+        expect(errorMessage).to.equal('A <Service Task> with <Extension properties> is only supported by Camunda 8.1 or newer');
       });
 
     });
