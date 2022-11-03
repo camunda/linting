@@ -155,6 +155,50 @@ describe('utils/error-messages', function() {
     });
 
 
+    describe('element collapsed not allowed', function() {
+
+      it('should adjust (subprocess)', async function() {
+
+        // given
+        const di = createElement('bpmndi:BPMNShape', {
+          bpmnElement: createElement('bpmn:SubProcess'),
+          isExpanded: false
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/collapsed-subprocess');
+
+        const report = await getLintError(di, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <Sub Process> must be expanded');
+      });
+
+
+      it('should adjust (ad-hoc subprocess)', async function() {
+
+        // given
+        const di = createElement('bpmndi:BPMNShape', {
+          bpmnElement: createElement('bpmn:AdHocSubProcess'),
+          isExpanded: false
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/collapsed-subprocess');
+
+        const report = await getLintError(di, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('An <Ad Hoc Sub Process> must be expanded');
+      });
+
+    });
+
+
     describe('extension element not allowed', function() {
 
       it('should adjust (business rule task with called decision)', async function() {
@@ -958,6 +1002,7 @@ describe('utils/error-messages', function() {
 
         // then
         expect(errorMessage).to.equal('A <Service Task> with two or more <Headers> with the same <Key> (foo) is not supported');
+
       });
 
     });
