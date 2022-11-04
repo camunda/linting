@@ -856,6 +856,184 @@ describe('utils/properties-panel', function() {
       expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 interval.', report);
     });
 
+
+    describe('FEEL', async function() {
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/feel');
+      const INVALID_FEEL = '===';
+
+      it('should return error for input mapping', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          id: 'ServiceTask_1',
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:IoMapping', {
+                inputParameters: [
+                  createElement('zeebe:Input', {
+                    source: INVALID_FEEL
+                  })
+                ]
+              })
+            ]
+          })
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+      });
+
+
+      it('should return error for output mapping', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          id: 'ServiceTask_1',
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:IoMapping', {
+                outputParameters: [
+                  createElement('zeebe:Output', {
+                    source: INVALID_FEEL
+                  })
+                ]
+              })
+            ]
+          })
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'ServiceTask_1-output-0-source' ]);
+      });
+
+
+      it('should return error for Task Headers', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          id: 'ServiceTask_1',
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:TaskHeaders', {
+                values: [
+                  createElement('zeebe:Header', {
+                    value: INVALID_FEEL
+                  })
+                ]
+              })
+            ]
+          })
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'ServiceTask_1-header-0-value' ]);
+      });
+
+
+      it('should return error for Extension Properties', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          id: 'ServiceTask_1',
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:TaskHeaders', {
+                values: [
+                  createElement('zeebe:Property', {
+                    value: INVALID_FEEL
+                  })
+                ]
+              })
+            ]
+          })
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'ServiceTask_1-extensionProperty-0-value' ]);
+      });
+
+
+      it('should return error for multi-instance properties', async function() {
+        const node = createElement('bpmn:ServiceTask', {
+          loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:LoopCharacteristics', {
+                  inputCollection: INVALID_FEEL
+                })
+              ]
+            })
+          })
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'multiInstance-inputCollection' ]);
+
+      });
+
+
+      it('should return error for multi-instance completion condition', async function() {
+        const node = createElement('bpmn:ServiceTask', {
+          loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics', {
+            completionCondition: createElement('bpmn:FormalExpression', {
+              body: INVALID_FEEL
+            })
+          })
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'multiInstance-completionCondition' ]);
+      });
+
+
+      it('should return error for conditional flow', async function() {
+        const node = createElement('bpmn:SequenceFlow', {
+          conditionExpression: createElement('bpmn:FormalExpression', {
+            body: INVALID_FEEL
+          })
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'conditionExpression' ]);
+      });
+
+    });
+
   });
 
 
