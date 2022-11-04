@@ -98,6 +98,9 @@ const linter = new Linter();
 describe('Linting', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
+    keyboard: {
+      bindTo: document
+    },
     additionalModules: [
       lintingModule,
       propertiesPanelModule,
