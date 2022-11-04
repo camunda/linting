@@ -858,8 +858,11 @@ describe('utils/properties-panel', function() {
 
 
     describe('FEEL', async function() {
+
       const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/feel');
+
       const INVALID_FEEL = '===';
+
 
       it('should return error for input mapping', async function() {
 
