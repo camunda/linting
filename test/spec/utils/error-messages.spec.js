@@ -1026,6 +1026,33 @@ describe('utils/error-messages', function() {
 
     });
 
+
+    describe('property value required', function() {
+
+      it('should adjust (is executable)', async function() {
+
+        // given
+        const node = createElement('bpmn:Definitions', {
+          rootElements: [
+            createElement('bpmn:Process', {
+              isExecutable: false
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/executable-process');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <Process> must be <Executable>');
+      });
+
+    });
+
   });
 
 

@@ -24,6 +24,31 @@ describe('utils/properties-panel', function() {
 
   describe('#getEntryId and #getErrorMessage', function() {
 
+    it('executable-process - Executable', async function() {
+
+      // given
+      const node = createElement('bpmn:Definitions', {
+        rootElements: [
+          createElement('bpmn:Process', {
+            isExecutable: false
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/executable-process');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'isExecutable' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Must be executable.', report);
+    });
+
+
     it('called-decision-or-task-definition - Implementation', async function() {
 
       // given
