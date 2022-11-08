@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.9.0
+
+* `FEAT`: add `feel` rule to validate feel expressions ([#51](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/51))
+* `FEAT`: add `collapsed-subprocess` rule to disallow collapsed subprocess ([#52](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/52))
+* `FEAT`: error message hints at allowed version ([#34](https://github.com/camunda/linting/pull/34))
+
 ## 0.8.0
 
 * `FEAT`: show lint error and warning annotations ([#32](https://github.com/camunda/linting/pull/32))
