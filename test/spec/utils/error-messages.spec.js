@@ -1016,6 +1016,7 @@ describe('utils/error-messages', function() {
     // [ executionPlatform, executionPlatformVersion, expectedLabel ]
     const labelCombinations = [
       [ 'Camunda Cloud', '1.0', 'Camunda 8 (Zeebe 1.0)' ],
+      [ 'Camunda Cloud', '1.0.0', 'Camunda 8 (Zeebe 1.0)' ],
       [ 'Camunda Cloud', '1.1', 'Camunda 8 (Zeebe 1.1)' ],
       [ 'Camunda Cloud', '1.2', 'Camunda 8 (Zeebe 1.2)' ],
       [ 'Camunda Cloud', '1.3', 'Camunda 8 (Zeebe 1.3)' ],
