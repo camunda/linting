@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.9.1
+
+* `FIX`: handle minor and patch versions when getting execution platform label ([#35](https://github.com/camunda/linting/pull/35))
+
 ## 0.9.0
 
 * `FEAT`: add `feel` rule to validate feel expressions ([#51](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/51))
