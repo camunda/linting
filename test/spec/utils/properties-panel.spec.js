@@ -600,7 +600,7 @@ describe('utils/properties-panel', function() {
         ]
       });
 
-      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/inclusive-gateway');
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/sequence-flow-condition');
 
       const reports = await getLintErrors(node, rule);
 
