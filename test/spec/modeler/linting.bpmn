@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_18k1k7x" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.2" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_18k1k7x" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.5.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0">
   <bpmn:process id="Process_09qm081" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1m1s8rd</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:exclusiveGateway id="Gateway_0a303iy">
+    <bpmn:exclusiveGateway id="Gateway_0a303iy" default="Flow_0zzdw7g">
       <bpmn:incoming>Flow_1m1s8rd</bpmn:incoming>
       <bpmn:outgoing>Flow_0zzdw7g</bpmn:outgoing>
       <bpmn:outgoing>Flow_192e6hp</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1m1s8rd" sourceRef="StartEvent_1" targetRef="Gateway_0a303iy" />
     <bpmn:sequenceFlow id="Flow_0zzdw7g" sourceRef="Gateway_0a303iy" targetRef="ServiceTask_1" />
-    <bpmn:sequenceFlow id="Flow_192e6hp" sourceRef="Gateway_0a303iy" targetRef="ServiceTask_2" />
+    <bpmn:sequenceFlow id="Flow_192e6hp" sourceRef="Gateway_0a303iy" targetRef="ServiceTask_2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1fo9xb9" sourceRef="ServiceTask_1" targetRef="ServiceTask_2" />
     <bpmn:serviceTask id="ServiceTask_1" name="Foo">
       <bpmn:extensionElements>

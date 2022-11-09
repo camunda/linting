@@ -46,7 +46,26 @@ describe('utils/error-messages', function() {
         const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
         // then
-        expect(errorMessage).to.equal('An <Undefined Task> is not supported by Camunda 8 (Zeebe 1.0)');
+        expect(errorMessage).to.equal('An <Undefined Task> is only supported by Camunda 8.2 or newer');
+      });
+
+
+      it('should adjust (complex gateway)', async function() {
+
+        // given
+        const executionPlatformVersion = '1.0';
+
+        const node = createElement('bpmn:ComplexGateway');
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+
+        const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+        // when
+        const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+        // then
+        expect(errorMessage).to.equal('A <Complex Gateway> is not supported by Camunda 8 (Zeebe 1.0)');
       });
 
 
@@ -809,7 +828,7 @@ describe('utils/error-messages', function() {
           ]
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/inclusive-gateway');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/sequence-flow-condition');
 
         const reports = await getLintErrors(node, rule);
 
