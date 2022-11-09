@@ -8,18 +8,18 @@ import { Linter } from '../..';
 
 import simpleXML from './simple.bpmn';
 import noExecutionPlatformXML from './no-execution-platform.bpmn';
-import camundaCloud10ValidXML from './camunda-cloud-1-0-valid.bpmn';
-import camundaCloud10InvalidXML from './camunda-cloud-1-0-invalid.bpmn';
-import camundaCloud11ValidXML from './camunda-cloud-1-1-valid.bpmn';
-import camundaCloud11InvalidXML from './camunda-cloud-1-1-invalid.bpmn';
-import camundaCloud12ValidXML from './camunda-cloud-1-2-valid.bpmn';
-import camundaCloud12InvalidXML from './camunda-cloud-1-2-invalid.bpmn';
-import camundaCloud13ValidXML from './camunda-cloud-1-3-valid.bpmn';
-import camundaCloud13InvalidXML from './camunda-cloud-1-3-invalid.bpmn';
-import camundaCloud80ValidXML from './camunda-cloud-8-0-valid.bpmn';
-import camundaCloud80InvalidXML from './camunda-cloud-8-0-invalid.bpmn';
-import camundaCloud81ValidXML from './camunda-cloud-8-1-valid.bpmn';
-import camundaCloud81InvalidXML from './camunda-cloud-8-1-invalid.bpmn';
+import camundaCloud10XML from './camunda-cloud-1-0.bpmn';
+import camundaCloud10ErrorsXML from './camunda-cloud-1-0-errors.bpmn';
+import camundaCloud11XML from './camunda-cloud-1-1.bpmn';
+import camundaCloud11ErrorsXML from './camunda-cloud-1-1-errors.bpmn';
+import camundaCloud12XML from './camunda-cloud-1-2.bpmn';
+import camundaCloud12ErrorsXML from './camunda-cloud-1-2-errors.bpmn';
+import camundaCloud13XML from './camunda-cloud-1-3.bpmn';
+import camundaCloud13ErrorsXML from './camunda-cloud-1-3-errors.bpmn';
+import camundaCloud80XML from './camunda-cloud-8-0.bpmn';
+import camundaCloud80ErrorsXML from './camunda-cloud-8-0-errors.bpmn';
+import camundaCloud81XML from './camunda-cloud-8-1.bpmn';
+import camundaCloud81ErrorsXML from './camunda-cloud-8-1-errors.bpmn';
 import camundaPlatform717XML from './camunda-platform-7-17.bpmn';
 
 describe('Linter', function() {
@@ -75,7 +75,7 @@ describe('Linter', function() {
       it('should lint without errors (Camunda Cloud 1.0.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud10ValidXML);
+        const { root } = await createModdle(camundaCloud10XML);
 
         // when
         const reports = await linter.lint(root);
@@ -88,7 +88,7 @@ describe('Linter', function() {
       it('should lint with errors (Camunda Cloud 1.0.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud10InvalidXML);
+        const { root } = await createModdle(camundaCloud10ErrorsXML);
 
         // when
         const reports = await linter.lint(root);
@@ -101,7 +101,7 @@ describe('Linter', function() {
       it('should lint without errors (Camunda Cloud 1.1.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud11ValidXML);
+        const { root } = await createModdle(camundaCloud11XML);
 
         // when
         const reports = await linter.lint(root);
@@ -114,7 +114,7 @@ describe('Linter', function() {
       it('should lint with errors (Camunda Cloud 1.1.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud11InvalidXML);
+        const { root } = await createModdle(camundaCloud11ErrorsXML);
 
         // when
         const reports = await linter.lint(root);
@@ -127,7 +127,7 @@ describe('Linter', function() {
       it('should lint without errors (Camunda Cloud 1.2.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud12ValidXML);
+        const { root } = await createModdle(camundaCloud12XML);
 
         // when
         const reports = await linter.lint(root);
@@ -140,7 +140,7 @@ describe('Linter', function() {
       it('should lint with errors (Camunda Cloud 1.2.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud12InvalidXML);
+        const { root } = await createModdle(camundaCloud12ErrorsXML);
 
         // when
         const reports = await linter.lint(root);
@@ -153,7 +153,7 @@ describe('Linter', function() {
       it('should lint without errors (Camunda Cloud 1.3.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud13ValidXML);
+        const { root } = await createModdle(camundaCloud13XML);
 
         // when
         const reports = await linter.lint(root);
@@ -166,7 +166,7 @@ describe('Linter', function() {
       it('should lint with errors (Camunda Cloud 1.3.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud13InvalidXML);
+        const { root } = await createModdle(camundaCloud13ErrorsXML);
 
         // when
         const reports = await linter.lint(root);
@@ -179,7 +179,7 @@ describe('Linter', function() {
       it('should lint without errors (Camunda Cloud 8.0.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud80ValidXML);
+        const { root } = await createModdle(camundaCloud80XML);
 
         // when
         const reports = await linter.lint(root);
@@ -192,7 +192,7 @@ describe('Linter', function() {
       it('should lint with errors (Camunda Cloud 8.0.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud80InvalidXML);
+        const { root } = await createModdle(camundaCloud80ErrorsXML);
 
         // when
         const reports = await linter.lint(root);
@@ -205,7 +205,7 @@ describe('Linter', function() {
       it('should lint without errors (Camunda Cloud 8.1.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud81ValidXML);
+        const { root } = await createModdle(camundaCloud81XML);
 
         // when
         const reports = await linter.lint(root);
@@ -218,7 +218,7 @@ describe('Linter', function() {
       it('should lint with errors (Camunda Cloud 8.1.0)', async function() {
 
         // given
-        const { root } = await createModdle(camundaCloud81InvalidXML);
+        const { root } = await createModdle(camundaCloud81ErrorsXML);
 
         // when
         const reports = await linter.lint(root);
