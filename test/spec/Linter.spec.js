@@ -20,6 +20,8 @@ import camundaCloud80XML from './camunda-cloud-8-0.bpmn';
 import camundaCloud80ErrorsXML from './camunda-cloud-8-0-errors.bpmn';
 import camundaCloud81XML from './camunda-cloud-8-1.bpmn';
 import camundaCloud81ErrorsXML from './camunda-cloud-8-1-errors.bpmn';
+import camundaCloud82XML from './camunda-cloud-8-2.bpmn';
+import camundaCloud82ErrorsXML from './camunda-cloud-8-2-errors.bpmn';
 import camundaPlatform717XML from './camunda-platform-7-17.bpmn';
 
 describe('Linter', function() {
@@ -72,159 +74,55 @@ describe('Linter', function() {
 
     describe('camunda-cloud', function() {
 
-      it('should lint without errors (Camunda Cloud 1.0.0)', async function() {
+      const versions = [
+        [ '1.0', camundaCloud10XML, camundaCloud10ErrorsXML ],
+        [ '1.1', camundaCloud11XML, camundaCloud11ErrorsXML ],
+        [ '1.2', camundaCloud12XML, camundaCloud12ErrorsXML ],
+        [ '1.3', camundaCloud13XML, camundaCloud13ErrorsXML ],
+        [ '8.0', camundaCloud80XML, camundaCloud80ErrorsXML ],
+        [ '8.1', camundaCloud81XML, camundaCloud81ErrorsXML ],
+        [ '8.2', camundaCloud82XML, camundaCloud82ErrorsXML ]
+      ];
 
-        // given
-        const { root } = await createModdle(camundaCloud10XML);
+      versions.forEach(function([ version, xml, errorsXML ]) {
 
-        // when
-        const reports = await linter.lint(root);
+        describe(`Camunda Cloud ${ version }`, function() {
 
-        // then
-        expect(reports).to.be.empty;
-      });
+          describe('no errors', function() {
 
+            it('should not have errors', async function() {
 
-      it('should lint with errors (Camunda Cloud 1.0.0)', async function() {
+              // given
+              const { root } = await createModdle(xml);
 
-        // given
-        const { root } = await createModdle(camundaCloud10ErrorsXML);
+              // when
+              const reports = await linter.lint(root);
 
-        // when
-        const reports = await linter.lint(root);
+              // then
+              expect(reports).to.be.empty;
+            });
 
-        // then
-        expect(reports).not.to.be.empty;
-      });
-
-
-      it('should lint without errors (Camunda Cloud 1.1.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud11XML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).to.be.empty;
-      });
+          });
 
 
-      it('should lint with errors (Camunda Cloud 1.1.0)', async function() {
+          describe('errors', function() {
 
-        // given
-        const { root } = await createModdle(camundaCloud11ErrorsXML);
+            it('should have errors', async function() {
 
-        // when
-        const reports = await linter.lint(root);
+              // given
+              const { root } = await createModdle(errorsXML);
 
-        // then
-        expect(reports).not.to.be.empty;
-      });
+              // when
+              const reports = await linter.lint(root);
 
+              // then
+              expect(reports).not.to.be.empty;
+            });
 
-      it('should lint without errors (Camunda Cloud 1.2.0)', async function() {
+          });
 
-        // given
-        const { root } = await createModdle(camundaCloud12XML);
+        });
 
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).to.be.empty;
-      });
-
-
-      it('should lint with errors (Camunda Cloud 1.2.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud12ErrorsXML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).not.to.be.empty;
-      });
-
-
-      it('should lint without errors (Camunda Cloud 1.3.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud13XML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).to.be.empty;
-      });
-
-
-      it('should lint with errors (Camunda Cloud 1.3.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud13ErrorsXML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).not.to.be.empty;
-      });
-
-
-      it('should lint without errors (Camunda Cloud 8.0.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud80XML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).to.be.empty;
-      });
-
-
-      it('should lint with errors (Camunda Cloud 8.0.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud80ErrorsXML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).not.to.be.empty;
-      });
-
-
-      it('should lint without errors (Camunda Cloud 8.1.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud81XML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).to.be.empty;
-      });
-
-
-      it('should lint with errors (Camunda Cloud 8.1.0)', async function() {
-
-        // given
-        const { root } = await createModdle(camundaCloud81ErrorsXML);
-
-        // when
-        const reports = await linter.lint(root);
-
-        // then
-        expect(reports).not.to.be.empty;
       });
 
     });
