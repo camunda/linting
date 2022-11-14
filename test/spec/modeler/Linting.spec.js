@@ -143,7 +143,7 @@ describe('Linting', function() {
 
         linting.setErrors(reports);
 
-        panel.querySelector('textarea').textContent = reports.map(({ message }) => message).join('\n');
+        panel.querySelector('textarea').textContent = reports.map(({ id, message }) => `${ id }: ${ message }`).join('\n');
       });
     };
 
