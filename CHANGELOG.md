@@ -6,6 +6,14 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.10.0
+
+* `FEAT`: add `executable-process` rule ([#56](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/56))
+* `FEAT`: add `sequence-flow-condition` rule ([#58](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/58))
+* `FEAT`: add Camunda Platform 8.2 config ([#59](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/59))
+* `DEPS`: update `bpmnlint-plugin-camunda-compat` to v0.15.1
+* `DEPS`: update `bpmnlint` to v8.1.1
+
 ## 0.9.1
 
 * `FIX`: handle minor and patch versions when getting execution platform label ([#35](https://github.com/camunda/linting/pull/35))
