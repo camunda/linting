@@ -93,12 +93,12 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('called-decision-or-task-definition - Implementation', async function() {
+    it('implementation - Implementation', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask');
 
-      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
       const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -158,7 +158,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('called-decision-or-task-definition - Decision ID', async function() {
+    it('implementation - Decision ID', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask', {
@@ -171,7 +171,7 @@ describe('utils/properties-panel', function() {
         })
       });
 
-      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
       const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -185,7 +185,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('called-decision-or-task-definition - Result variable', async function() {
+    it('implementation - Result variable', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask', {
@@ -198,7 +198,7 @@ describe('utils/properties-panel', function() {
         })
       });
 
-      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
       const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -422,14 +422,14 @@ describe('utils/properties-panel', function() {
     });
 
 
-    describe('called-decision-or-task-definition', function() {
+    describe('implementation', function() {
 
       it('Type (no task definition)', async function() {
 
         // given
         const node = createElement('bpmn:ServiceTask');
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.0' });
 
@@ -454,7 +454,7 @@ describe('utils/properties-panel', function() {
           })
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.0' });
 

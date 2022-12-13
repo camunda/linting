@@ -233,7 +233,7 @@ describe('utils/error-messages', function() {
           })
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -334,7 +334,7 @@ describe('utils/error-messages', function() {
         // given
         const node = createElement('bpmn:ServiceTask');
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.0' });
 
@@ -351,7 +351,7 @@ describe('utils/error-messages', function() {
         // given
         const node = createElement('bpmn:BusinessRuleTask');
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -508,7 +508,7 @@ describe('utils/error-messages', function() {
           })
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -533,7 +533,7 @@ describe('utils/error-messages', function() {
           })
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -556,7 +556,7 @@ describe('utils/error-messages', function() {
           })
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -703,7 +703,7 @@ describe('utils/error-messages', function() {
           })
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-decision-or-task-definition');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
         const report = await getLintError(node, rule, { version: '1.0' });
 
