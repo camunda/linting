@@ -93,7 +93,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('implementation - Implementation', async function() {
+    it('implementation (Business Rule Task) - Implementation', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask');
@@ -107,6 +107,25 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryIds).to.eql([ 'businessRuleImplementation' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Implementation must be defined.', report);
+    });
+
+
+    it('implementation (Script Task) - Implementation', async function() {
+
+      // given
+      const node = createElement('bpmn:ScriptTask');
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+      const report = await getLintError(node, rule, { version: '8.2' });
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'scriptImplementation' ]);
 
       expectErrorMessage(entryIds[ 0 ], 'Implementation must be defined.', report);
     });
@@ -158,7 +177,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('implementation - Decision ID', async function() {
+    it('implementation (DMN decision) - Decision ID', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask', {
@@ -185,7 +204,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('implementation - Result variable', async function() {
+    it('implementation (DMN decision) - Result variable', async function() {
 
       // given
       const node = createElement('bpmn:BusinessRuleTask', {
@@ -201,6 +220,60 @@ describe('utils/properties-panel', function() {
       const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
 
       const report = await getLintError(node, rule, { version: '1.3' });
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'resultVariable' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Result variable must be defined.', report);
+    });
+
+
+    it('implementation (FEEL expression) - FEEL expression', async function() {
+
+      // given
+      const node = createElement('bpmn:ScriptTask', {
+        extensionElements: createElement('bpmn:ExtensionElements', {
+          values: [
+            createElement('zeebe:Script', {
+              resultVariable: 'foo'
+            })
+          ]
+        })
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+      const report = await getLintError(node, rule, { version: '8.2' });
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'scriptExpression' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'FEEL expression must be defined.', report);
+    });
+
+
+    it('implementation (FEEL expression) - Result variable', async function() {
+
+      // given
+      const node = createElement('bpmn:ScriptTask', {
+        extensionElements: createElement('bpmn:ExtensionElements', {
+          values: [
+            createElement('zeebe:Script', {
+              expression: 'foo'
+            })
+          ]
+        })
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+      const report = await getLintError(node, rule, { version: '8.2' });
 
       // when
       const entryIds = getEntryIds(report);

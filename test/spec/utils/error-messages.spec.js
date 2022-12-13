@@ -269,6 +269,31 @@ describe('utils/error-messages', function() {
         expect(errorMessage).to.equal('A <Service Task> with <Extension properties> is only supported by Camunda 8.1 or newer');
       });
 
+
+      it('should adjust (script task with zeebe:Script)', async function() {
+
+        // given
+        const executionPlatformVersion = '1.1';
+
+        const node = createElement('bpmn:ScriptTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:Script')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+        const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+        // when
+        const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+        // then
+        expect(errorMessage).to.equal('A <Script Task> with <Implementation: FEEL expression> is only supported by Camunda 8.2 or newer');
+      });
+
     });
 
 
@@ -360,6 +385,23 @@ describe('utils/error-messages', function() {
 
         // then
         expect(errorMessage).to.equal('A <Business Rule Task> must have a defined <Implementation>');
+      });
+
+
+      it('should adjust (script and task definition)', async function() {
+
+        // given
+        const node = createElement('bpmn:ScriptTask');
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+        const report = await getLintError(node, rule, { version: '8.2' });
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <Script Task> must have a defined <Implementation>');
       });
 
     });
@@ -912,6 +954,79 @@ describe('utils/error-messages', function() {
 
         // then
         expect(errorMessage).to.equal('A <Timer Boundary Event> must have a defined <Timer value>');
+      });
+
+
+      it('should adjust (script expression)', async function() {
+
+        // given
+        const node = createElement('bpmn:ScriptTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:Script', {
+                resultVariable: 'foo'
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+        const report = await getLintError(node, rule, { version: '8.2' });
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <Script Task> with <Implementation: FEEL expression> must have a defined <FEEL expression>');
+      });
+
+
+      it('should adjust (result variable)', async function() {
+
+        // given
+        const node = createElement('bpmn:ScriptTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:Script', {
+                expression: '=foo'
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+        const report = await getLintError(node, rule, { version: '8.2' });
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <Script Task> with <Implementation: FEEL expression> must have a defined <Result variable>');
+      });
+
+
+      it('should adjust (task definition type)', async function() {
+
+        // given
+        const node = createElement('bpmn:ScriptTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:TaskDefinition')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+
+        const report = await getLintError(node, rule, { version: '8.2' });
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('A <Script Task> with <Implementation: Job worker> must have a defined <Task definition type>');
       });
 
     });
