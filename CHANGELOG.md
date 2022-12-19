@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.12.0
+
+* `FEAT`: support FEEL expression in Script Task ([#38](https://github.com/camunda/linting/issues/38))
+* `DEPS`: update to `zeebe-bpmn-moddle@0.17.0`
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@0.17.0`
+
 ## 0.11.0
 
 * `FEAT`: add link events to `element-type` rule ([#63](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/63))
