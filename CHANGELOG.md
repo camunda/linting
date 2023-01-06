@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.13.0
+
+* `FEAT`: support `Error#errorCode` as FEEL expression ([bpmnlint-plugin-camunda-compat#69](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/69))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@0.18.0`
+
 ## 0.12.0
 
 * `FEAT`: support FEEL expression in Script Task ([#38](https://github.com/camunda/linting/issues/38))
