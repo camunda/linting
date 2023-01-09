@@ -310,6 +310,32 @@ describe('utils/properties-panel', function() {
     });
 
 
+    it('error-reference - Code as expression', async function() {
+
+      // given
+      const node = createElement('bpmn:EndEvent', {
+        eventDefinitions: [
+          createElement('bpmn:ErrorEventDefinition', {
+            errorRef: createElement('bpmn:Error', { errorCode: '=expression' })
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+
+      const report = await getLintError(node, rule, { version: '8.1' });
+
+      // when
+      console.log(report);
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'errorCode' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
+    });
+
+
     it('message-reference - Name', async function() {
 
       // given
