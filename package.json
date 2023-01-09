@@ -34,8 +34,8 @@
     "zeebe-bpmn-moddle": "^0.17.0"
   },
   "devDependencies": {
-    "bpmn-js": "^9.4.0",
-    "bpmn-js-properties-panel": "^1.13.0",
+    "bpmn-js": "^11.1.1",
+    "bpmn-js-properties-panel": "^1.15.0",
     "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "eslint": "^8.23.1",
