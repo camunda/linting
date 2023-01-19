@@ -1205,6 +1205,33 @@ describe('utils/properties-panel', function() {
 
     });
 
+
+    it('user task - Candidate users', async function() {
+
+      // given
+      const node = createElement('bpmn:UserTask', {
+        extensionElements: createElement('bpmn:ExtensionElements', {
+          values: [
+            createElement('zeebe:AssignmentDefinition', {
+              candidateUsers: 'foo'
+            })
+          ]
+        })
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-candidate-users');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'assignmentDefinitionCandidateUsers' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+    });
+
   });
 
 

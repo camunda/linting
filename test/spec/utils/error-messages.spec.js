@@ -532,6 +532,31 @@ describe('utils/error-messages', function() {
         expect(errorMessage).to.equal('An <Inclusive Gateway> with more than one incoming <Sequence Flow> is not supported by Camunda 8 (Zeebe 1.0)');
       });
 
+
+      it('should adjust (candidate users)', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:AssignmentDefinition', {
+                candidateUsers: 'foo'
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-candidate-users');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+        // then
+        expect(errorMessage).to.equal('A <User Task> with defined <Candidate users> is only supported by Camunda 8.2 or newer');
+      });
+
     });
 
 
