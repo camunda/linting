@@ -310,7 +310,7 @@ describe('utils/properties-panel', function() {
     });
 
 
-    it('error-reference - Code as expression', async function() {
+    it('error-reference - Code as expression (throw event)', async function() {
 
       // given
       const node = createElement('bpmn:EndEvent', {
@@ -330,6 +330,56 @@ describe('utils/properties-panel', function() {
 
       // then
       expect(entryIds).to.eql([ 'errorCode' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
+    });
+
+
+    it('error-reference - Code as expression (catch event)', async function() {
+
+      // given
+      const node = createElement('bpmn:BoundaryEvent', {
+        eventDefinitions: [
+          createElement('bpmn:ErrorEventDefinition', {
+            errorRef: createElement('bpmn:Error', { errorCode: '=expression' })
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+
+      const report = await getLintError(node, rule, { version: '8.2' });
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'errorCode' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
+    });
+
+
+    it('escalation-reference - Code as expression in a catch event', async function() {
+
+      // given
+      const node = createElement('bpmn:BoundaryEvent', {
+        eventDefinitions: [
+          createElement('bpmn:EscalationEventDefinition', {
+            escalationRef: createElement('bpmn:Escalation', { escalationCode: '=expression' })
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+
+      const report = await getLintError(node, rule, { version: '8.2' });
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'escalationCode' ]);
 
       expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
     });
