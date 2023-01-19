@@ -326,7 +326,6 @@ describe('utils/properties-panel', function() {
       const report = await getLintError(node, rule, { version: '8.1' });
 
       // when
-      console.log(report);
       const entryIds = getEntryIds(report);
 
       // then
