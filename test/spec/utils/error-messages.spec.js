@@ -681,6 +681,29 @@ describe('utils/error-messages', function() {
       });
 
 
+      it('should adjust (escalation code)', async function() {
+
+        // given
+        const node = createElement('bpmn:EndEvent', {
+          eventDefinitions: [
+            createElement('bpmn:EscalationEventDefinition', {
+              escalationRef: createElement('bpmn:Escalation')
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/escalation-reference');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('An <Escalation End Event> with <Escalation Reference> must have a defined <Escalation code>');
+      });
+
+
       it('should adjust (input collection)', async function() {
 
         // given

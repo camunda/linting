@@ -154,6 +154,29 @@ describe('utils/properties-panel', function() {
     });
 
 
+    it('escalation-reference - Global escalation reference', async function() {
+
+      // given
+      const node = createElement('bpmn:EndEvent', {
+        eventDefinitions: [
+          createElement('bpmn:EscalationEventDefinition')
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/escalation-reference');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'escalationRef' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Global escalation reference must be defined.', report);
+    });
+
+
     it('message-reference - Global message reference', async function() {
 
       // given
@@ -357,6 +380,31 @@ describe('utils/properties-panel', function() {
       expect(entryIds).to.eql([ 'errorCode' ]);
 
       expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
+    });
+
+
+    it('escalation-reference - Code', async function() {
+
+      // given
+      const node = createElement('bpmn:EndEvent', {
+        eventDefinitions: [
+          createElement('bpmn:EscalationEventDefinition', {
+            escalationRef: createElement('bpmn:Escalation')
+          })
+        ]
+      });
+
+      const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/escalation-reference');
+
+      const report = await getLintError(node, rule);
+
+      // when
+      const entryIds = getEntryIds(report);
+
+      // then
+      expect(entryIds).to.eql([ 'escalationCode' ]);
+
+      expectErrorMessage(entryIds[ 0 ], 'Code must be defined.', report);
     });
 
 
