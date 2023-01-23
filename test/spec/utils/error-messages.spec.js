@@ -1194,6 +1194,86 @@ describe('utils/error-messages', function() {
     });
 
 
+    describe('expression not allowed', function() {
+
+      it('should adjust (error code, catch event)', async function() {
+
+        // given
+        const node = createElement('bpmn:BoundaryEvent', {
+          attachedToRef: createElement('bpmn:Task'),
+          eventDefinitions: [
+            createElement('bpmn:ErrorEventDefinition', {
+              errorRef: createElement('bpmn:Error', {
+                errorCode: '=code'
+              })
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+
+        const report = await getLintError(node, rule, { version: '8.2' });
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('Error code used in a catch event must be a static value');
+      });
+
+
+      it('should NOT adjust (error code, throw event)', async function() {
+
+        // given
+        const node = createElement('bpmn:EndEvent', {
+          eventDefinitions: [
+            createElement('bpmn:ErrorEventDefinition', {
+              errorRef: createElement('bpmn:Error', {
+                errorCode: '=code'
+              })
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+
+        const report = await getLintError(node, rule, { version: '8.1' });
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).not.to.exist;
+      });
+
+
+      it('should adjust (escalation code, catch event)', async function() {
+
+        // given
+        const node = createElement('bpmn:BoundaryEvent', {
+          attachedToRef: createElement('bpmn:Task'),
+          eventDefinitions: [
+            createElement('bpmn:EscalationEventDefinition', {
+              escalationRef: createElement('bpmn:Escalation', {
+                escalationCode: '=code'
+              })
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+
+        const report = await getLintError(node, rule, { version: '8.2' });
+
+        // when
+        const errorMessage = getErrorMessage(report);
+
+        // then
+        expect(errorMessage).to.equal('Escalation code used in a catch event must be a static value');
+      });
+    });
+
+
     it('should adjust (is executable, collaboration)', async function() {
 
       // given
