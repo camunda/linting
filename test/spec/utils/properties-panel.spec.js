@@ -142,7 +142,7 @@ describe('utils/properties-panel', function() {
 
       const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
 
-      const report = await getLintError(node, rule);
+      const report = await getLintError(node, rule, { version: '8.1' });
 
       // when
       const entryIds = getEntryIds(report);
@@ -321,7 +321,7 @@ describe('utils/properties-panel', function() {
 
       const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
 
-      const report = await getLintError(node, rule);
+      const report = await getLintError(node, rule, { version: '8.1' });
 
       // when
       const entryIds = getEntryIds(report);

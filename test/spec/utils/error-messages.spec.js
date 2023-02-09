@@ -658,7 +658,32 @@ describe('utils/error-messages', function() {
       });
 
 
-      it('should adjust (error code)', async function() {
+      it('should adjust (error code, catch event)', async function() {
+
+        // given
+        const executionPlatformVersion = '8.1';
+
+        const node = createElement('bpmn:BoundaryEvent', {
+          eventDefinitions: [
+            createElement('bpmn:ErrorEventDefinition', {
+              errorRef: createElement('bpmn:Error')
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
+
+        const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+        // when
+        const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+        // then
+        expect(errorMessage).to.equal('An <Error Boundary Event> without defined <Error code> is only supported by Camunda 8.2 or newer');
+      });
+
+
+      it('should adjust (error code, throw event)', async function() {
 
         // given
         const node = createElement('bpmn:EndEvent', {
@@ -671,7 +696,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '8.1' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -805,7 +830,30 @@ describe('utils/error-messages', function() {
       });
 
 
-      it('should adjust (error ref)', async function() {
+      it('should adjust (error ref, catch event)', async function() {
+
+        // given
+        const executionPlatformVersion = '8.1';
+
+        const node = createElement('bpmn:BoundaryEvent', {
+          eventDefinitions: [
+            createElement('bpmn:ErrorEventDefinition')
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
+
+        const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+        // when
+        const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+        // then
+        expect(errorMessage).to.equal('An <Error Boundary Event> without defined <Error Reference> is only supported by Camunda 8.2 or newer');
+      });
+
+
+      it('should adjust (error ref, throw event)', async function() {
 
         // given
         const node = createElement('bpmn:EndEvent', {
@@ -816,7 +864,7 @@ describe('utils/error-messages', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '8.1' });
 
         // when
         const errorMessage = getErrorMessage(report);
@@ -1294,6 +1342,7 @@ describe('utils/error-messages', function() {
         // then
         expect(errorMessage).to.equal('Escalation code used in a catch event must be a static value');
       });
+
     });
 
 
