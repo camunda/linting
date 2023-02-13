@@ -1266,7 +1266,7 @@ describe('utils/error-messages', function() {
         const errorMessage = getErrorMessage(report);
 
         // then
-        expect(errorMessage).not.to.exist;
+        expect(errorMessage).to.eql(report.message);
       });
 
 
