@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.16.0
+
+* `FEAT`: allow error catch event without error code in Camunda 8.2 ([#44](https://github.com/camunda/linting/pull/44))
+
 ## 0.15.1
 
 * `FIX`: display error message for disallowed FEEL error code
