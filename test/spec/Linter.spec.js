@@ -2,7 +2,10 @@ import { expect } from 'chai';
 
 import StaticResolver from 'bpmnlint/lib/resolver/static-resolver';
 
-import { createModdle } from '../helper';
+import {
+  createModdle,
+  createModdleCamundaPlatform
+} from '../helper';
 
 import { Linter } from '../..';
 
@@ -23,6 +26,8 @@ import camundaCloud81ErrorsXML from './camunda-cloud-8-1-errors.bpmn';
 import camundaCloud82XML from './camunda-cloud-8-2.bpmn';
 import camundaCloud82ErrorsXML from './camunda-cloud-8-2-errors.bpmn';
 import camundaPlatform717XML from './camunda-platform-7-17.bpmn';
+import camundaPlatform719XML from './camunda-platform-7-19.bpmn';
+import camundaPlatform719ErrorsXML from './camunda-platform-7-19-errors.bpmn';
 
 describe('Linter', function() {
 
@@ -133,13 +138,43 @@ describe('Linter', function() {
       it('should not lint Camunda Platform 7.17', async function() {
 
         // given
-        const { root } = await createModdle(camundaPlatform717XML);
+        const { root } = await createModdleCamundaPlatform(camundaPlatform717XML);
 
         // when
         const reports = await linter.lint(root);
 
         // then
         expect(reports).to.be.empty;
+      });
+
+
+      describe('Camunda Platform 7.19', function() {
+
+        it('should not have errors', async function() {
+
+          // given
+          const { root } = await createModdleCamundaPlatform(camundaPlatform719XML);
+
+          // when
+          const reports = await linter.lint(root);
+
+          // then
+          expect(reports).to.be.empty;
+        });
+
+
+        it('should have errors', async function() {
+
+          // given
+          const { root } = await createModdleCamundaPlatform(camundaPlatform719ErrorsXML);
+
+          // when
+          const reports = await linter.lint(root);
+
+          // then
+          expect(reports).not.to.be.empty;
+        });
+
       });
 
     });
