@@ -4,12 +4,10 @@ import { isArray } from 'min-dash';
 
 import modelerModdleSchema from 'modeler-moddle/resources/modeler.json';
 import zeebeModdleSchema from 'zeebe-bpmn-moddle/resources/zeebe.json';
+import camundaModdleSchema from 'camunda-bpmn-moddle/resources/camunda.json';
 
-export async function createModdle(xml) {
-  const moddle = new BpmnModdle({
-    modeler: modelerModdleSchema,
-    zeebe: zeebeModdleSchema
-  });
+export async function createModdle(xml, executionPlatform = 'camunda-cloud') {
+  const moddle = createBpmnModdle(executionPlatform);
 
   let root, warnings;
 
@@ -32,11 +30,12 @@ export async function createModdle(xml) {
   };
 }
 
-export function createElement(type, properties) {
-  const moddle = new BpmnModdle({
-    modeler: modelerModdleSchema,
-    zeebe: zeebeModdleSchema
-  });
+export function createModdleCamundaPlatform(xml) {
+  return createModdle(xml, 'camunda-platform');
+}
+
+export function createElement(type, properties, executionPlatform = 'camunda-cloud') {
+  const moddle = createBpmnModdle(executionPlatform);
 
   const moddleElement = moddle.create(type, properties);
 
@@ -73,4 +72,19 @@ export function createElement(type, properties) {
   }
 
   return moddleElement;
+}
+
+export function createCamundaPlatformElement(type, properties) {
+  return createElement(type, properties, 'camunda-platform');
+}
+
+function createBpmnModdle(executionPlatform) {
+  const moddleSchema = (executionPlatform === 'camunda-cloud') ?
+    { zeebe: zeebeModdleSchema }
+    : { camunda: camundaModdleSchema };
+
+  return new BpmnModdle({
+    modeler: modelerModdleSchema,
+    ...moddleSchema
+  });
 }
