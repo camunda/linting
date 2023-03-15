@@ -17,6 +17,8 @@ import {
   ElementTemplatesPropertiesProviderModule as elementTemplatesPropertiesProviderModule
 } from 'bpmn-js-properties-panel';
 
+import camundaCloudBehaviors from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
+
 import { domify } from 'min-dom';
 
 import sinon from 'sinon';
@@ -110,6 +112,7 @@ describe('Linting', function() {
         lintingModule,
         propertiesPanelModule,
         bpmnPropertiesProviderModule,
+        camundaCloudBehaviors,
         ...additionalModules
       ],
       moddleExtensions: {
