@@ -7,7 +7,9 @@
     "all": "npm run lint && npm test",
     "dev": "npm run test:watch",
     "lint": "eslint .",
-    "start": "cross-env SINGLE_START=modeler npm run test:watch",
+    "start": "npm run start:cloud",
+    "start:platform": "cross-env SINGLE_START=platform npm run test:watch",
+    "start:cloud": "cross-env SINGLE_START=cloud npm run test:watch",
     "test": "karma start",
     "test:watch": "npm test -- --auto-watch --no-single-run"
   },
