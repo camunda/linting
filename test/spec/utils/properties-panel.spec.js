@@ -10,7 +10,7 @@ import {
 
 import {
   createElement,
-  createCamundaPlatformElement,
+  createElementCamundaPlatform,
   createModdle,
   createModdleCamundaPlatform
 } from '../../helper';
@@ -1381,7 +1381,7 @@ describe('utils/properties-panel', function() {
       it('History cleanup (no time to live)', async function() {
 
         // given
-        const node = createCamundaPlatformElement('bpmn:Process', { isExecutable: true });
+        const node = createElementCamundaPlatform('bpmn:Process', { isExecutable: true });
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/history-time-to-live');
 

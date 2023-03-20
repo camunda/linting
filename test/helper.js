@@ -2,9 +2,9 @@ import BpmnModdle from 'bpmn-moddle';
 
 import { isArray } from 'min-dash';
 
+import camundaModdleSchema from 'camunda-bpmn-moddle/resources/camunda.json';
 import modelerModdleSchema from 'modeler-moddle/resources/modeler.json';
 import zeebeModdleSchema from 'zeebe-bpmn-moddle/resources/zeebe.json';
-import camundaModdleSchema from 'camunda-bpmn-moddle/resources/camunda.json';
 
 export async function createModdle(xml, executionPlatform = 'camunda-cloud') {
   const moddle = createBpmnModdle(executionPlatform);
@@ -28,6 +28,10 @@ export async function createModdle(xml, executionPlatform = 'camunda-cloud') {
     },
     warnings
   };
+}
+
+export function createModdleCamundaCloud(xml) {
+  return createModdle(xml, 'camunda-cloud');
 }
 
 export function createModdleCamundaPlatform(xml) {
@@ -74,7 +78,11 @@ export function createElement(type, properties, executionPlatform = 'camunda-clo
   return moddleElement;
 }
 
-export function createCamundaPlatformElement(type, properties) {
+export function createElementCamundaCloud(type, properties) {
+  return createElement(type, properties, 'camunda-cloud');
+}
+
+export function createElementCamundaPlatform(type, properties) {
   return createElement(type, properties, 'camunda-platform');
 }
 
