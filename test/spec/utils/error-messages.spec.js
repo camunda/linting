@@ -302,6 +302,33 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Script Task> with <Implementation: FEEL expression> is only supported by Camunda 8.2 or newer');
         });
 
+
+        it('should adjust (user task with zeebe:TaskSchedule)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.1';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskSchedule', {
+                  dueDate: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-task-schedule');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Due date> or <Follow up date> is only supported by Camunda 8.2 or newer');
+        });
+
       });
 
 
@@ -1136,7 +1163,7 @@ describe('utils/error-messages', function() {
       });
 
 
-      describe('property type not allowed', function() {
+      describe('expression value not allowed', function() {
 
         it('should adjust (time cycle)', async function() {
 
@@ -1159,7 +1186,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> should be an expression, an ISO 8601 repeating interval, or a cron expression (cron requires Camunda Platform 8.1 or newer)');
+          expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression (cron requires Camunda Platform 8.1 or newer)');
         });
 
 
@@ -1182,7 +1209,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('A <Timer Start Event> <Time date> should be an expression, or an ISO 8601 date');
+          expect(errorMessage).to.equal('A <Timer Start Event> <Time date> must be an expression, or an ISO 8601 date');
         });
 
 
@@ -1207,7 +1234,61 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('A <Timer Boundary Event> <Time duration> should be an expression, or an ISO 8601 interval');
+          expect(errorMessage).to.equal('A <Timer Boundary Event> <Time duration> must be an expression, or an ISO 8601 interval');
+        });
+
+
+        it('should adjust (due date)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.2';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskSchedule', {
+                  dueDate: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/task-schedule');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> <Due date> must be an ISO 8601 date');
+        });
+
+
+        it('should adjust (follow up date)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.2';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskSchedule', {
+                  followUpDate: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/task-schedule');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> <Follow up date> must be an ISO 8601 date');
         });
 
       });
