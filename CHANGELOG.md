@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.17.0
+
+* `FEAT`: require history time to live in Camunda 7.19 ([#83](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/83))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@0.23.0`
+
 ## 0.16.0
 
 * `FEAT`: allow error catch event without error code in Camunda 8.2 ([#44](https://github.com/camunda/linting/pull/44))
