@@ -25,7 +25,7 @@ import propertiesPanelPlatformXML from './properties-panel-platform.bpmn';
 
 describe('utils/properties-panel', function() {
 
-  describe('Camunda Cloud', function() {
+  describe('Camunda Cloud (Camunda 8)', function() {
 
     describe('#getEntryId and #getErrorMessage', function() {
 
@@ -1374,7 +1374,7 @@ describe('utils/properties-panel', function() {
   });
 
 
-  describe('Camunda Platform', function() {
+  describe('Camunda Platform (Camunda 7)', function() {
 
     describe('#getEntryId and #getErrorMessage', function() {
 
