@@ -13,7 +13,7 @@ import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
 import bpmnFont from 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import lintingCSS from '../../../assets/linting.css';
 
-import diagramXML from './linting.bpmn';
+import diagramXML from './linting-cloud.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
 insertCSS('bpmn-js.css', bpmnCSS);

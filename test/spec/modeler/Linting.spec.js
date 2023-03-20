@@ -36,8 +36,8 @@ import propertiesPanelCSS from 'bpmn-js-properties-panel/dist/assets/properties-
 import elementTemplatesCSS from 'bpmn-js-properties-panel/dist/assets/element-templates.css';
 import lintingCSS from '../../../assets/linting.css';
 
-import diagramXML from './linting.bpmn';
-import diagramCamundaPlatformXML from './linting-platform.bpmn';
+import diagramXMLCloud from './linting-cloud.bpmn';
+import diagramXMLPlatform from './linting-platform.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
 insertCSS('bpmn-js.css', bpmnCSS);
@@ -164,15 +164,15 @@ describe('Linting', function() {
     propertiesPanel.attachTo(propertiesPanelParent);
 
     const panel = domify(`
-    <div class="panel">
-      <textarea></textarea>
-      <div>
-        <label>Execution Platform Version</label>
-        <input type="text" />
-        <button>Deactivate Linting</button>
+      <div class="panel">
+        <textarea></textarea>
+        <div>
+          <label>Execution Platform Version</label>
+          <input type="text" />
+          <button>Deactivate Linting</button>
+        </div>
       </div>
-    </div>
-  `);
+    `);
 
     bpmnjs._container.appendChild(panel);
 
@@ -202,7 +202,7 @@ describe('Linting', function() {
 
   describe('Camunda Cloud', function() {
 
-    beforeEach(createModeler(diagramXML,
+    beforeEach(createModeler(diagramXMLCloud,
       [
         zeebePropertiesProviderModule,
         cloudElementTemplatesPropertiesProvider
@@ -227,7 +227,7 @@ describe('Linting', function() {
 
     describe('config', function() {
 
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(diagramXMLCloud, {
         additionalModules: [
           lintingModule
         ],
@@ -585,7 +585,7 @@ describe('Linting', function() {
 
   describe('Camunda Platform', function() {
 
-    beforeEach(createModeler(diagramCamundaPlatformXML,
+    beforeEach(createModeler(diagramXMLPlatform,
       [
         camundaPlatformPropertiesProviderModule,
         elementTemplatesPropertiesProviderModule
