@@ -9,7 +9,8 @@ ___Note:__ Yet to be released changes appear here._
 ## 0.17.0
 
 * `FEAT`: require history time to live in Camunda 7.19 ([#83](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/83))
-* `DEPS`: update to `bpmnlint-plugin-camunda-compat@0.23.0`
+* `FEAT`: add `task-schedule` and `no-task-schedule` rules ([#86](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/86))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@0.24.0`
 
 ## 0.16.0
 
