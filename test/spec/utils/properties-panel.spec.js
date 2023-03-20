@@ -1334,6 +1334,118 @@ describe('utils/properties-panel', function() {
         expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
       });
 
+
+      describe('user task - Due date and Follow up date', function() {
+
+        it('user task - Due date', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskSchedule', {
+                  dueDate: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/task-schedule');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'taskScheduleDueDate' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be an ISO 8601 date.', report);
+        });
+
+
+        it('user task - Follow up date', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskSchedule', {
+                  followUpDate: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/task-schedule');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'taskScheduleFollowUpDate' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be an ISO 8601 date.', report);
+        });
+
+
+        it('user task - Due date not supported', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskSchedule', {
+                  dueDate: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-task-schedule');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'taskScheduleDueDate' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+        });
+
+
+        it('user task - Follow up date not supported', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskSchedule', {
+                  followUpDate: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-task-schedule');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'taskScheduleFollowUpDate' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+        });
+
+      });
+
     });
 
 
