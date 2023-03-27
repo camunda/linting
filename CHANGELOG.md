@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.0.0
+
+* `FEAT`: adjust `element-type` configuration and add `no-signal-event-sub-process` rule to allow signal start events in Camunda 8.2 ([#88](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/88))
+* `FIX`: adjust `error-reference` rule to disallow error references without error code ([#89](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/89))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@1.0.0`
+
 ## 0.17.0
 
 * `FEAT`: require history time to live in Camunda 7.19 ([#83](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/83))
