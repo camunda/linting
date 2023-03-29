@@ -442,7 +442,7 @@ describe('utils/error-messages', function() {
       });
 
 
-      describe('property dependend required', function() {
+      describe('property dependent required', function() {
 
         it('should adjust (output collection)', async function() {
 
