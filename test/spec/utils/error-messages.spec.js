@@ -37,6 +37,38 @@ describe('utils/error-messages', function() {
 
     describe('Camunda Cloud (Camunda 8)', function() {
 
+      describe('child element type not allowed', function() {
+
+        it('should adjust (signal event sub process)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.2';
+
+          const node = createElement('bpmn:SubProcess', {
+            flowElements: [
+              createElement('bpmn:StartEvent', {
+                eventDefinitions: [
+                  createElement('bpmn:SignalEventDefinition')
+                ]
+              })
+            ],
+            triggeredByEvent: true
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-signal-event-sub-process');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <Signal Start Event> in a <Sub Process> is not supported by Camunda 8.2');
+        });
+
+      });
+
+
       describe('element type not allowed', function() {
 
         it('should adjust (undefined task)', async function() {
