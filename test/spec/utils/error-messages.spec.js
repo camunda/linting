@@ -728,7 +728,7 @@ describe('utils/error-messages', function() {
         it('should adjust (error code, catch event)', async function() {
 
           // given
-          const executionPlatformVersion = '8.1';
+          const executionPlatformVersion = '8.2';
 
           const node = createElement('bpmn:BoundaryEvent', {
             eventDefinitions: [
@@ -746,7 +746,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
-          expect(errorMessage).to.equal('An <Error Boundary Event> without defined <Error code> is only supported by Camunda 8.2 or newer');
+          expect(errorMessage).to.equal('An <Error Boundary Event> with <Error Reference> must have a defined <Error code>');
         });
 
 
