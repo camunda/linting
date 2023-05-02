@@ -844,6 +844,29 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (signal name)', async function() {
+
+          // given
+          const node = createElement('bpmn:StartEvent', {
+            eventDefinitions: [
+              createElement('bpmn:SignalEventDefinition', {
+                signalRef: createElement('bpmn:Signal')
+              })
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/signal-reference');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <Signal Start Event> with <Signal Reference> must have a defined <Name>');
+        });
+
+
         it('should adjust (correlation key)', async function() {
 
           // given
@@ -959,6 +982,27 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <Message Intermediate Catch Event> must have a defined <Message Reference>');
+        });
+
+
+        it('should adjust (signal ref)', async function() {
+
+          // given
+          const node = createElement('bpmn:StartEvent', {
+            eventDefinitions: [
+              createElement('bpmn:SignalEventDefinition')
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/signal-reference');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <Signal Start Event> must have a defined <Signal Reference>');
         });
 
 

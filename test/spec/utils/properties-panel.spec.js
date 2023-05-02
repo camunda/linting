@@ -205,6 +205,29 @@ describe('utils/properties-panel', function() {
       });
 
 
+      it('signal-reference - Global signal reference', async function() {
+
+        // given
+        const node = createElement('bpmn:StartEvent', {
+          eventDefinitions: [
+            createElement('bpmn:SignalEventDefinition')
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/signal-reference');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'signalRef' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Global signal reference must be defined.', report);
+      });
+
+
       it('implementation (DMN decision) - Decision ID', async function() {
 
         // given
