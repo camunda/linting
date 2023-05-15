@@ -1511,6 +1511,38 @@ describe('utils/error-messages', function() {
       });
 
 
+      describe('event-based gateway target not allowed', function() {
+
+        it('should adjust (receive task)', async function() {
+
+          // given
+          const eventBasedGateway = createElement('bpmn:EventBasedGateway', {});
+
+          const receiveTask = createElement('bpmn:ReceiveTask', {});
+
+          const sequenceFlow = createElement('bpmn:SequenceFlow', {
+            sourceRef: eventBasedGateway,
+            targetRef: receiveTask
+          });
+
+          eventBasedGateway.outgoing = [ sequenceFlow ];
+
+          receiveTask.incoming = [ sequenceFlow ];
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/event-based-gateway-target');
+
+          const report = await getLintError(receiveTask, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <Receive Task> cannot be the target of an <Event-Based Gateway>');
+        });
+
+      });
+
+
       it('should adjust (is executable, collaboration)', async function() {
 
         // given
