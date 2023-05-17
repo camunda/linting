@@ -624,6 +624,35 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <User Task> with defined <Candidate users> is only supported by Camunda 8.2 or newer');
         });
 
+
+        it('sequence flow condition', async function() {
+
+          // given
+          const task = createElement('bpmn:Task', {});
+
+          const endEvent = createElement('bpmn:EndEvent', {});
+
+          const sequenceFlow = createElement('bpmn:SequenceFlow', {
+            sourceRef: task,
+            targetRef: endEvent,
+            conditionExpression: createElement('bpmn:FormalExpression', {})
+          });
+
+          task.outgoing = [ sequenceFlow ];
+
+          endEvent.incoming = [ sequenceFlow ];
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/sequence-flow-condition');
+
+          const report = await getLintError(sequenceFlow, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+          // then
+          expect(errorMessage).to.equal('A <Sequence Flow> with <Condition expression> is only supported if the source is an <Exclusive Gateway> or <Inclusive Gateway>');
+        });
+
       });
 
 
