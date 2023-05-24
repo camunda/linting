@@ -922,7 +922,7 @@ describe('utils/properties-panel', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const entryIds = getEntryIds(report);
@@ -931,58 +931,6 @@ describe('utils/properties-panel', function() {
         expect(entryIds).to.eql([ 'timerEventDefinitionType' ]);
 
         expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
-      });
-
-
-      it('timer (no duration value)', async function() {
-
-        // given
-        const node = createElement('bpmn:BoundaryEvent', {
-          attachedToRef: createElement('bpmn:Task'),
-          cancelActivity: false,
-          eventDefinitions: [
-            createElement('bpmn:TimerEventDefinition', {
-              timeDuration: createElement('bpmn:FormalExpression')
-            })
-          ]
-        });
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
-
-        const report = await getLintError(node, rule);
-
-        // when
-        const entryIds = getEntryIds(report);
-
-        // then
-        expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
-
-        expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
-      });
-
-
-      it('timer (no duration value - no timer selection)', async function() {
-
-        // given
-        const node = createElement('bpmn:IntermediateCatchEvent', {
-          eventDefinitions: [
-            createElement('bpmn:TimerEventDefinition', {
-              timeDuration: createElement('bpmn:FormalExpression')
-            })
-          ]
-        });
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
-
-        const report = await getLintError(node, rule);
-
-        // when
-        const entryIds = getEntryIds(report);
-
-        // then
-        expect(entryIds).to.eql([ 'timerEventDefinitionDurationValue' ]);
-
-        expectErrorMessage(entryIds[ 0 ], 'Duration must be defined.', report);
       });
 
 
@@ -1001,7 +949,7 @@ describe('utils/properties-panel', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const entryIds = getEntryIds(report);
@@ -1024,9 +972,38 @@ describe('utils/properties-panel', function() {
           ]
         });
 
+        createElement('bpmn:Process', { flowElements: [ node ] });
+
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
+      });
+
+
+      it('timer (no time duration value)', async function() {
+
+        // given
+        const node = createElement('bpmn:BoundaryEvent', {
+          attachedToRef: createElement('bpmn:Task'),
+          cancelActivity: false,
+          eventDefinitions: [
+            createElement('bpmn:TimerEventDefinition', {
+              timeDuration: createElement('bpmn:FormalExpression')
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const entryIds = getEntryIds(report);
@@ -1055,7 +1032,7 @@ describe('utils/properties-panel', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const entryIds = getEntryIds(report);
@@ -1080,9 +1057,11 @@ describe('utils/properties-panel', function() {
           ]
         });
 
+        createElement('bpmn:Process', { flowElements: [ node ] });
+
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const entryIds = getEntryIds(report);
@@ -1111,40 +1090,13 @@ describe('utils/properties-panel', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '1.0' });
 
         // when
         const entryIds = getEntryIds(report);
 
         // then
         expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
-
-        expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 interval.', report);
-      });
-
-
-      it('timer (invalid time duration - no timer selection)', async function() {
-
-        // given
-        const node = createElement('bpmn:IntermediateCatchEvent', {
-          eventDefinitions: [
-            createElement('bpmn:TimerEventDefinition', {
-              timeDuration: createElement('bpmn:FormalExpression', {
-                body: 'INVALID'
-              })
-            })
-          ]
-        });
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
-
-        const report = await getLintError(node, rule);
-
-        // when
-        const entryIds = getEntryIds(report);
-
-        // then
-        expect(entryIds).to.eql([ 'timerEventDefinitionDurationValue' ]);
 
         expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 interval.', report);
       });
