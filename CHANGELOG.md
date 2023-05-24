@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.3.0
+
+* `FEAT`: allow time date for timer intermediate catch and boundary event in Camunda 8.3 ([98](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/98))
+
 ## 1.2.1
 
 * `FIX`: make `modeler-moddle` a production dependency
