@@ -33,6 +33,7 @@
     "bpmnlint-utils": "^1.0.2",
     "min-dash": "^4.0.0",
     "min-dom": "^4.1.0",
+    "modeler-moddle": "^0.2.0",
     "zeebe-bpmn-moddle": "^0.18.0"
   },
   "devDependencies": {
@@ -52,7 +53,6 @@
     "karma-webpack": "^5.0.0",
     "mocha": "^10.2.0",
     "mocha-test-container-support": "^0.2.0",
-    "modeler-moddle": "^0.2.0",
     "puppeteer": "^19.5.2",
     "sinon": "^15.0.1",
     "sinon-chai": "^3.7.0",
