@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.2.1
+
 * `FIX`: make `modeler-moddle` a production dependency
 
 ## 1.2.0
