@@ -29,6 +29,27 @@ describe('utils/properties-panel', function() {
 
     describe('#getEntryId and #getErrorMessage', function() {
 
+      it('should keep original entryIds', async function() {
+
+        // given
+        const node = createElement('bpmn:Process');
+
+        const rule = () => ({
+          check: (node, reporter) => {
+            reporter.report(node.id, 'My Custom Message' , { entryIds: [ 'myCustomEntry' ] });
+          }
+        });
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'myCustomEntry' ]);
+      });
+
+
       it('executable-process - Executable (process)', async function() {
 
         // given
