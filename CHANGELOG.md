@@ -6,9 +6,20 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.0.0
+
+* `FIX`: fix _Timer_ _Type_ not supported error message ([#58](https://github.com/camunda/linting/pull/58))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@1.3.2`
+* `DEPS` update `bpmn-js-properties-panel` peer dependency to `>= 2.0.0`
+
+### Breaking Changes
+
+* support of legacy `timerEventDefinitionDurationValue` ID for Camunda 8 _Timer_ group _Value_ entry was removed; `timerEventDefinitionValue` ID is now used for all _Value_ entries ([#98](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/98))
+
 ## 1.3.0
 
-* `FEAT`: allow time date for timer intermediate catch and boundary event in Camunda 8.3 ([98](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/98))
+* `FEAT`: allow time date for timer intermediate catch and boundary event in Camunda 8.3 ([#98](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/98))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@1.3.1`
 
 ## 1.2.1
 
@@ -171,7 +182,7 @@ propertiesPanel.showEntry
 * `FEAT`: add #getErrors function that creates properties panel errors from reports ([#7](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/7))
 * `FEAT`: adjust connectors error message ([#6](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/6))
 
-### BREAKING CHANGES
+### Breaking Changes
 
 * #lint is not static anymore, Linter must be instantiated
 
