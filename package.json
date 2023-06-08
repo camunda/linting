@@ -38,8 +38,8 @@
   },
   "devDependencies": {
     "bpmn-js": "^11.1.1",
-    "bpmn-js-properties-panel": "^1.20.0",
-    "camunda-bpmn-js-behaviors": "^0.5.0",
+    "bpmn-js-properties-panel": "^2.0.0",
+    "camunda-bpmn-js-behaviors": "^0.6.0",
     "chai": "^4.3.7",
     "cross-env": "^7.0.3",
     "eslint": "^8.32.0",
@@ -59,7 +59,7 @@
     "webpack": "^5.75.0"
   },
   "peerDependencies": {
-    "bpmn-js-properties-panel": ">= 1.10.0"
+    "bpmn-js-properties-panel": ">= 2.0.0"
   },
   "peerDependenciesMeta": {
     "bpmn-js-properties-panel": {
