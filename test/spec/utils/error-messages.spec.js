@@ -653,6 +653,33 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Sequence Flow> with <Condition expression> is only supported if the source is an <Exclusive Gateway> or <Inclusive Gateway>');
         });
 
+
+        it('should adjust (time date)', async function() {
+
+          // given
+          const executionPlatformVersion = '1.0';
+
+          const node = createElement('bpmn:IntermediateCatchEvent', {
+            eventDefinitions: [
+              createElement('bpmn:TimerEventDefinition', {
+                timeDate: createElement('bpmn:FormalExpression')
+              })
+            ]
+          });
+
+          createElement('bpmn:Process', { flowElements: [ node ] });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <Timer Intermediate Catch Event> with <Date> is only supported by Camunda 8.3 or newer');
+        });
+
       });
 
 
