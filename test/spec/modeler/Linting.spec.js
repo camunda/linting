@@ -44,6 +44,7 @@ import lintingCSS from '../../../assets/linting.css';
 import diagramXMLCloud from './linting-cloud.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
+import { ERROR_TYPES } from 'bpmnlint-plugin-camunda-compat/rules/utils/error-types';
 
 insertCSS('diagram-js.css', diagramCSS);
 insertCSS('bpmn-js.css', bpmnCSS);
@@ -130,7 +131,7 @@ describe('Linting', function() {
     });
   }
 
-  function lintingExample(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
+  function lintingExample(bpmnjs, canvas, elementRegistry, eventBus, linting, modeling, propertiesPanel) {
 
     // given
     const FooPlugin = {
@@ -158,11 +159,44 @@ describe('Linting', function() {
       ]
     });
 
+    let ignore = false;
+
     const lint = () => {
+      if (ignore) return;
+
       const definitions = bpmnjs.getDefinitions();
 
       linter.lint(definitions).then(reports => {
         linting.setErrors(reports);
+
+        ignore = true;
+
+        elementRegistry.forEach(element => modeling.setColor(element, null));
+
+        reports.forEach(report => {
+          const { data = {} } = report;
+
+          if (data.type !== ERROR_TYPES.LOOP_NOT_ALLOWED) return;
+
+          data.elements.forEach(id => {
+            const element = elementRegistry.get(id);
+
+            modeling.setColor(element, { stroke: '#e60000' });
+
+            const sequenceFlows = [
+              ...element.incoming.filter(({ source }) => {
+                return data.elements.includes(source.id);
+              }),
+              ...element.outgoing.filter(({ target }) => {
+                return data.elements.includes(target.id);
+              })
+            ];
+
+            sequenceFlows.forEach(sequenceFlow => modeling.setColor(sequenceFlow, { stroke: '#e60000' }));
+          });
+        });
+
+        ignore = false;
 
         const container = panel.querySelector('.errorContainer');
         container.innerHTML = '';
@@ -247,9 +281,9 @@ describe('Linting', function() {
       })
     );
 
-    (singleStart === 'cloud' ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
+    (singleStart === 'cloud' ? it.only : it)('example', inject(function(bpmnjs, canvas, elementRegistry, eventBus, linting, modeling, propertiesPanel) {
 
-      lintingExample(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel);
+      lintingExample(bpmnjs, canvas, elementRegistry, eventBus, linting, modeling, propertiesPanel);
     }));
 
 
@@ -717,9 +751,9 @@ describe('Linting', function() {
       })
     );
 
-    (singleStart === 'platform' ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
+    (singleStart === 'platform' ? it.only : it)('example', inject(function(bpmnjs, canvas, elementRegistry, eventBus, linting, modeling, propertiesPanel) {
 
-      lintingExample(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel);
+      lintingExample(bpmnjs, canvas, elementRegistry, eventBus, linting, modeling, propertiesPanel);
     }));
 
   });
