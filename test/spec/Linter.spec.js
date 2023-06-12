@@ -28,6 +28,8 @@ import camundaCloud82ErrorsXML from './camunda-cloud-8-2-errors.bpmn';
 import camundaPlatform717XML from './camunda-platform-7-17.bpmn';
 import camundaPlatform719XML from './camunda-platform-7-19.bpmn';
 import camundaPlatform719ErrorsXML from './camunda-platform-7-19-errors.bpmn';
+import camundaPlatform720XML from './camunda-platform-7-20.bpmn';
+import camundaPlatform720ErrorsXML from './camunda-platform-7-20-errors.bpmn';
 
 describe('Linter', function() {
 
@@ -135,6 +137,11 @@ describe('Linter', function() {
 
     describe('camunda-platform', function() {
 
+      const versions = [
+        [ '7.19', camundaPlatform719XML, camundaPlatform719ErrorsXML ],
+        [ '7.20', camundaPlatform720XML, camundaPlatform720ErrorsXML ]
+      ];
+
       it('should not lint Camunda Platform 7.17', async function() {
 
         // given
@@ -148,31 +155,35 @@ describe('Linter', function() {
       });
 
 
-      describe('Camunda Platform 7.19', function() {
+      versions.forEach(function([ version, xml, errorsXML ]) {
 
-        it('should not have errors', async function() {
+        describe(`Camunda Platform ${ version }`, function() {
 
-          // given
-          const { root } = await createModdleCamundaPlatform(camundaPlatform719XML);
+          it('should not have errors', async function() {
 
-          // when
-          const reports = await linter.lint(root);
+            // given
+            const { root } = await createModdleCamundaPlatform(xml);
 
-          // then
-          expect(reports).to.be.empty;
-        });
+            // when
+            const reports = await linter.lint(root);
+
+            // then
+            expect(reports).to.be.empty;
+          });
 
 
-        it('should have errors', async function() {
+          it('should have errors', async function() {
 
-          // given
-          const { root } = await createModdleCamundaPlatform(camundaPlatform719ErrorsXML);
+            // given
+            const { root } = await createModdleCamundaPlatform(errorsXML);
 
-          // when
-          const reports = await linter.lint(root);
+            // when
+            const reports = await linter.lint(root);
 
-          // then
-          expect(reports).not.to.be.empty;
+            // then
+            expect(reports).not.to.be.empty;
+          });
+
         });
 
       });
