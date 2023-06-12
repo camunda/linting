@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: extend Camunda 7.19 rules to Camunda 7.20 ([#101](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/101))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@1.4.0`
+
 ## 2.0.0
 
 * `FIX`: fix _Timer_ _Type_ not supported error message ([#58](https://github.com/camunda/linting/pull/58))
