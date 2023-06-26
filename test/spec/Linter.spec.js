@@ -79,6 +79,21 @@ describe('Linter', function() {
     });
 
 
+    it('should add name of rule to each report', async function() {
+
+      // given
+      const { root } = await createModdle(camundaCloud10ErrorsXML);
+
+      // when
+      const reports = await linter.lint(root);
+
+      // then
+      reports.forEach(report => {
+        expect(report.rule).to.exist;
+      });
+    });
+
+
     describe('camunda-cloud', function() {
 
       const versions = [
