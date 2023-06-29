@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.3.0
+
+* `FEAT`: rule errors are now reported as `rule-error` category instead of `error` ([#109](https://github.com/bpmn-io/bpmnlint/pull/109))
+* `DEPS`: update to `bpmnlint@9.0.0`
+
 ## 2.2.0
 
 * `FEAT`: add `rule` name to each report ([#61](https://github.com/camunda/linting/pull/61))
