@@ -94,6 +94,46 @@ describe('Linter', function() {
     });
 
 
+    it('should not break on rule error', async function() {
+
+      // given
+      const FooPlugin = {
+        config: {
+          rules: {
+            'foo/rule-error': 'error'
+          }
+        },
+        resolver: new StaticResolver({
+          'rule:bpmnlint-plugin-foo/rule-error': () => {
+            return {
+              check() {
+                throw new Error('Rule error');
+              }
+            };
+          }
+        })
+      };
+
+      const linter = new Linter({
+        plugins: [
+          FooPlugin
+        ]
+      });
+
+      const { root } = await createModdle(simpleXML);
+
+      // when
+      const reports = await linter.lint(root);
+
+      // then
+      expect(reports).to.have.length(2);
+
+      expect(reports.find(({ category, message }) => {
+        return category === 'rule-error' && message === 'Rule error';
+      })).to.exist;
+    });
+
+
     describe('camunda-cloud', function() {
 
       const versions = [

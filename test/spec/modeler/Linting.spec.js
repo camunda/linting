@@ -128,11 +128,19 @@ describe('Linting', function() {
     const FooPlugin = {
       config: {
         rules: {
-          'foo/fake-join': 'warn'
+          'foo/fake-join': 'warn',
+          'foo/rule-error': 'error'
         }
       },
       resolver: new StaticResolver({
-        'rule:bpmnlint-plugin-foo/fake-join': require('bpmnlint/rules/fake-join')
+        'rule:bpmnlint-plugin-foo/fake-join': require('bpmnlint/rules/fake-join'),
+        'rule:bpmnlint-plugin-foo/rule-error': () => {
+          return {
+            check() {
+              throw new Error('Oh no!');
+            }
+          };
+        }
       })
     };
 
@@ -150,7 +158,13 @@ describe('Linting', function() {
 
         linting.setErrors(reports);
 
-        panel.querySelector('textarea').textContent = reports.map(({ id, message }) => `${ id }: ${ message }`).join('\n');
+        panel.querySelector('textarea').textContent = reports.map(({ category, id, message, rule }) => {
+          if (category === 'rule-error') {
+            return `Rule error: Rule <${ rule }> errored with the following message: ${ message }`;
+          }
+
+          return `${ id }: ${ message }`;
+        }).join('\n');
       });
     };
 
