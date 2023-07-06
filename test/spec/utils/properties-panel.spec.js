@@ -36,7 +36,15 @@ describe('utils/properties-panel', function() {
 
         const rule = () => ({
           check: (node, reporter) => {
-            reporter.report(node.id, 'My Custom Message' , { entryIds: [ 'myCustomEntry' ] });
+            reporter.report(
+              node.id,
+              'My Custom Message',
+              {
+                propertiesPanel: {
+                  entryIds: [ 'myCustomEntry' ]
+                }
+              }
+            );
           }
         });
 
