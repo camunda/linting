@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `CHORE`: persist all `entryIds` in the report ([#63](https://github.com/camunda/linting/pull/63))
+
 ## 3.0.0
 
 * `FEAT`: rule errors are now reported as `rule-error` category instead of `error` ([#109](https://github.com/bpmn-io/bpmnlint/pull/109))
