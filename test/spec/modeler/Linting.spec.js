@@ -13,9 +13,12 @@ import {
   BpmnPropertiesProviderModule as bpmnPropertiesProviderModule,
   CamundaPlatformPropertiesProviderModule as camundaPlatformPropertiesProviderModule,
   ZeebePropertiesProviderModule as zeebePropertiesProviderModule,
+} from 'bpmn-js-properties-panel';
+
+import {
   CloudElementTemplatesPropertiesProviderModule as cloudElementTemplatesPropertiesProvider,
   ElementTemplatesPropertiesProviderModule as elementTemplatesPropertiesProviderModule
-} from 'bpmn-js-properties-panel';
+} from 'bpmn-js-element-templates';
 
 import camundaCloudBehaviors from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 
