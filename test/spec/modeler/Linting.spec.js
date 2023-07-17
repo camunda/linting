@@ -82,7 +82,7 @@ insertCSS('test.css', `
     font-family: sans-serif;
   }
 
-  .panel textarea {
+  .panel .errorContainer {
     resize: none;
     flex-grow: 1;
     background-color: #f7f7f8;
@@ -91,6 +91,10 @@ insertCSS('test.css', `
     font-family: sans-serif;
     line-height: 1.5;
     outline: none;
+  }
+
+  .panel .errorItem {
+    cursor: pointer;
   }
 
   .panel button,
@@ -157,17 +161,27 @@ describe('Linting', function() {
       const definitions = bpmnjs.getDefinitions();
 
       linter.lint(definitions).then(reports => {
-        console.log('reports', reports);
-
         linting.setErrors(reports);
 
-        panel.querySelector('textarea').textContent = reports.map(({ category, id, message, rule }) => {
+        const container = panel.querySelector('.errorContainer');
+        container.innerHTML = '';
+
+        reports.map((report) => {
+          const { id, message, category, rule } = report;
+
           if (category === 'rule-error') {
-            return `Rule error: Rule <${ rule }> errored with the following message: ${ message }`;
+            return domify(`<div class="errorItem">Rule error: Rule <${ escapeHTML(rule) }> errored with the following message: ${ escapeHTML(message) }</div>`);
           }
 
-          return `${ id }: ${ message }`;
-        }).join('\n');
+          const element = domify(`<div class="errorItem">${ id }: ${escapeHTML(message) }</div>`);
+
+          element.addEventListener('click', () => {
+            linting.showError(report);
+          });
+          return element;
+        }).forEach(item => {
+          container.appendChild(item);
+        });
       });
     };
 
@@ -185,7 +199,7 @@ describe('Linting', function() {
 
     const panel = domify(`
       <div class="panel">
-        <textarea></textarea>
+        <div class="errorContainer"></div>
         <div>
           <label>Execution Platform Version</label>
           <input type="text" />
@@ -623,3 +637,7 @@ describe('Linting', function() {
   });
 
 });
+
+function escapeHTML(string) {
+  return string.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
