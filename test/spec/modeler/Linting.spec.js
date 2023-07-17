@@ -401,6 +401,27 @@ describe('Linting', function() {
     ));
 
 
+    it('should not show overlay on root element', inject(async function(canvas, linting, overlays) {
+
+      // given
+      const root = canvas.getRootElement();
+
+      const reports = [
+        {
+          id: root.id,
+          message: 'foo'
+        }
+      ];
+
+      // when
+      linting.setErrors(reports);
+      linting.activate();
+
+      // then
+      expect(overlays.get({ type: 'linting' })).to.have.length(0);
+    }));
+
+
     it('should not update linting annotations on selection.changed (not active)', inject(
       async function(bpmnjs, elementRegistry, eventBus, linting, lintingAnnotations, overlays, selection) {
 
@@ -493,6 +514,38 @@ describe('Linting', function() {
           expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
             id: 'taskDefinitionType'
           });
+        }
+      ));
+
+
+      it('should select root element', inject(
+        async function(canvas, linting, selection, elementRegistry) {
+
+          // given
+          const serviceTask = elementRegistry.get('ServiceTask_1');
+          const root = canvas.getRootElement();
+
+          const reports = [
+            {
+              id: root.id,
+              message: 'foo'
+            }
+          ];
+
+          linting.setErrors(reports);
+          linting.activate();
+
+          selection.select(serviceTask);
+
+          // assume
+          expect(selection.get()).to.eql([ serviceTask ]);
+
+          // when
+          linting.showError(reports[ 0 ]);
+          clock.tick();
+
+          // then
+          expect(selection.get()).to.eql([ root ]);
         }
       ));
 
