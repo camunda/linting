@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.1.1
+
+* `CHORE`: add LICENSE
+* `DEPS`: support `bpmn-js-properties-panel@3`
+
 ## 3.1.0
 
 * `CHORE`: persist all `entryIds` in the report ([#63](https://github.com/camunda/linting/pull/63))
