@@ -1160,7 +1160,6 @@ describe('utils/properties-panel', function() {
       });
 
 
-
       describe('FEEL', async function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/feel');
@@ -1478,6 +1477,25 @@ describe('utils/properties-panel', function() {
           expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
         });
 
+      });
+
+
+      it('Process - History TTL', async function() {
+
+        // given
+        const node = createElement('bpmn:Process');
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/history-time-to-live');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'historyTimeToLive' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Time to live must be defined.', report);
       });
 
     });
