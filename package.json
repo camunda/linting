@@ -42,7 +42,7 @@
     "zeebe-bpmn-moddle": "^0.18.0"
   },
   "devDependencies": {
-    "bpmn-js": "^11.1.1",
+    "bpmn-js": "^13.2.2",
     "bpmn-js-element-templates": "^1.2.0",
     "bpmn-js-properties-panel": "^3.0.0",
     "camunda-bpmn-js-behaviors": "^0.6.0",
