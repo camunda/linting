@@ -4,6 +4,8 @@ import {
   insertCSS
 } from 'bpmn-js/test/helper';
 
+import { query as domQuery } from 'min-dom';
+
 import sinon from 'sinon';
 
 import lintingModule from '../../../modeler';
@@ -20,7 +22,8 @@ insertCSS('bpmn-js.css', bpmnCSS);
 insertCSS('bpmn-embedded.css', bpmnFont);
 insertCSS('linting.css', lintingCSS);
 
-describe('LintingAnnotations', function() {
+
+describe('modeler - LintingAnnotations', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     additionalModules: [
@@ -57,12 +60,12 @@ describe('LintingAnnotations', function() {
     const serviceTaskOverlays = overlays.get({ element: serviceTask });
 
     expect(serviceTaskOverlays).to.have.length(1);
-    expect(serviceTaskOverlays[ 0 ].html.classList.contains('bjs-linting-annotation--warning')).to.be.true;
+    expect(domQuery('.cl-icon-warn', serviceTaskOverlays[ 0 ].html)).to.exist;
 
     const startEventOverlays = overlays.get({ element: startEvent });
 
     expect(startEventOverlays).to.have.length(1);
-    expect(startEventOverlays[ 0 ].html.classList.contains('bjs-linting-annotation--error')).to.be.true;
+    expect(domQuery('.cl-icon-error', startEventOverlays[ 0 ].html)).to.exist;
   }));
 
 
@@ -111,15 +114,19 @@ describe('LintingAnnotations', function() {
 
       lintingAnnotations.setErrors(reports);
 
-      const lintingAnnotationsClickSpy = sinon.spy();
+      const clickSpy = sinon.spy();
 
-      eventBus.on('lintingAnnotations.click', lintingAnnotationsClickSpy);
+      eventBus.on('lintingAnnotations.click', clickSpy);
 
       // when
-      overlays.get({ type: 'linting' })[ 0 ].html.click();
+      const overlay = overlays.get({ type: 'linting' })[ 0 ];
+
+      const icon = domQuery('.cl-icon', overlay.html);
+
+      icon.click();
 
       // then
-      expect(lintingAnnotationsClickSpy).to.have.been.calledOnce;
+      expect(clickSpy).to.have.been.calledOnce;
     }
   ));
 

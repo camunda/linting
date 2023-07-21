@@ -1,34 +1,34 @@
 :root {
-  --color-grey-225-10-15: hsl(225, 10%, 15%);
+  --cl-color-white: hsl(0, 0%, 100%);
 
-  --color-red-360-100-45: hsl(360, 100%, 45%);
-
-  --color-white: hsl(0, 0%, 100%);
-
-  --color-yellow-47-88-53: hsl(47, 88%, 53%);
-
-  --linting-annotation-error-background-color: var(--color-red-360-100-45);
-  --linting-annotation-error-fill-color: var(--color-white);
-  
-  --linting-annotation-warning-background-color: var(--color-yellow-47-88-53);
-  --linting-annotation-warning-fill-color: var(--color-white);
-  --linting-annotation-warning-stroke-color: var(--color-grey-225-10-15);
+  --cl-color-info: #0f62fe;
+  --cl-color-warning: #ff832b;
+  --cl-color-error: #da1e26;
+  --cl-color-success: #52b415;
 }
 
-.bjs-linting-annotation {
+.cl-icon {
+  --icon-color: white;
+  --icon-bg-color: #333;
+  background: var(--icon-bg-color);
+  color: var(--icon-color);
+  border-radius: 100%;
+  height: .75em;
+  width: .75em;
+  border: solid 4px var(--icon-bg-color);
   display: flex;
-  flex-direction: row;
   align-items: center;
-  padding: 2px;
-  border-radius: 2px;
-  cursor: default;
-  z-index: 100000;
+  justify-content: center;
 }
 
-.bjs-linting-annotation--error {
-  background-color: var(--linting-annotation-error-background-color);
+.cl-icon-error {
+  --icon-bg-color: var(--cl-color-error);
 }
 
-.bjs-linting-annotation--warning {
-  background-color: var(--linting-annotation-warning-background-color);
+.cl-icon-warn {
+  --icon-bg-color: var(--cl-color-warning);
+}
+
+.cl-icon-info {
+  --icon-bg-color: var(--cl-color-info);
 }
