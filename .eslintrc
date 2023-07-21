@@ -1,12 +1,3 @@
 {
-  "extends": "plugin:bpmn-io/browser",
-  "parserOptions": {
-    "ecmaVersion": "latest"
-  },
-  "overrides": [
-    {
-      "files": ["karma.conf.js", "tasks/*.js"],
-      "extends": "plugin:bpmn-io/node"
-    }
-  ]
+  "extends": "plugin:bpmn-io/browser"
 }
