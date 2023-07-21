@@ -37,3 +37,67 @@
 .cl-icon-info {
   --icon-bg-color: var(--cl-color-info);
 }
+
+.cl-overlay {
+  z-index: 500;
+}
+
+.cl-overlay:hover {
+  z-index: 1000;
+}
+
+.cl-dropdown {
+  position: relative;
+}
+
+.cl-dropdown-menu {
+  position: absolute;
+  top: 18px;
+  left: 5px;
+  padding: 5px;
+}
+
+.cl-dropdown-menu {
+  display: none;
+}
+
+.cl-dropdown:hover .cl-dropdown-menu,
+.cl-dropdown.open .cl-dropdown-menu {
+  display: block;
+}
+
+.cl-reports {
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+
+  color: var(--cl-font-color);
+  font-family: var(--cl-font-family);
+  font-size: var(--cl-font-size);
+  background: var(--color-grey-225-10-97);
+  border: solid 1px var(--color-grey-225-10-75);
+  border-radius: 2px;
+
+  width: max-content;
+  max-width: 300px;
+}
+
+.cl-report {
+  display: flex;
+  align-items: flex-start;
+  justify-items: stretch;
+}
+
+.cl-report .cl-icon {
+  flex: none;
+
+  margin-top: .095em;
+  margin-right: .5em;
+
+  height: 1em;
+  width: 1em;
+
+  color: var(--icon-bg-color);
+  background: transparent;
+  border: none;
+}
