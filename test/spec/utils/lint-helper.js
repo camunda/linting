@@ -2,16 +2,26 @@ import { expect } from 'chai';
 
 import Linter from 'bpmnlint/lib/linter';
 
-async function lintNode(node, rule, config = {}) {
+async function lintNode(node, rule, config = {},) {
   const linter = new Linter({
     resolver: {
       resolveRule: () => Promise.resolve(rule)
     }
   });
 
-  return linter.lint(node, {
+  const allReports = await linter.lint(node, {
     rules: { 'ruleName': [ 2, config ] }
   });
+
+  Object.values(allReports).forEach(reports => {
+    reports.forEach(report => {
+      if (config.version) {
+        report.executionPlatformVersion = config.version;
+      }
+    });
+  });
+
+  return allReports;
 }
 
 /**
