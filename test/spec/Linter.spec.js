@@ -253,11 +253,11 @@ describe('Linter', function() {
     const FooPlugin = {
       config: {
         rules: {
-          'foo/fake-join': 'error'
+          'foo/superfluous-gateway': 'error'
         }
       },
       resolver: new StaticResolver({
-        'rule:bpmnlint-plugin-foo/fake-join': require('bpmnlint/rules/fake-join')
+        'rule:bpmnlint-plugin-foo/superfluous-gateway': require('bpmnlint/rules/superfluous-gateway')
       })
     };
 
@@ -265,24 +265,24 @@ describe('Linter', function() {
       config: {
         extends: 'plugin:foo/recommended',
         rules: {
-          'bar/single-blank-start-event': 'error'
+          'bar/no-implicit-end': 'error'
         }
       },
       resolver: new StaticResolver({
         'config:bpmnlint-plugin-foo/recommended': {
           rules: {
-            'foo/fake-join': 'error'
+            'foo/superfluous-gateway': 'error'
           }
         },
-        'rule:bpmnlint-plugin-foo/fake-join': require('bpmnlint/rules/fake-join'),
-        'rule:bpmnlint-plugin-bar/single-blank-start-event': require('bpmnlint/rules/single-blank-start-event')
+        'rule:bpmnlint-plugin-foo/superfluous-gateway': require('bpmnlint/rules/superfluous-gateway'),
+        'rule:bpmnlint-plugin-bar/no-implicit-end': require('bpmnlint/rules/no-implicit-end')
       })
     };
 
     const BazPlugin = {
       config: {
         rules: {
-          'foo/fake-join': 'off'
+          'foo/superfluous-gateway': 'off'
         }
       },
       resolver: new StaticResolver({})
@@ -306,7 +306,7 @@ describe('Linter', function() {
       // then
       expect(reports).to.have.length(2);
 
-      expect(reports.find(({ message }) => message === 'Incoming flows do not join')).to.exist;
+      expect(reports.find(({ message }) => message === 'Gateway is superfluous. It only has one source and target.')).to.exist;
     });
 
 
@@ -327,8 +327,8 @@ describe('Linter', function() {
       // then
       expect(reports).to.have.length(3);
 
-      expect(reports.find(({ message }) => message === 'Incoming flows do not join')).to.exist;
-      expect(reports.find(({ message }) => message === 'Process has multiple blank start events')).to.exist;
+      expect(reports.find(({ message }) => message === 'Gateway is superfluous. It only has one source and target.')).to.exist;
+      expect(reports.find(({ message }) => message === 'Element is an implicit end')).to.exist;
     });
 
 
@@ -351,8 +351,8 @@ describe('Linter', function() {
       // then
       expect(reports).to.have.length(2);
 
-      expect(reports.find(({ message }) => message === 'Incoming flows do not join')).not.to.exist;
-      expect(reports.find(({ message }) => message === 'Process has multiple blank start events')).to.exist;
+      expect(reports.find(({ message }) => message === 'Gateway is superfluous. It only has one source and target.')).not.to.exist;
+      expect(reports.find(({ message }) => message === 'Element is an implicit end')).to.exist;
     });
 
   });
