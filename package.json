@@ -28,8 +28,8 @@
   "license": "MIT",
   "dependencies": {
     "bpmn-moddle": "^8.0.0",
-    "bpmnlint": "^9.0.0",
-    "bpmnlint-plugin-camunda-compat": "^1.4.0",
+    "bpmnlint": "^9.2.0",
+    "bpmnlint-plugin-camunda-compat": "^2.1.0",
     "bpmnlint-utils": "^1.0.2",
     "min-dash": "^4.0.0",
     "min-dom": "^4.1.0",

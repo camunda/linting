@@ -55,7 +55,7 @@ describe('utils/error-messages', function() {
             triggeredByEvent: true
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-signal-event-sub-process');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-signal-event-sub-process');
 
           const report = await getLintError(node, rule);
 
@@ -78,7 +78,7 @@ describe('utils/error-messages', function() {
 
           const node = createElement('bpmn:Task');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -97,7 +97,7 @@ describe('utils/error-messages', function() {
 
           const node = createElement('bpmn:ComplexGateway');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -116,7 +116,7 @@ describe('utils/error-messages', function() {
 
           const node = createElement('bpmn:IntermediateCatchEvent');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -135,7 +135,7 @@ describe('utils/error-messages', function() {
 
           const node = createElement('bpmn:IntermediateThrowEvent');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -158,7 +158,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -177,7 +177,7 @@ describe('utils/error-messages', function() {
 
           const node = createElement('bpmn:BusinessRuleTask');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -200,7 +200,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/element-type');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -224,7 +224,7 @@ describe('utils/error-messages', function() {
             isExpanded: false
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/collapsed-subprocess');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/collapsed-subprocess');
 
           const report = await getLintError(di, rule);
 
@@ -244,7 +244,7 @@ describe('utils/error-messages', function() {
             isExpanded: false
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/collapsed-subprocess');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/collapsed-subprocess');
 
           const report = await getLintError(di, rule);
 
@@ -273,7 +273,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -298,7 +298,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-zeebe-properties');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-zeebe-properties');
 
           const report = await getLintError(node, rule);
 
@@ -323,7 +323,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -350,7 +350,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-task-schedule');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-task-schedule');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -371,7 +371,7 @@ describe('utils/error-messages', function() {
           // given
           const node = createElement('bpmn:CallActivity');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-element');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/called-element');
 
           const report = await getLintError(node, rule);
 
@@ -390,7 +390,7 @@ describe('utils/error-messages', function() {
             loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics')
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/loop-characteristics');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/loop-characteristics');
 
           const report = await getLintError(node, rule);
 
@@ -409,7 +409,7 @@ describe('utils/error-messages', function() {
             messageRef: createElement('bpmn:Message')
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/subscription');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/subscription');
 
           const report = await getLintError(node, rule);
 
@@ -426,7 +426,7 @@ describe('utils/error-messages', function() {
           // given
           const node = createElement('bpmn:ServiceTask');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '1.0' });
 
@@ -443,7 +443,7 @@ describe('utils/error-messages', function() {
           // given
           const node = createElement('bpmn:BusinessRuleTask');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -460,7 +460,7 @@ describe('utils/error-messages', function() {
           // given
           const node = createElement('bpmn:ScriptTask');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '8.2' });
 
@@ -492,7 +492,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/loop-characteristics');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/loop-characteristics');
 
           const report = await getLintError(node, rule);
 
@@ -520,7 +520,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/loop-characteristics');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/loop-characteristics');
 
           const report = await getLintError(node, rule);
 
@@ -545,7 +545,7 @@ describe('utils/error-messages', function() {
               modelerTemplate: 'foo'
             });
 
-            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-template');
 
             const report = await getLintError(node, rule);
 
@@ -564,7 +564,7 @@ describe('utils/error-messages', function() {
               modelerTemplate: 'foo'
             });
 
-            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-template');
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-template');
 
             const report = await getLintError(node, rule);
 
@@ -588,7 +588,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/inclusive-gateway');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/inclusive-gateway');
 
           const report = await getLintError(node, rule);
 
@@ -613,7 +613,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-candidate-users');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-candidate-users');
 
           const report = await getLintError(node, rule);
 
@@ -642,7 +642,7 @@ describe('utils/error-messages', function() {
 
           endEvent.incoming = [ sequenceFlow ];
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/sequence-flow-condition');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/sequence-flow-condition');
 
           const report = await getLintError(sequenceFlow, rule);
 
@@ -669,7 +669,7 @@ describe('utils/error-messages', function() {
 
           createElement('bpmn:Process', { flowElements: [ node ] });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -698,7 +698,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -723,7 +723,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -746,7 +746,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '1.3' });
 
@@ -769,7 +769,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/called-element');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/called-element');
 
           const report = await getLintError(node, rule);
 
@@ -794,7 +794,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/error-reference');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -817,7 +817,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/error-reference');
 
           const report = await getLintError(node, rule, { version: '8.1' });
 
@@ -840,7 +840,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/escalation-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/escalation-reference');
 
           const report = await getLintError(node, rule);
 
@@ -865,7 +865,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/loop-characteristics');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/loop-characteristics');
 
           const report = await getLintError(node, rule);
 
@@ -888,7 +888,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/message-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/message-reference');
 
           const report = await getLintError(node, rule);
 
@@ -911,7 +911,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/signal-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/signal-reference');
 
           const report = await getLintError(node, rule);
 
@@ -941,7 +941,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/subscription');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/subscription');
 
           const report = await getLintError(node, rule);
 
@@ -964,7 +964,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '1.0' });
 
@@ -987,7 +987,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/error-reference');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1008,7 +1008,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/error-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/error-reference');
 
           const report = await getLintError(node, rule, { version: '8.1' });
 
@@ -1029,7 +1029,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/message-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/message-reference');
 
           const report = await getLintError(node, rule);
 
@@ -1050,7 +1050,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/signal-reference');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/signal-reference');
 
           const report = await getLintError(node, rule);
 
@@ -1073,7 +1073,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/user-task-form');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
 
           const report = await getLintError(node, rule);
 
@@ -1111,7 +1111,7 @@ describe('utils/error-messages', function() {
 
           const node = process.get('flowElements')[ 0 ];
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/user-task-form');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
 
           const report = await getLintError(node, rule);
 
@@ -1133,7 +1133,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/sequence-flow-condition');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/sequence-flow-condition');
 
           const reports = await getLintErrors(node, rule);
 
@@ -1163,7 +1163,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1190,7 +1190,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1215,7 +1215,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '8.2' });
 
@@ -1240,7 +1240,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '8.2' });
 
@@ -1263,7 +1263,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/implementation');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
 
           const report = await getLintError(node, rule, { version: '8.2' });
 
@@ -1294,7 +1294,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1321,7 +1321,7 @@ describe('utils/error-messages', function() {
 
           createElement('bpmn:Process', { flowElements: [ node ] });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1348,7 +1348,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/timer');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1375,7 +1375,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/task-schedule');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/task-schedule');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1402,7 +1402,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/task-schedule');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/task-schedule');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
@@ -1434,7 +1434,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/duplicate-task-headers');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/duplicate-task-headers');
 
           const report = await getLintError(node, rule);
 
@@ -1462,7 +1462,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/executable-process');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/executable-process');
 
           const report = await getLintError(node, rule);
 
@@ -1492,7 +1492,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-expression');
 
           const report = await getLintError(node, rule, { version: '8.2' });
 
@@ -1517,7 +1517,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-expression');
 
           const report = await getLintError(node, rule, { version: '8.1' });
 
@@ -1543,7 +1543,7 @@ describe('utils/error-messages', function() {
             ]
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/no-expression');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-expression');
 
           const report = await getLintError(node, rule, { version: '8.2' });
 
@@ -1575,7 +1575,7 @@ describe('utils/error-messages', function() {
 
           receiveTask.incoming = [ sequenceFlow ];
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/event-based-gateway-target');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/event-based-gateway-target');
 
           const report = await getLintError(receiveTask, rule);
 
@@ -1617,7 +1617,7 @@ describe('utils/error-messages', function() {
           ]
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/executable-process');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/executable-process');
 
         const reports = await getLintErrors(node, rule);
 
@@ -1642,7 +1642,7 @@ describe('utils/error-messages', function() {
           // given
           const node = createElementCamundaPlatform('bpmn:Process');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/history-time-to-live');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-platform/history-time-to-live');
 
           const report = await getLintError(node, rule, { version: '7.19' });
 
