@@ -1071,32 +1071,65 @@ describe('utils/properties-panel', function() {
         });
 
 
-        it('invalid time cycle value', async function() {
+        describe('invalid time cycle value', async function() {
 
-          // given
-          const node = createElement('bpmn:BoundaryEvent', {
-            attachedToRef: createElement('bpmn:Task'),
-            cancelActivity: false,
-            eventDefinitions: [
-              createElement('bpmn:TimerEventDefinition', {
-                timeCycle: createElement('bpmn:FormalExpression', {
-                  body: '0 0 9-17 * * MON-FRI'
+          it('< Camunda 8.1', async function() {
+
+            // given
+            const node = createElement('bpmn:BoundaryEvent', {
+              attachedToRef: createElement('bpmn:Task'),
+              cancelActivity: false,
+              eventDefinitions: [
+                createElement('bpmn:TimerEventDefinition', {
+                  timeCycle: createElement('bpmn:FormalExpression', {
+                    body: 'invalid'
+                  })
                 })
-              })
-            ]
+              ]
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
+
+            const report = await getLintError(node, rule, { version: '1.0' });
+
+            // when
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression (cron only supported by Camunda Platform 8.1 or newer).', report);
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
-          const report = await getLintError(node, rule, { version: '1.0' });
+          it('=> Camunda 8.1', async function() {
 
-          // when
-          const entryIds = getEntryIds(report);
+            // given
+            const node = createElement('bpmn:BoundaryEvent', {
+              attachedToRef: createElement('bpmn:Task'),
+              cancelActivity: false,
+              eventDefinitions: [
+                createElement('bpmn:TimerEventDefinition', {
+                  timeCycle: createElement('bpmn:FormalExpression', {
+                    body: 'invalid'
+                  })
+                })
+              ]
+            });
 
-          // then
-          expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression (cron requires Camunda Platform 8.1 or newer).', report);
+            const report = await getLintError(node, rule, { version: '8.1' });
+
+            // when
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression.', report);
+          });
+
         });
 
 
