@@ -10,8 +10,10 @@
     "start": "npm run start:cloud",
     "start:platform": "cross-env SINGLE_START=platform npm run test:watch",
     "start:cloud": "cross-env SINGLE_START=cloud npm run test:watch",
-    "test": "karma start",
-    "test:watch": "npm test -- --auto-watch --no-single-run"
+    "test": "npm run compile-config && karma start",
+    "test:watch": "npm test -- --auto-watch --no-single-run",
+    "compile-config": "node tasks/compile-config.js",
+    "prepublish": "npm run compile-config"
   },
   "keywords": [
     "bpmnlint",
