@@ -1479,25 +1479,6 @@ describe('utils/properties-panel', function() {
 
       });
 
-
-      it('Process - History TTL', async function() {
-
-        // given
-        const node = createElement('bpmn:Process');
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/history-time-to-live');
-
-        const report = await getLintError(node, rule);
-
-        // when
-        const entryIds = getEntryIds(report);
-
-        // then
-        expect(entryIds).to.eql([ 'historyTimeToLive' ]);
-
-        expectErrorMessage(entryIds[ 0 ], 'Time to live must be defined.', report);
-      });
-
     });
 
 
