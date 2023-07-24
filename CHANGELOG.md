@@ -6,6 +6,18 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.2.0
+
+* `FEAT`: improve overlay styles ([#70](https://github.com/camunda/linting/pull/70))
+* `FEAT`: always show overlays and scale ([#72](https://github.com/camunda/linting/pull/72))
+* `FEAT`: add execution platform and version to each report ([#66](https://github.com/camunda/linting/pull/66))
+* `FIX`: fix time cycle error message ([#66](https://github.com/camunda/linting/pull/66))
+* `FIX`: make root element selectable (by selecting nothing) ([#66](https://github.com/camunda/linting/pull/66))
+* `FIX`: make missing time to live error selectable in properties panel ([#66](https://github.com/camunda/linting/pull/66))
+* `CHORE`: create resolver using bpmnlint's compile-config helper ([#67](https://github.com/camunda/linting/pull/67))
+* `DEPS`: update to `bpmnlint@9.2.0`
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.1.0`
+
 ## 3.1.1
 
 * `CHORE`: add LICENSE
