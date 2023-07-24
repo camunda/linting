@@ -1279,30 +1279,61 @@ describe('utils/error-messages', function() {
 
       describe('expression value not allowed', function() {
 
-        it('should adjust (time cycle)', async function() {
+        describe('should adjust (time cycle)', async function() {
 
-          // given
-          const executionPlatformVersion = '1.0';
+          it('< Camunda 8.1', async function() {
 
-          const node = createElement('bpmn:BoundaryEvent', {
-            attachedToRef: createElement('bpmn:Task'),
-            cancelActivity: false,
-            eventDefinitions: [
-              createElement('bpmn:TimerEventDefinition', {
-                timeCycle: createElement('bpmn:FormalExpression', { body: 'invalid' })
-              })
-            ]
+            // given
+            const executionPlatformVersion = '1.0';
+
+            const node = createElement('bpmn:BoundaryEvent', {
+              attachedToRef: createElement('bpmn:Task'),
+              cancelActivity: false,
+              eventDefinitions: [
+                createElement('bpmn:TimerEventDefinition', {
+                  timeCycle: createElement('bpmn:FormalExpression', { body: 'invalid' })
+                })
+              ]
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
+
+            const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+            // then
+            expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression (cron only supported by Camunda Platform 8.1 or newer)');
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
 
-          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+          it('=> Camunda 8.1', async function() {
 
-          // when
-          const errorMessage = getErrorMessage(report);
+            // given
+            const executionPlatformVersion = '8.1';
 
-          // then
-          expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression (cron requires Camunda Platform 8.1 or newer)');
+            const node = createElement('bpmn:BoundaryEvent', {
+              attachedToRef: createElement('bpmn:Task'),
+              cancelActivity: false,
+              eventDefinitions: [
+                createElement('bpmn:TimerEventDefinition', {
+                  timeCycle: createElement('bpmn:FormalExpression', { body: 'invalid' })
+                })
+              ]
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer');
+
+            const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+            // then
+            expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression');
+          });
+
         });
 
 
