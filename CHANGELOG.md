@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.4.1
+
+* `FIX`: display overlays correctly when parent sets box-sizing ([#76](https://github.com/camunda/linting/pull/76))
+
 ## 3.4.0
 
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.3.0`
