@@ -775,6 +775,29 @@ describe('utils/properties-panel', function() {
       });
 
 
+      it('start-form - Form', async function() {
+
+        // given
+        const node = createElement('bpmn:StartEvent', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:FormDefinition')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/start-form');
+
+        const report = await getLintError(node, rule, { version: '1.0' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'formType' ]);
+      });
+
+
       it('user-task-form - Form key', async function() {
 
         // given

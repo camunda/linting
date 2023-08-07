@@ -361,6 +361,31 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <User Task> with <Due date> or <Follow up date> is only supported by Camunda 8.2 or newer');
         });
 
+
+        it('should adjust (start event with zeebe:FormDefinition)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.2';
+
+          const node = createElement('bpmn:StartEvent', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition')
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/start-form');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <Start Event> with <User Task Form> is only supported by Camunda 8.3 or newer');
+        });
+
       });
 
 
