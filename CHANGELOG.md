@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.5.0
+
+* `FEAT`: add documentation url to rules ([#74](https://github.com/camunda/linting/pull/74))
+* `FEAT`: integrate `start-form` rule ([#75](https://github.com/camunda/linting/pull/75))
+* `FIX`: correct linter annotation size ([#77](https://github.com/camunda/linting/pull/77))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.4.0`
+
 ## 3.4.1
 
 * `FIX`: display overlays correctly when parent sets box-sizing ([#76](https://github.com/camunda/linting/pull/76))
