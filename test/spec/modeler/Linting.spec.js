@@ -42,6 +42,7 @@ import elementTemplatesCSS from 'bpmn-js-properties-panel/dist/assets/element-te
 import lintingCSS from '../../../assets/linting.css';
 
 import diagramXMLCloud from './linting-cloud.bpmn';
+import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
@@ -599,6 +600,16 @@ describe('Linting', function() {
 
     describe('canvas scrolling', function() {
 
+      beforeEach(createModeler(diagramXMLCloudScroll,
+        [
+          zeebePropertiesProviderModule,
+          cloudElementTemplatesPropertiesProvider
+        ],
+        {
+          zeebe: zeebeModdleExtension
+        })
+      );
+
       it('should scroll', inject(
         function(canvas, linting) {
 
@@ -632,13 +643,13 @@ describe('Linting', function() {
       ));
 
 
-      it('should not scroll', inject(
-        function(canvas, linting) {
+      it('should set correct root element (nested task)', inject(
+        function(canvas, linting, elementRegistry) {
 
           // given
           const reports = [
             {
-              id: 'StartEvent_1',
+              id: 'NestedTask_1',
               message: 'foo'
             }
           ];
@@ -647,12 +658,36 @@ describe('Linting', function() {
 
           linting.activate();
 
-          canvas.viewbox({
-            x: 0,
-            y: 0,
-            width: 1000,
-            height: 1000
-          });
+          const scrollToElementSpy = sinon.spy(canvas, 'scrollToElement');
+
+          // when
+          linting.showError(reports[ 0 ]);
+
+          // then
+          expect(scrollToElementSpy).to.have.been.called;
+          expect(canvas.getRootElement().id).to.eql('SubProcess_1_plane');
+        }
+      ));
+
+
+      it('should set correct root element (error in root)', inject(
+        function(canvas, linting, elementRegistry) {
+
+          // given
+          const subProcessPlane = elementRegistry.get('SubProcess_1_plane');
+
+          canvas.setRootElement(subProcessPlane);
+
+          const reports = [
+            {
+              id: 'Process_1',
+              message: 'foo'
+            }
+          ];
+
+          linting.setErrors(reports);
+
+          linting.activate();
 
           const scrollToElementSpy = sinon.spy(canvas, 'scrollToElement');
 
@@ -660,12 +695,12 @@ describe('Linting', function() {
           linting.showError(reports[ 0 ]);
 
           // then
-          expect(scrollToElementSpy).not.to.have.been.called;
+          expect(scrollToElementSpy).to.have.been.called;
+          expect(canvas.getRootElement().id).to.eql('Process_1');
         }
       ));
 
     });
-
 
   });
 
