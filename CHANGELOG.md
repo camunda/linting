@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.5.1
+
+* `FIX`: always scroll to element ([#78](https://github.com/camunda/linting/pull/78))
+
 ## 3.5.0
 
 * `FEAT`: add documentation url to rules ([#74](https://github.com/camunda/linting/pull/74))
