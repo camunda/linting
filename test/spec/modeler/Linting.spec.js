@@ -38,7 +38,7 @@ import diagramCSS from 'bpmn-js/dist/assets/diagram-js.css';
 import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
 import bpmnFont from 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import propertiesPanelCSS from '@bpmn-io/properties-panel/assets/properties-panel.css';
-import elementTemplatesCSS from 'bpmn-js-properties-panel/dist/assets/element-templates.css';
+import elementTemplatesCSS from 'bpmn-js-element-templates/dist/assets/element-templates.css';
 import lintingCSS from '../../../assets/linting.css';
 
 import diagramXMLCloud from './linting-cloud.bpmn';
