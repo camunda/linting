@@ -1505,6 +1505,35 @@ describe('utils/error-messages', function() {
       });
 
 
+      describe('property value not allowed', function() {
+
+        it('should adjust (propagate all parent variables set to false)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  propagateAllParentVariables: false
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-propagate-all-parent-variables');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+          // then
+          expect(errorMessage).to.equal('A <Call Activity> with <Propagate all variables> disabled is only supported by Camunda 8.2 or newer');
+        });
+
+      });
+
+
       describe('property value required', function() {
 
         it('should adjust (is executable, process)', async function() {
@@ -1640,6 +1669,37 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <Receive Task> cannot be the target of an <Event-Based Gateway>');
+        });
+
+      });
+
+
+      describe('property value not allowed', function() {
+
+        it('should adjust (zeebe:CalledElement#propagateAllParentVariables)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  propagateAllParentVariables: false
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-propagate-all-parent-variables');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+          console.log(errorMessage);
+
+          // then
+          expect(errorMessage).to.equal('A <Call Activity> with <disabled Propagate All Variables> is only supported by Camunda 8.2 or newer');
         });
 
       });

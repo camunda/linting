@@ -1535,6 +1535,33 @@ describe('utils/properties-panel', function() {
 
       });
 
+
+      it('call activity - Propagate all variables', async function() {
+
+        // given
+        const node = createElement('bpmn:CallActivity', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:CalledElement', {
+                propagateAllParentVariables: false
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-propagate-all-parent-variables');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'propagateAllParentVariables' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+      });
+
     });
 
 
