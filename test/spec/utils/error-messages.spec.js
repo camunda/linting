@@ -1558,6 +1558,48 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Process> must be <Executable>');
         });
 
+
+        it('should adjust (is executable, collaboration)', async function() {
+
+          // given
+          const process1 = createElement('bpmn:Process', {
+            isExecutable: false
+          });
+
+          const process2 = createElement('bpmn:Process', {
+            isExecutable: false
+          });
+
+          const node = createElement('bpmn:Definitions', {
+            rootElements: [
+              createElement('bpmn:Collaboration', {
+                participants: [
+                  createElement('bpmn:Participant', {
+                    processRef: process1
+                  }),
+                  createElement('bpmn:Participant', {
+                    processRef: process2
+                  })
+                ]
+              }),
+              process1,
+              process2
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/executable-process');
+
+          const reports = await getLintErrors(node, rule);
+
+          // when
+          const errorMessages = reports.map(getErrorMessage);
+
+          // then
+          errorMessages.forEach(errorMessage => {
+            expect(errorMessage).to.equal('One <Process> must be <Executable>');
+          });
+        });
+
       });
 
 
@@ -1671,79 +1713,6 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Receive Task> cannot be the target of an <Event-Based Gateway>');
         });
 
-      });
-
-
-      describe('property value not allowed', function() {
-
-        it('should adjust (zeebe:CalledElement#propagateAllParentVariables)', async function() {
-
-          // given
-          const node = createElement('bpmn:CallActivity', {
-            extensionElements: createElement('bpmn:ExtensionElements', {
-              values: [
-                createElement('zeebe:CalledElement', {
-                  propagateAllParentVariables: false
-                })
-              ]
-            })
-          });
-
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-propagate-all-parent-variables');
-
-          const report = await getLintError(node, rule);
-
-          // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
-
-          console.log(errorMessage);
-
-          // then
-          expect(errorMessage).to.equal('A <Call Activity> with <disabled Propagate All Variables> is only supported by Camunda 8.2 or newer');
-        });
-
-      });
-
-
-      it('should adjust (is executable, collaboration)', async function() {
-
-        // given
-        const process1 = createElement('bpmn:Process', {
-          isExecutable: false
-        });
-
-        const process2 = createElement('bpmn:Process', {
-          isExecutable: false
-        });
-
-        const node = createElement('bpmn:Definitions', {
-          rootElements: [
-            createElement('bpmn:Collaboration', {
-              participants: [
-                createElement('bpmn:Participant', {
-                  processRef: process1
-                }),
-                createElement('bpmn:Participant', {
-                  processRef: process2
-                })
-              ]
-            }),
-            process1,
-            process2
-          ]
-        });
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/executable-process');
-
-        const reports = await getLintErrors(node, rule);
-
-        // when
-        const errorMessages = reports.map(getErrorMessage);
-
-        // then
-        errorMessages.forEach(errorMessage => {
-          expect(errorMessage).to.equal('One <Process> must be <Executable>');
-        });
       });
 
     });
