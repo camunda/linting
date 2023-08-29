@@ -258,6 +258,47 @@ describe('utils/error-messages', function() {
       });
 
 
+      describe('element property value duplicated', function() {
+
+        it('should adjust (link name)', async function() {
+
+          // given
+          const node = createElement('bpmn:Process', {
+            flowElements: [
+              createElement('bpmn:IntermediateCatchEvent', {
+                eventDefinitions: [
+                  createElement('bpmn:LinkEventDefinition', {
+                    name: 'foo'
+                  })
+                ]
+              }),
+              createElement('bpmn:IntermediateCatchEvent', {
+                eventDefinitions: [
+                  createElement('bpmn:LinkEventDefinition', {
+                    name: 'foo'
+                  })
+                ]
+              })
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/link-event');
+
+          const reports = await getLintErrors(node, rule);
+
+          // when
+          reports.forEach(report => {
+            const errorMessage = getErrorMessage(report);
+
+            // then
+            expect(errorMessage).to
+              .equal('A <Link Intermediate Catch Event> must have a unique <Name>');
+          });
+        });
+
+      });
+
+
       describe('extension element not allowed', function() {
 
         it('should adjust (business rule task with called decision)', async function() {
@@ -1297,6 +1338,27 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <Script Task> with <Implementation: Job worker> must have a defined <Task definition type>');
+        });
+
+
+        it('should adjust (link name)', async function() {
+
+          // given
+          const node = createElement('bpmn:IntermediateCatchEvent', {
+            eventDefinitions: [
+              createElement('bpmn:LinkEventDefinition')
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/link-event');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <Link Intermediate Catch Event> must have a defined <Name>');
         });
 
       });

@@ -1659,6 +1659,71 @@ describe('utils/properties-panel', function() {
 
       });
 
+
+      describe('link event - Name', async function() {
+
+        it('required', async function() {
+
+          // given
+          const node = createElement('bpmn:IntermediateCatchEvent', {
+            eventDefinitions: [
+              createElement('bpmn:LinkEventDefinition')
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/link-event');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'linkName' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be defined.', report);
+        });
+
+
+        it('duplicated', async function() {
+
+          // given
+          const node = createElement('bpmn:Process', {
+            flowElements: [
+              createElement('bpmn:IntermediateCatchEvent', {
+                eventDefinitions: [
+                  createElement('bpmn:LinkEventDefinition', {
+                    name: 'foo'
+                  })
+                ]
+              }),
+              createElement('bpmn:IntermediateCatchEvent', {
+                eventDefinitions: [
+                  createElement('bpmn:LinkEventDefinition', {
+                    name: 'foo'
+                  })
+                ]
+              })
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/link-event');
+
+          const reports = await getLintErrors(node, rule);
+
+          // when
+          reports.forEach(report => {
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([ 'linkName' ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
+          });
+        });
+
+      });
+
     });
 
 
