@@ -1562,6 +1562,103 @@ describe('utils/properties-panel', function() {
         expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
       });
 
+
+      describe('secret expression invalid', function() {
+
+        it('Subscription correlation key', async function() {
+
+          // given
+          const node = createElement('bpmn:ReceiveTask', {
+            messageRef: createElement('bpmn:Message', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:Subscription', {
+                    correlationKey: 'secrets.'
+                  })
+                ]
+              })
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Is not a valid secret.', report);
+        });
+
+
+        it('Input variable assignment value', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      source: 'secrets.'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Is not a valid secret.', report);
+        });
+
+
+        it('Extension property value', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:Properties', {
+                  properties: [
+                    createElement('zeebe:Property', {
+                      value: 'secrets.'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-extensionProperty-0-value' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Is not a valid secret.', report);
+        });
+
+      });
+
     });
 
 
