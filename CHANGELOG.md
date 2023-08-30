@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.6.0
+
+* `FEAT`: add `no-propagate-all-parent-variables` rule
+* `FEAT`: add `link-event` rule
+* `FEAT`: add `secrets` rule
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.6.3`
+
 ## 3.5.1
 
 * `FIX`: always scroll to element ([#78](https://github.com/camunda/linting/pull/78))
