@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.7.0
+
+* `FEAT`: add `no-loop` rule
+* `FIX`: `link-event` rule only checks link events
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.7.0`
+
 ## 3.6.0
 
 * `FEAT`: add `no-propagate-all-parent-variables` rule
