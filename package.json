@@ -32,7 +32,7 @@
     "@bpmn-io/diagram-js-ui": "^0.2.2",
     "bpmn-moddle": "^8.0.0",
     "bpmnlint": "^9.2.0",
-    "bpmnlint-plugin-camunda-compat": "^2.7.0",
+    "bpmnlint-plugin-camunda-compat": "^2.7.1",
     "bpmnlint-utils": "^1.0.2",
     "clsx": "^2.0.0",
     "min-dash": "^4.0.0",
