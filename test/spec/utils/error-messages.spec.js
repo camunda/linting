@@ -1778,7 +1778,7 @@ describe('utils/error-messages', function() {
       });
 
 
-      describe('secret expression invalid', function() {
+      describe('secret expression format deprecated', function() {
 
         it('should adjust (correlation key)', async function() {
 
@@ -1808,7 +1808,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('Property <correlationKey> is not a valid secret');
+          expect(errorMessage).to.equal('Property <correlationKey> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
         });
 
 
@@ -1837,7 +1837,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('Property <source> is not a valid secret');
+          expect(errorMessage).to.equal('Property <source> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
         });
 
 
@@ -1866,7 +1866,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('Property <value> is not a valid secret');
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
         });
 
       });

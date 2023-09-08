@@ -1563,7 +1563,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      describe('secret expression invalid', function() {
+      describe('secret expression format deprecated', function() {
 
         it('Subscription correlation key', async function() {
 
@@ -1590,7 +1590,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Is not a valid secret.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Secret expression format deprecated.', report);
         });
 
 
@@ -1622,7 +1622,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Is not a valid secret.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Secret expression format deprecated.', report);
         });
 
 
@@ -1654,7 +1654,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-extensionProperty-0-value' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Is not a valid secret.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Secret expression format deprecated.', report);
         });
 
       });
