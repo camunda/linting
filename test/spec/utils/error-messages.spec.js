@@ -1871,6 +1871,62 @@ describe('utils/error-messages', function() {
 
       });
 
+
+      describe('loop not allowed', function() {
+
+        it('should adjust', async function() {
+
+          // given
+          const task = createElement('bpmn:Task', {
+            id: 'Task_1'
+          });
+
+          const manualTask = createElement('bpmn:ManualTask', {
+            id: 'ManualTask_1'
+          });
+
+          const sequenceFlow1 = createElement('bpmn:SequenceFlow', {
+            id: 'SequenceFlow_1',
+            sourceRef: task,
+            targetRef: manualTask
+          });
+
+          const sequenceFlow2 = createElement('bpmn:SequenceFlow', {
+            id: 'SequenceFlow_2',
+            sourceRef: manualTask,
+            targetRef: task
+          });
+
+          task.set('incoming', [ sequenceFlow2 ]);
+          task.set('outgoing', [ sequenceFlow1 ]);
+
+          manualTask.set('incoming', [ sequenceFlow1 ]);
+          manualTask.set('outgoing', [ sequenceFlow2 ]);
+
+          const process = createElement('bpmn:Process', {
+            id: 'Process_1',
+            isExecutable: true,
+            flowElements: [
+              task,
+              manualTask,
+              sequenceFlow1,
+              sequenceFlow2
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-loop');
+
+          const report = await getLintError(process, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <Process> is not allowed to contain a straight-through processing loop: <Task_1>, <ManualTask_1>');
+        });
+
+      });
+
     });
 
 
