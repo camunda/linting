@@ -151,6 +151,10 @@ describe('Linter', function() {
 
     describe('camunda-cloud', function() {
 
+      beforeEach(function() {
+        linter = new Linter({ type: 'cloud' });
+      });
+
       const versions = [
         [ '1.0', camundaCloud10XML, camundaCloud10ErrorsXML ],
         [ '1.1', camundaCloud11XML, camundaCloud11ErrorsXML ],
@@ -165,7 +169,7 @@ describe('Linter', function() {
 
         describe(`Camunda Cloud ${ version }`, function() {
 
-          describe('no errors', function() {
+          describe('from moddle', function() {
 
             it('should not have errors', async function() {
 
@@ -179,10 +183,6 @@ describe('Linter', function() {
               expect(reports).to.be.empty;
             });
 
-          });
-
-
-          describe('errors', function() {
 
             it('should have errors', async function() {
 
@@ -198,6 +198,30 @@ describe('Linter', function() {
 
           });
 
+
+          describe('from XML', function() {
+
+            it('should not have errors', async function() {
+
+              // when
+              const reports = await linter.lint(xml);
+
+              // then
+              expect(reports).to.be.empty;
+            });
+
+
+            it('should have errors', async function() {
+
+              // when
+              const reports = await linter.lint(errorsXML);
+
+              // then
+              expect(reports).not.to.be.empty;
+            });
+
+          });
+
         });
 
       });
@@ -206,6 +230,10 @@ describe('Linter', function() {
 
 
     describe('camunda-platform', function() {
+
+      beforeEach(function() {
+        linter = new Linter({ type: 'platform' });
+      });
 
       const versions = [
         [ '7.19', camundaPlatform719XML, camundaPlatform719ErrorsXML ],
@@ -229,29 +257,57 @@ describe('Linter', function() {
 
         describe(`Camunda Platform ${ version }`, function() {
 
-          it('should not have errors', async function() {
+          describe('from moddle', function() {
 
-            // given
-            const { root } = await createModdleCamundaPlatform(xml);
+            it('should not have errors', async function() {
 
-            // when
-            const reports = await linter.lint(root);
+              // given
+              const { root } = await createModdleCamundaPlatform(xml);
 
-            // then
-            expect(reports).to.be.empty;
+              // when
+              const reports = await linter.lint(root);
+
+              // then
+              expect(reports).to.be.empty;
+            });
+
+
+            it('should have errors', async function() {
+
+              // given
+              const { root } = await createModdleCamundaPlatform(errorsXML);
+
+              // when
+              const reports = await linter.lint(root);
+
+              // then
+              expect(reports).not.to.be.empty;
+            });
+
           });
 
 
-          it('should have errors', async function() {
+          describe('from xml', function() {
 
-            // given
-            const { root } = await createModdleCamundaPlatform(errorsXML);
+            it('should not have errors', async function() {
 
-            // when
-            const reports = await linter.lint(root);
+              // when
+              const reports = await linter.lint(xml);
 
-            // then
-            expect(reports).not.to.be.empty;
+              // then
+              expect(reports).to.be.empty;
+            });
+
+
+            it('should have errors', async function() {
+
+              // when
+              const reports = await linter.lint(errorsXML);
+
+              // then
+              expect(reports).not.to.be.empty;
+            });
+
           });
 
         });
