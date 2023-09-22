@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.7.2
+
+* `FIX`: correctly parse Camunda 7 XML ([#85](https://github.com/camunda/linting/pull/85))
+
 ## 3.7.1
 
 * `FIX`: adjust `no-loop` error message ([#84](https://github.com/camunda/linting/pull/84))
