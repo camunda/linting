@@ -21,6 +21,7 @@ import {
 } from './lint-helper';
 
 import propertiesPanelXML from './properties-panel.bpmn';
+import propertiesPanelInfoXML from './properties-panel-info.bpmn';
 import propertiesPanelPlatformXML from './properties-panel-platform.bpmn';
 
 describe('utils/properties-panel', function() {
@@ -1590,7 +1591,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Secret expression format deprecated.', report);
+          expectNoErrorMessage(entryIds[ 0 ], report);
         });
 
 
@@ -1622,7 +1623,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Secret expression format deprecated.', report);
+          expectNoErrorMessage(entryIds[ 0 ], report);
         });
 
 
@@ -1654,7 +1655,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-extensionProperty-0-value' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Secret expression format deprecated.', report);
+          expectNoErrorMessage(entryIds[ 0 ], report);
         });
 
       });
@@ -1759,6 +1760,54 @@ describe('utils/properties-panel', function() {
         });
       });
 
+
+      it('should not return errors for category info', async function() {
+
+        // given
+        const linter = new Linter();
+
+        const { root } = await createModdle(propertiesPanelInfoXML);
+
+        const reports = await linter.lint(root);
+
+        // when
+        let element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'Task_1');
+
+        let errors = getErrors(reports, element);
+
+        // then
+        expect(errors).to.be.empty;
+      });
+
+
+      it('should not return errors for category info', async function() {
+
+        // given
+        const linter = new Linter({
+          plugins: [
+            {
+              config: {
+                rules: {
+                  'camunda-compat/secrets': 'warn'
+                }
+              }
+            }
+          ]
+        });
+
+        const { root } = await createModdle(propertiesPanelInfoXML);
+
+        const reports = await linter.lint(root);
+
+        // when
+        let element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'Task_1');
+
+        let errors = getErrors(reports, element);
+
+        // then
+        expect(errors).to.be.empty;
+      });
+
     });
 
   });
@@ -1825,4 +1874,8 @@ function expectErrorMessage(id, expectedErrorMessage, report) {
 
   // then
   expect(errorMessage).to.equal(expectedErrorMessage);
+}
+
+function expectNoErrorMessage(id, report) {
+  expectErrorMessage(id, undefined, report);
 }
