@@ -31,8 +31,8 @@ const modeler = new Modeler({
 
 // configure to be used with desktop or web modeler
 const linter = new Linter({
-  modeler: 'web',
-  type: 'cloud' // cloud or platform diagrams, defaults to `cloud`
+  modeler: 'web', // `desktop` or `web` modeler, defaults to `desktop`
+  type: 'cloud' // `cloud` or `platform` diagrams, defaults to `cloud`
 });
 
 // lint by passing definitions
