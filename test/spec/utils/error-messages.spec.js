@@ -63,7 +63,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
-          expect(errorMessage).to.equal('A <Signal Start Event> in a <Sub Process> is not supported by Camunda 8.2');
+          expect(errorMessage).to.equal('A <Signal Start Event> in a <Sub Process> is only supported by Camunda 8.3 or newer');
         });
 
       });

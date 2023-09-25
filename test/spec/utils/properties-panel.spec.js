@@ -1780,7 +1780,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('should not return errors for category info', async function() {
+      it('should not return errors for category warn', async function() {
 
         // given
         const linter = new Linter({
