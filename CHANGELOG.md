@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.8.0
+
+* `FEAT`: allow signal boundary, intermediate catch, and signal start events in sub-processes ([#86](https://github.com/camunda/linting/pull/86))
+* `FEAT`: enable `secrets` rule for Camunda 8.3 ([#86](https://github.com/camunda/linting/pull/86))
+* `FIX`: only display errors in properties panel ([#86](https://github.com/camunda/linting/pull/86))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.8.0`
+
 ## 3.7.2
 
 * `FIX`: correctly parse Camunda 7 XML ([#85](https://github.com/camunda/linting/pull/85))
