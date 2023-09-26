@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.8.1
+
+* `FIX`: enable `signal-reference` rule for signal boundary events and signal intermediate catch events ([#138](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/138))
+
 ## 3.8.0
 
 * `FEAT`: allow signal boundary, intermediate catch, and signal start events in sub-processes ([#86](https://github.com/camunda/linting/pull/86))
