@@ -705,7 +705,7 @@ describe('Linting', function() {
   });
 
 
-  describe('Camunda Platform', function() {
+  describe('Camunda', function() {
 
     beforeEach(createModeler(diagramXMLPlatform,
       [

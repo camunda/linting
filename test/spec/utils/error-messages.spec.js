@@ -1391,7 +1391,7 @@ describe('utils/error-messages', function() {
             const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
             // then
-            expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression (cron only supported by Camunda Platform 8.1 or newer)');
+            expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression (cron only supported by Camunda 8.1 or newer)');
           });
 
 
