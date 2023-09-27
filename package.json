@@ -1,7 +1,7 @@
 {
   "name": "@camunda/linting",
   "version": "3.8.1",
-  "description": "Linting for Camunda Platform",
+  "description": "Linting for Camunda",
   "main": "index.js",
   "scripts": {
     "all": "npm run lint && npm test",

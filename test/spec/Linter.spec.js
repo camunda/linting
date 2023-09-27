@@ -255,7 +255,7 @@ describe('Linter', function() {
 
       versions.forEach(function([ version, xml, errorsXML ]) {
 
-        describe(`Camunda Platform ${ version }`, function() {
+        describe(`Camunda ${ version }`, function() {
 
           describe('from moddle', function() {
 
