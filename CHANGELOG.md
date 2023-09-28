@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.9.0
+
+* `FEAT`: rename `Camunda Platform` to `Camunda` ([#89](https://github.com/camunda/linting/pull/89))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.9.0`
+
 ## 3.8.1
 
 * `FIX`: enable `signal-reference` rule for signal boundary events and signal intermediate catch events ([#138](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/138))
