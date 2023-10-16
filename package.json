@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "bpmn-js": "^13.2.2",
-    "bpmn-js-element-templates": "^1.3.0",
-    "bpmn-js-properties-panel": "^5.0.0",
+    "bpmn-js-element-templates": "^2.0.0-1",
+    "bpmn-js-properties-panel": "^6.0.0-2",
     "camunda-bpmn-js-behaviors": "^1.0.0",
     "chai": "^4.3.7",
     "cross-env": "^7.0.3",
@@ -64,14 +64,6 @@
     "sinon": "^15.0.1",
     "sinon-chai": "^3.7.0",
     "webpack": "^5.75.0"
-  },
-  "peerDependencies": {
-    "bpmn-js-properties-panel": ">= 2.0.0"
-  },
-  "peerDependenciesMeta": {
-    "bpmn-js-properties-panel": {
-      "optional": true
-    }
   },
   "files": [
     "assets",
