@@ -15,6 +15,9 @@
     "compile-config": "node tasks/compile-config.js",
     "prepublish": "npm run compile-config"
   },
+  "engines": {
+    "node": "*"
+  },
   "keywords": [
     "bpmnlint",
     "camunda"
