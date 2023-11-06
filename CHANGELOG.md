@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.10.0
+
+* `FEAT`: add 8.4 and 7.21 config ([#143](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/143))
+* `FEAT`: validate `formId` with Camunda 8.4 and newer ([#144](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/144))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.11.1`
+
 ## 3.9.0
 
 * `FEAT`: rename `Camunda Platform` to `Camunda` ([#89](https://github.com/camunda/linting/pull/89))
