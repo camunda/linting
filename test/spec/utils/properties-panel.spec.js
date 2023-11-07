@@ -799,7 +799,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('user-task-form - Form key', async function() {
+      it('user-task-form - Form key (Camunda 8.3 and older)', async function() {
 
         // given
         const node = createElement('bpmn:UserTask', {
@@ -812,7 +812,7 @@ describe('utils/properties-panel', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '8.3' });
 
         // when
         const entryIds = getEntryIds(report);
@@ -821,6 +821,87 @@ describe('utils/properties-panel', function() {
         expect(entryIds).to.eql([ 'customFormKey' ]);
 
         expectErrorMessage(entryIds[ 0 ], 'Form key must be defined.', report);
+      });
+
+
+      it('user-task-form - Form key (Camunda 8.4 and newer)', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:FormDefinition', {
+                formKey: ''
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+        const report = await getLintError(node, rule, { version: '8.4' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'customFormKey' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Form key must be defined.', report);
+      });
+
+
+      it('user-task-form - Form ID (Camunda 8.3 and older)', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:FormDefinition', {
+                formId: ''
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+        const report = await getLintError(node, rule, { version: '8.3' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'formId' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Form ID not supported.', report);
+      });
+
+
+      it('user-task-form - Form ID (Camunda 8.4 and newer)', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:FormDefinition', {
+                formId: ''
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+        const report = await getLintError(node, rule, { version: '8.4' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'formId' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Form ID must be defined.', report);
       });
 
 
@@ -852,7 +933,7 @@ describe('utils/properties-panel', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '8.2' });
 
         // when
         const entryIds = getEntryIds(report);

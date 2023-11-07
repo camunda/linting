@@ -1128,7 +1128,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (form key)', async function() {
+        it('should adjust (form key) (Camunda 8.3 and older)', async function() {
 
           // given
           const node = createElement('bpmn:UserTask', {
@@ -1141,13 +1141,90 @@ describe('utils/error-messages', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.3' });
 
           // when
           const errorMessage = getErrorMessage(report);
 
           // then
           expect(errorMessage).to.equal('A <User Task> with <Form type: Custom form key> must have a defined <Form key>');
+        });
+
+
+        it('should adjust (form key) (Camunda 8.4 and newer)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition', {
+                  formKey: ''
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+          const report = await getLintError(node, rule, { version: '8.4' });
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Form type: Custom form key> must have a defined <Form key>');
+        });
+
+
+        it('should adjust (form ID) (Camunda 8.3 and older)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.3';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition', {
+                  formId: ''
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda form (linked)> is only supported by Camunda 8.4 or newer');
+        });
+
+
+        it('should adjust (form ID) (Camunda 8.4 and newer)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition', {
+                  formId: ''
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+          const report = await getLintError(node, rule, { version: '8.4' });
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda form (linked)> must have a defined <Form ID>');
         });
 
 
@@ -1179,13 +1256,13 @@ describe('utils/error-messages', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.3' });
 
           // when
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda forms> must have a defined <Form JSON configuration>');
+          expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda form (embedded)> must have a defined <Form JSON configuration>');
         });
 
 
