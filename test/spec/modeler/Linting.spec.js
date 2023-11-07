@@ -37,7 +37,7 @@ import { getErrors } from '../../../lib/utils/properties-panel';
 import diagramCSS from 'bpmn-js/dist/assets/diagram-js.css';
 import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
 import bpmnFont from 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
-import propertiesPanelCSS from '@bpmn-io/properties-panel/assets/properties-panel.css';
+import propertiesPanelCSS from '@bpmn-io/properties-panel/dist/assets/properties-panel.css';
 import elementTemplatesCSS from 'bpmn-js-element-templates/dist/assets/element-templates.css';
 import lintingCSS from '../../../assets/linting.css';
 
