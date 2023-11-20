@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import sinon from 'sinon';
 
 import StaticResolver from 'bpmnlint/lib/resolver/static-resolver';
 
@@ -52,6 +52,39 @@ describe('Linter', function() {
 
       // then
       expect(linter._modeler).to.equal('web');
+    });
+
+
+    it('should add modeler configuration to rule configurations', async function() {
+
+      // given
+      const spy = sinon.spy(() => {
+        return {
+          check: () => {}
+        };
+      });
+
+      const linter = new Linter({
+        modeler: 'web',
+        plugins: [
+          {
+            resolver: new StaticResolver({
+              'rule:bpmnlint-plugin-camunda-compat/element-type': spy
+            })
+          }
+        ]
+      });
+
+      const { root } = await createModdle(simpleXML);
+
+      // when
+      await linter.lint(root);
+
+      // then
+      expect(spy).to.have.been.calledWithMatch({
+        modeler: 'web',
+        version: '8.0'
+      });
     });
 
   });
