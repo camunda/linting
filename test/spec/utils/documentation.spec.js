@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { getDocumentationUrl } from '../../../lib/utils/documentation';
 
 describe('utils/documentation', function() {

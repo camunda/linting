@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import Linter from 'bpmnlint/lib/linter';
 
 async function lintNode(node, rule, config = {},) {
