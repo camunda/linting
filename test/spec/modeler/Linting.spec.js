@@ -152,11 +152,18 @@ describe('Linting', function() {
       })
     };
 
-    const linter = new Linter({
-      plugins: [
-        FooPlugin
-      ]
-    });
+    let modeler = 'desktop';
+
+    const createLinter = modeler => {
+      return new Linter({
+        modeler,
+        plugins: [
+          FooPlugin
+        ]
+      });
+    };
+
+    let linter = createLinter(modeler);
 
     const lint = () => {
       const definitions = bpmnjs.getDefinitions();
@@ -204,6 +211,11 @@ describe('Linting', function() {
         <div>
           <label>Execution Platform Version</label>
           <input type="text" />
+          <label>Modeler</label>
+          <select>
+            <option value="desktop">Desktop</option>
+            <option value="web">Web</option>
+          </select>
           <button>Deactivate Linting</button>
         </div>
       </div>
@@ -219,6 +231,16 @@ describe('Linting', function() {
         bpmnjs.getDefinitions(),
         { executionPlatformVersion: target.value }
       );
+    });
+
+    panel.querySelector('select').value = modeler;
+
+    panel.querySelector('select').addEventListener('change', ({ target }) => {
+      modeler = target.value;
+
+      linter = createLinter(modeler);
+
+      lint();
     });
 
     panel.querySelector('button').addEventListener('click', () => {
