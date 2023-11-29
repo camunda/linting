@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.11.0
+
+* `FEAT`: allow `formKey` and `formId` starting with v8.3 when linting start event forms ([#149](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/149))
+* `FIX`: differentiate between desktop and web modeler when linting user task forms ([#149](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/149))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.12.0`
+
 ## 3.10.0
 
 * `FEAT`: add 8.4 and 7.21 config ([#143](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/143))
