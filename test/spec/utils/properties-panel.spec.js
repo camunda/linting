@@ -774,7 +774,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('start-form - Form', async function() {
+      it('start-event-form - Form', async function() {
 
         // given
         const node = createElement('bpmn:StartEvent', {
@@ -785,7 +785,7 @@ describe('utils/properties-panel', function() {
           })
         });
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/start-form');
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/start-event-form');
 
         const report = await getLintError(node, rule, { version: '1.0' });
 

@@ -414,7 +414,7 @@ describe('utils/error-messages', function() {
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/start-form');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/start-event-form');
 
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
