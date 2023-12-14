@@ -227,10 +227,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(di, rule);
 
           // when
-          const errorMessage = getErrorMessage(report);
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.3');
 
           // then
-          expect(errorMessage).to.equal('A <Sub Process> must be expanded');
+          expect(errorMessage).to.equal('A collapsed <Sub Process> is only supported by Camunda 8.4 or newer');
         });
 
 
@@ -247,10 +247,11 @@ describe('utils/error-messages', function() {
           const report = await getLintError(di, rule);
 
           // when
-          const errorMessage = getErrorMessage(report);
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.3');
 
           // then
-          expect(errorMessage).to.equal('An <Ad Hoc Sub Process> must be expanded');
+          console.log(errorMessage);
+          expect(errorMessage).to.equal('A collapsed <Ad Hoc Sub Process> is only supported by Camunda 8.4 or newer');
         });
 
       });
