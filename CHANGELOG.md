@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.12.0
+
+* `FEAT`: allow collapsed subprocess in 8.4
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.13.0`
+
 ## 3.11.0
 
 * `FEAT`: allow `formKey` and `formId` starting with v8.3 when linting start event forms ([#149](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/149))
