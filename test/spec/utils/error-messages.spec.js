@@ -536,6 +536,23 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Script Task> must have a defined <Implementation>');
         });
 
+
+        it('should adjust (user task and form)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask');
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+          const report = await getLintError(node, rule, { version: '8.2' });
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> must have a defined <Form>');
+        });
+
       });
 
 
