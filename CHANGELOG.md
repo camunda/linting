@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.13.0
+
+* `FEAT`: ensure user tasks have a `formDefinition` ([#150](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/151))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.14.0`
+
 ## 3.12.0
 
 * `FEAT`: allow collapsed subprocess in 8.4
