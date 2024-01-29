@@ -1303,6 +1303,33 @@ describe('utils/properties-panel', function() {
         const INVALID_FEEL = '===';
 
 
+        it('should adjust error message', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      source: INVALID_FEEL
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          // when
+          const report = await getLintError(node, rule);
+          const entryIds = getEntryIds(report);
+
+          // then
+          expectErrorMessage(entryIds[ 0 ], 'Unparsable FEEL expression.', report);
+        });
+
+
         it('should return error for input mapping', async function() {
 
           // given
