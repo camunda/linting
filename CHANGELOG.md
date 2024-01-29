@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.14.0
+
+* `FEAT`: simplify FEEL error messages ([#97](https://github.com/camunda/linting/pull/97))
+
 ## 3.13.0
 
 * `FEAT`: ensure user tasks have a `formDefinition` ([#150](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/151))
