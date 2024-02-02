@@ -47,7 +47,7 @@
     "bpmn-js-element-templates": "^1.13.1",
     "bpmn-js-properties-panel": "^5.11.1",
     "camunda-bpmn-js-behaviors": "^1.2.3",
-    "chai": "^4.3.7",
+    "chai": "^4.4.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.45.0",
     "eslint-plugin-bpmn-io": "^1.0.0",
@@ -57,13 +57,13 @@
     "karma-env-preprocessor": "^0.1.1",
     "karma-mocha": "^2.0.1",
     "karma-sinon-chai": "^2.0.2",
-    "karma-webpack": "^5.0.0",
+    "karma-webpack": "^5.0.1",
     "mocha": "^10.2.0",
     "mocha-test-container-support": "^0.2.0",
-    "puppeteer": "^20.9.0",
-    "sinon": "^15.0.1",
+    "puppeteer": "^21.10.0",
+    "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
-    "webpack": "^5.75.0"
+    "webpack": "^5.90.1"
   },
   "peerDependencies": {
     "bpmn-js-properties-panel": ">= 2.0.0"
