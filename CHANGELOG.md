@@ -9,6 +9,7 @@ ___Note:__ Yet to be released changes appear here._
 ## 3.14.0
 
 * `FEAT`: simplify FEEL error messages ([#97](https://github.com/camunda/linting/pull/97))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.15.0`
 
 ## 3.13.0
 
