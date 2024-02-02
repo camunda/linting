@@ -76,6 +76,7 @@
   "files": [
     "assets",
     "lib",
+    "index.js",
     "modeler.js"
   ],
   "publishConfig": {
