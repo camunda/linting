@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.15.0
+
+* `DEPS`: update to `bpmnlint@10`
+
 ## 3.14.0
 
 * `FEAT`: simplify FEEL error messages ([#97](https://github.com/camunda/linting/pull/97))
