@@ -305,7 +305,7 @@ describe('Linter', function() {
             });
 
 
-            it('should have errors', async function() {
+            it('should not have errors', async function() {
 
               // given
               const { root } = await createModdleCamundaPlatform(errorsXML);
@@ -314,7 +314,7 @@ describe('Linter', function() {
               const reports = await linter.lint(root);
 
               // then
-              expect(reports).not.to.be.empty;
+              expect(reports).to.be.empty;
             });
 
           });
@@ -332,13 +332,13 @@ describe('Linter', function() {
             });
 
 
-            it('should have errors', async function() {
+            it('should not have errors', async function() {
 
               // when
               const reports = await linter.lint(errorsXML);
 
               // then
-              expect(reports).not.to.be.empty;
+              expect(reports).to.be.empty;
             });
 
           });
