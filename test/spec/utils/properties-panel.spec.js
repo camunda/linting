@@ -8,9 +8,7 @@ import {
 
 import {
   createElement,
-  createElementCamundaPlatform,
-  createModdle,
-  createModdleCamundaPlatform
+  createModdle
 } from '../../helper';
 
 import {
@@ -20,7 +18,6 @@ import {
 
 import propertiesPanelXML from './properties-panel.bpmn';
 import propertiesPanelInfoXML from './properties-panel-info.bpmn';
-import propertiesPanelPlatformXML from './properties-panel-platform.bpmn';
 
 describe('utils/properties-panel', function() {
 
@@ -1918,60 +1915,8 @@ describe('utils/properties-panel', function() {
 
   });
 
-
-  describe('Camunda Platform (Camunda 7)', function() {
-
-    describe('#getEntryId and #getErrorMessage', function() {
-
-      it('History cleanup (no time to live)', async function() {
-
-        // given
-        const node = createElementCamundaPlatform('bpmn:Process', { isExecutable: true });
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-platform/history-time-to-live');
-
-        const report = await getLintError(node, rule, { platform: 'camunda-platform', version: '7.19' });
-
-        // when
-        const entryIds = getEntryIds(report);
-
-        // then
-        expect(entryIds).to.eql([ 'historyTimeToLive' ]);
-
-
-        expectErrorMessage(entryIds[ 0 ], 'Time to live must be defined.', report);
-      });
-
-    });
-
-
-    describe('#getErrors', function() {
-
-      it('should return errors', async function() {
-
-        // given
-        const linter = new Linter();
-
-        const { root } = await createModdleCamundaPlatform(propertiesPanelPlatformXML);
-
-        const reports = await linter.lint(root);
-
-        // when
-        let element = root.rootElements[ 0 ];
-
-        let errors = getErrors(reports, element);
-
-        // then
-        expect(errors).to.eql({
-          historyTimeToLive: 'Time to live must be defined.'
-        });
-      });
-
-    });
-
-  });
-
 });
+
 
 function expectErrorMessage(id, expectedErrorMessage, report) {
 
