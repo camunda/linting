@@ -4,8 +4,7 @@ import {
 } from '../../../lib/utils/error-messages';
 
 import {
-  createElement,
-  createElementCamundaPlatform
+  createElement
 } from '../../helper';
 
 import {
@@ -2016,31 +2015,6 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <Process> is not allowed to contain a straight-through processing loop: <Task_1>, <ManualTask_1>');
-        });
-
-      });
-
-    });
-
-
-    describe('Camunda Platform (Camunda 7)', function() {
-
-      describe('property required', function() {
-
-        it('should adjust (history time to live)', async function() {
-
-          // given
-          const node = createElementCamundaPlatform('bpmn:Process');
-
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-platform/history-time-to-live');
-
-          const report = await getLintError(node, rule, { version: '7.19' });
-
-          // when
-          const errorMessage = getErrorMessage(report);
-
-          // then
-          expect(errorMessage).to.equal('A <Process> must have a defined <History time to live>');
         });
 
       });
