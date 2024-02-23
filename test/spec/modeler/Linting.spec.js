@@ -178,10 +178,10 @@ describe('Linting', function() {
           const { id, message, category, rule, documentation } = report;
 
           if (category === 'rule-error') {
-            return domify(`<div class="errorItem">Rule error: Rule <${ escapeHTML(rule) }> errored with the following message: ${ escapeHTML(message) }</div>`);
+            return domify(`<div class="errorItem"><strong>${ category }</strong> Rule <${ escapeHTML(rule) }> errored with the following message: ${ escapeHTML(message) }</div>`);
           }
 
-          const element = domify(`<div class="errorItem">${ id }: ${escapeHTML(message) } </div>`);
+          const element = domify(`<div class="errorItem"><strong>${ category }</strong> ${ id }: ${escapeHTML(message) } </div>`);
 
           if (documentation.url) {
             const documentationLink = domify(`<a href="${ documentation.url }" rel="noopener" target="_blank">ref</a>`);
