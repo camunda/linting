@@ -541,7 +541,7 @@ describe('utils/error-messages', function() {
           // given
           const node = createElement('bpmn:UserTask');
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-definition');
 
           const report = await getLintError(node, rule, { version: '8.2' });
 
@@ -549,7 +549,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report);
 
           // then
-          expect(errorMessage).to.equal('A <User Task> must have a defined <Form>');
+          expect(errorMessage).to.equal('A <User Task> should have a defined <Form>');
         });
 
       });
