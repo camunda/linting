@@ -6,6 +6,15 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.16.0
+
+* `FEAT`: make `history-time-to-live` an informative hint ([camunda/bpmnlint-plugin-camunda-compat#160](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/160))
+* `FEAT`: report missing form definition as warning, not error ([camunda/bpmnlint-plugin-camunda-compat#154](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/154), [camunda/bpmnlint-plugin-camunda-compat#157](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/157))
+* `FIX`: correct `escalation-reference` to allow start event without `escalationRef` ([camunda/bpmnlint-plugin-camunda-compat#158](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/158))
+* `FIX`: report `secrets` as `warn`, not `error` ([camunda/bpmnlint-plugin-camunda-compat#157](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/157))
+* `FIX`: expose main entry point
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.16.0`
+
 ## 3.15.0
 
 * `DEPS`: update to `bpmnlint@10`
