@@ -900,6 +900,62 @@ describe('utils/properties-panel', function() {
       });
 
 
+      it('user-task-form (Zeebe User Task) - Form ID (Camunda 8.5 and newer)', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:UserTask'),
+              createElement('zeebe:FormDefinition', {
+                formId: ''
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+        const report = await getLintError(node, rule, { version: '8.5' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'formId' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Form ID must be defined.', report);
+      });
+
+
+      it('user-task-form (Zeebe User Task) - External reference (Camunda 8.5 and newer)', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:UserTask'),
+              createElement('zeebe:FormDefinition', {
+                externalReference: ''
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+        const report = await getLintError(node, rule, { version: '8.5' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'externalReference' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'External reference must be defined.', report);
+      });
+
+
       it('user-task-form - Form JSON configuration', async function() {
 
         // given
