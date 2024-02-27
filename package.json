@@ -40,7 +40,7 @@
     "min-dom": "^4.1.0",
     "modeler-moddle": "^0.2.0",
     "semver-compare": "^1.0.0",
-    "zeebe-bpmn-moddle": "^1.0.0"
+    "zeebe-bpmn-moddle": "^1.1.0"
   },
   "devDependencies": {
     "bpmn-js": "^16.5.0",
