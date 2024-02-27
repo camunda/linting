@@ -1243,6 +1243,32 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (Zeebe User Task) (form ID) (Camunda 8.5 and newer)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:UserTask', {}),
+                createElement('zeebe:FormDefinition', {
+                  formId: ''
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+          const report = await getLintError(node, rule, { version: '8.5' });
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda Form> must have a defined <Form ID>');
+        });
+
+
         it('should adjust (body)', async function() {
 
           // given
@@ -1278,6 +1304,32 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda form (embedded)> must have a defined <Form JSON configuration>');
+        });
+
+
+        it('should adjust (Zeebe User Task) (external reference) (Camunda 8.5 and newer)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:UserTask', {}),
+                createElement('zeebe:FormDefinition', {
+                  externalReference: ''
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/user-task-form');
+
+          const report = await getLintError(node, rule, { version: '8.5' });
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Form type: External reference> must have a defined <External reference>');
         });
 
 
