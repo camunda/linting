@@ -349,6 +349,31 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (zeebe:UserTask)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.5';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:UserTask')
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-zeebe-user-task');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Implementation: Zeebe user task> is only supported by Camunda 8.5 or newer');
+        });
+
+
         it('should adjust (script task with zeebe:Script)', async function() {
 
           // given
