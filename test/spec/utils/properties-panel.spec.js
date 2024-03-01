@@ -1086,7 +1086,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'userTaskImplementation' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+        expectErrorMessage(entryIds[ 0 ], 'Supported only in Camunda 8.5 or newer.', report);
       });
 
 
