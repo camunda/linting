@@ -6,6 +6,15 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.17.0
+
+`FEAT`: handle `no-zeebe-user-task` rule ([#101](https://github.com/camunda/linting/pull/101))
+`FEAT`: handle missing form property for Zeebe User Task ([#101](https://github.com/camunda/linting/pull/101))
+`DEPS`: update to `bpmnlint-plugin-camunda-compat@2.17.0`
+`DEPS`: update to `bpmn-js-properties-panel@5.13.0`
+`DEPS`: update to `camunda-bpmn-js-behaviors@1.3.0`
+`DEPS`: update to `zeebe-bpmn-moddle@1.1.0`
+
 ## 3.16.0
 
 * `FEAT`: make `history-time-to-live` an informative hint ([camunda/bpmnlint-plugin-camunda-compat#160](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/160))
