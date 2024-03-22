@@ -1910,6 +1910,30 @@ describe('utils/properties-panel', function() {
 
       });
 
+
+      it('should support `waitForCompletion`', async function() {
+
+        // given
+        const node = createElement('bpmn:IntermediateThrowEvent', {
+          eventDefinitions: [
+            createElement('bpmn:CompensateEventDefinition', {
+              waitForCompletion: false
+            })
+          ]
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/wait-for-completion');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'waitForCompletion' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Must wait for completion.', report);
+      });
     });
 
 

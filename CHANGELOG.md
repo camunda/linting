@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.18.0
+
+`FEAT`: handle `wait-for-completion` rule ([#103](https://github.com/camunda/linting/pull/103))
+`DEPS`: update to `bpmnlint-plugin-camunda-compat@2.18.0`
+
 ## 3.17.0
 
 `FEAT`: handle `no-zeebe-user-task` rule ([#101](https://github.com/camunda/linting/pull/101))
