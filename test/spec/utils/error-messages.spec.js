@@ -1762,6 +1762,27 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Call Activity> with <Propagate all variables> disabled is only supported by Camunda 8.2 or newer');
         });
 
+
+        it('should adjust wait for completion', async function() {
+
+          // given
+          const node = createElement('bpmn:EndEvent', {
+            eventDefinitions: [
+              createElement('bpmn:CompensateEventDefinition', { waitForCompletion: false })
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/wait-for-completion');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+          // then
+          expect(errorMessage).to.equal('A <Compensate End Event> with <Wait for completion> disabled is not supported by Camunda 8 (Zeebe 1.0)');
+        });
+
       });
 
 
