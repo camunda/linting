@@ -4,6 +4,8 @@ import {
   insertCSS
 } from 'bpmn-js/test/helper';
 
+import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
+
 import zeebeModdleExtension from 'zeebe-bpmn-moddle/resources/zeebe';
 import camundaModdleExtension from 'camunda-bpmn-moddle/resources/camunda';
 import modelerModdleExtension from 'modeler-moddle/resources/modeler';
@@ -42,6 +44,7 @@ import elementTemplatesCSS from 'bpmn-js-element-templates/dist/assets/element-t
 import lintingCSS from '../../../assets/linting.css';
 
 import diagramXMLCloud from './linting-cloud.bpmn';
+import diagramCollaborationXMLCloud from './linting-collaboration-cloud.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
 
@@ -625,6 +628,47 @@ describe('Linting', function() {
         }
       ));
 
+
+      describe('collaboration', function() {
+
+        beforeEach(createModeler(diagramCollaborationXMLCloud,
+          [
+            zeebePropertiesProviderModule,
+            cloudElementTemplatesPropertiesProvider
+          ],
+          {
+            zeebe: zeebeModdleExtension
+          })
+        );
+
+
+        it('should select participant', inject(
+          async function(linting, selection, elementRegistry) {
+
+            // given
+            const participant = elementRegistry.get('Participant_1');
+
+            const reports = [
+              {
+                id: getBusinessObject(participant).get('processRef').id,
+                message: 'foo'
+              }
+            ];
+
+            linting.setErrors(reports);
+            linting.activate();
+
+            // when
+            linting.showError(reports[ 0 ]);
+            clock.tick();
+
+            // then
+            expect(selection.get()).to.eql([ participant ]);
+          }
+        ));
+
+      });
+
     });
 
 
@@ -730,6 +774,38 @@ describe('Linting', function() {
         }
       ));
 
+
+      it('should not scroll if element not found', inject(
+        function(canvas, linting) {
+
+          // given
+          const reports = [
+            {
+              id: 'Foo',
+              message: 'foo'
+            }
+          ];
+
+          linting.setErrors(reports);
+
+          linting.activate();
+
+          canvas.viewbox({
+            x: 10000,
+            y: 10000,
+            width: 1000,
+            height: 1000
+          });
+
+          const scrollToElementSpy = sinon.spy(canvas, 'scrollToElement');
+
+          // when
+          linting.showError(reports[ 0 ]);
+
+          // then
+          expect(scrollToElementSpy).not.to.have.been.called;
+        }
+      ));
     });
 
   });
