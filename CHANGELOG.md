@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.18.1
+
+* `FIX`: show error for process refs ([#104](https://github.com/camunda/linting/pull/104))
+
 ## 3.18.0
 
 `FEAT`: handle `wait-for-completion` rule ([#103](https://github.com/camunda/linting/pull/103))
