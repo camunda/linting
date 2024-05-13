@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+# 3.19.0
+
+`DEPS`: update to `bpmnlint-plugin-camunda-compat@2.19.0`
+
 ## 3.18.1
 
 * `FIX`: show error for process refs ([#104](https://github.com/camunda/linting/pull/104))
