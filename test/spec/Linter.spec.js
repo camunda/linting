@@ -10,6 +10,7 @@ import {
 import { Linter } from '../..';
 
 import simpleXML from './simple.bpmn';
+import missingDiXML from './simple-no-di.bpmn';
 import noExecutionPlatformXML from './no-execution-platform.bpmn';
 import camundaCloud10XML from './camunda-cloud-1-0.bpmn';
 import camundaCloud10ErrorsXML from './camunda-cloud-1-0-errors.bpmn';
@@ -386,11 +387,30 @@ describe('Linter', function() {
     const BazPlugin = {
       config: {
         rules: {
-          'foo/superfluous-gateway': 'off'
+          'foo/superfluous-gateway': 'off',
+          'bpmnlint/no-bpmndi': 'off'
         }
       },
       resolver: new StaticResolver({})
     };
+
+
+    it('should have default plugins', async function() {
+
+      // given
+      const linter = new Linter();
+
+      const { root } = await createModdle(missingDiXML);
+
+      // when
+      const reports = await linter.lint(root);
+
+      // then
+      expect(reports).to.have.length(2);
+
+      expect(reports.find(({ message }) => message === 'Element is missing bpmndi')).to.exist;
+
+    });
 
 
     it('should add rules (rules)', async function() {
@@ -447,7 +467,7 @@ describe('Linter', function() {
         ]
       });
 
-      const { root } = await createModdle(simpleXML);
+      const { root } = await createModdle(missingDiXML);
 
       // when
       const reports = await linter.lint(root);
@@ -456,6 +476,7 @@ describe('Linter', function() {
       expect(reports).to.have.length(2);
 
       expect(reports.find(({ message }) => message === 'Gateway is superfluous. It only has one source and target.')).not.to.exist;
+      expect(reports.find(({ message }) => message === 'Element is missing bpmndi')).not.to.exist;
       expect(reports.find(({ message }) => message === 'Element is an implicit end')).to.exist;
     });
 
