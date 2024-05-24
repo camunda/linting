@@ -57,7 +57,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Signal Start Event> in a <Sub Process> is only supported by Camunda 8.3 or newer');
@@ -80,7 +83,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('An <Undefined Task> is only supported by Camunda 8.2 or newer');
@@ -99,7 +105,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Complex Gateway> is not supported by Camunda 8 (Zeebe 1.0)');
@@ -118,7 +127,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('An <Undefined Intermediate Catch Event> is not supported by Camunda 8 (Zeebe 1.0)');
@@ -137,7 +149,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('An <Undefined Intermediate Throw Event> is only supported by Camunda 8 (Zeebe 1.1) or newer');
@@ -160,7 +175,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Message Intermediate Throw Event> is only supported by Camunda 8 (Zeebe 1.2) or newer');
@@ -179,7 +197,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Business Rule Task> is only supported by Camunda 8 (Zeebe 1.1) or newer');
@@ -202,7 +223,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Terminate End Event> is only supported by Camunda 8.1 or newer');
@@ -226,7 +250,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(di, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.3');
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion: '8.3'
+          });
 
           // then
           expect(errorMessage).to.equal('A collapsed <Sub Process> is only supported by Camunda 8.4 or newer');
@@ -246,7 +273,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(di, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.3');
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion: '8.3'
+          });
 
           // then
           console.log(errorMessage);
@@ -317,7 +347,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Business Rule Task> with <Implementation: DMN decision> is only supported by Camunda 8 (Zeebe 1.3) or newer');
@@ -342,7 +375,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Service Task> with <Extension properties> is only supported by Camunda 8.1 or newer');
@@ -367,7 +403,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <User Task> with <Implementation: Zeebe user task> is only supported by Camunda 8.5 or newer');
@@ -392,7 +431,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Script Task> with <Implementation: FEEL expression> is only supported by Camunda 8.2 or newer');
@@ -419,7 +461,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <User Task> with <Due date> or <Follow up date> is only supported by Camunda 8.2 or newer');
@@ -444,7 +489,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Start Event> with <User Task Form> is only supported by Camunda 8.3 or newer');
@@ -656,7 +704,11 @@ describe('utils/error-messages', function() {
             const report = await getLintError(node, rule);
 
             // when
-            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0', 'desktop');
+            const errorMessage = getErrorMessage(report, {
+              executionPlatform: 'Camunda Cloud',
+              executionPlatformVersion: '1.0',
+              modeler: 'desktop'
+            });
 
             // then
             expect(errorMessage).to.equal('A <Template Service Task> is only supported by Camunda 8.0 or newer');
@@ -675,7 +727,11 @@ describe('utils/error-messages', function() {
             const report = await getLintError(node, rule);
 
             // when
-            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0', 'web');
+            const errorMessage = getErrorMessage(report, {
+              executionPlatform: 'Camunda Cloud',
+              executionPlatformVersion: '1.0',
+              modeler: 'web'
+            });
 
             // then
             expect(errorMessage).to.equal('A <Connector Service Task> is only supported by Camunda 8.0 or newer');
@@ -699,7 +755,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion: '1.0'
+          });
 
           // then
           expect(errorMessage).to.equal('An <Inclusive Gateway> with more than one incoming <Sequence Flow> is not supported by Camunda 8 (Zeebe 1.0)');
@@ -724,7 +783,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion: '1.0'
+          });
 
           // then
           expect(errorMessage).to.equal('A <User Task> with defined <Candidate users> is only supported by Camunda 8.2 or newer');
@@ -753,7 +815,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(sequenceFlow, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion: '1.0'
+          });
 
           // then
           expect(errorMessage).to.equal('A <Sequence Flow> with <Condition expression> is only supported if the source is an <Exclusive Gateway> or <Inclusive Gateway>');
@@ -780,7 +845,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <Timer Intermediate Catch Event> with <Date> is only supported by Camunda 8.3 or newer');
@@ -905,7 +973,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('An <Error Boundary Event> with <Error Reference> must have a defined <Error code>');
@@ -1098,7 +1169,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('An <Error Boundary Event> without defined <Error Reference> is only supported by Camunda 8.2 or newer');
@@ -1236,7 +1310,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <User Task> with <Form type: Camunda form (linked)> is only supported by Camunda 8.4 or newer');
@@ -1557,7 +1634,10 @@ describe('utils/error-messages', function() {
             const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
             // when
-            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+            const errorMessage = getErrorMessage(report, {
+              executionPlatform: 'Camunda Cloud',
+              executionPlatformVersion
+            });
 
             // then
             expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression (cron only supported by Camunda 8.1 or newer)');
@@ -1584,7 +1664,10 @@ describe('utils/error-messages', function() {
             const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
             // when
-            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+            const errorMessage = getErrorMessage(report, {
+              executionPlatform: 'Camunda Cloud',
+              executionPlatformVersion
+            });
 
             // then
             expect(errorMessage).to.equal('A <Timer Boundary Event> <Time cycle> must be an expression, an ISO 8601 repeating interval, or a cron expression');
@@ -1667,7 +1750,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <User Task> <Due date> must be an ISO 8601 date');
@@ -1694,7 +1780,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion
+          });
 
           // then
           expect(errorMessage).to.equal('A <User Task> <Follow up date> must be an ISO 8601 date');
@@ -1756,7 +1845,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion: '1.0'
+          });
 
           // then
           expect(errorMessage).to.equal('A <Call Activity> with <Propagate all variables> disabled is only supported by Camunda 8.2 or newer');
@@ -1777,7 +1869,10 @@ describe('utils/error-messages', function() {
           const report = await getLintError(node, rule);
 
           // when
-          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+          const errorMessage = getErrorMessage(report, {
+            executionPlatform: 'Camunda Cloud',
+            executionPlatformVersion: '1.0'
+          });
 
           // then
           expect(errorMessage).to.equal('A <Compensate End Event> with <Wait for completion> disabled is not supported by Camunda 8 (Zeebe 1.0)');
