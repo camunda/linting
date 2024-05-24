@@ -2212,6 +2212,13 @@ describe('utils/error-messages', function() {
 
       });
 
+
+      describe('connector property not allowed', function() {
+
+        // TODO
+
+      });
+
     });
 
   });
