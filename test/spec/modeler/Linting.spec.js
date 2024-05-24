@@ -24,6 +24,10 @@ import {
 
 import camundaCloudBehaviors from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 
+import '@bpmn-io/element-template-chooser/dist/element-template-chooser.css';
+
+import ElementTemplateChooserModule from '@bpmn-io/element-template-chooser';
+
 import { domify } from 'min-dom';
 
 import sinon from 'sinon';
@@ -107,6 +111,11 @@ insertCSS('test.css', `
   }
 `);
 
+import ElementTemplatesErrorLogger from './ElementTemplatesErrorLogger';
+
+import connectorTemplate from './connector-template.json';
+
+const elementTemplates = [ connectorTemplate ];
 
 const singleStart = window.__env__ && window.__env__.SINGLE_START;
 
@@ -124,12 +133,15 @@ describe('Linting', function() {
         propertiesPanelModule,
         bpmnPropertiesProviderModule,
         camundaCloudBehaviors,
+        ElementTemplateChooserModule,
+        ElementTemplatesErrorLogger,
         ...additionalModules
       ],
       moddleExtensions: {
         modeler: modelerModdleExtension,
         ...moddleExtensions
-      }
+      },
+      elementTemplates
     });
   }
 
@@ -171,7 +183,7 @@ describe('Linting', function() {
     const lint = () => {
       const definitions = bpmnjs.getDefinitions();
 
-      linter.lint(definitions).then(reports => {
+      linter.lint(definitions, { bpmnjs }).then(reports => {
         linting.setErrors(reports);
 
         const container = panel.querySelector('.errorContainer');
