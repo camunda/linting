@@ -869,7 +869,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'formId' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Form ID not supported.', report);
+        expectErrorMessage(entryIds[ 0 ], 'Form ID is only supported by Camunda 8.4 or newer.', report);
       });
 
 
@@ -1060,7 +1060,7 @@ describe('utils/properties-panel', function() {
           'ServiceTask_1-extensionProperty-1-name'
         ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.1 or newer.', report);
       });
 
 
@@ -1168,7 +1168,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Type not supported.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Type is only supported by Camunda 8.3 or newer.', report);
         });
 
 
@@ -1606,7 +1606,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'assignmentDefinitionCandidateUsers' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
       });
 
 
@@ -1689,7 +1689,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskScheduleDueDate' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
         });
 
 
@@ -1716,7 +1716,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskScheduleFollowUpDate' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
         });
 
       });
@@ -1745,7 +1745,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'propagateAllParentVariables' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
+        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
       });
 
 
