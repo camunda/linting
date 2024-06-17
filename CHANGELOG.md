@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.21.1
+
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.20.2` ([#108](https://github.com/camunda/linting/issues/108))
+
 ## 3.21.0
 
 * `FEAT`: show supported Camunda version in properties panel ([#102](https://github.com/camunda/linting/issues/102))
