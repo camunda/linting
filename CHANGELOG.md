@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.22.0
+
+* `FEAT`: support joining inclusive gateway in Camunda 8.6 ([#109](https://github.com/camunda/linting/pull/109))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.21.0` ([#109](https://github.com/camunda/linting/pull/109))
+
 ## 3.21.1
 
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.20.2` ([#108](https://github.com/camunda/linting/issues/108))
