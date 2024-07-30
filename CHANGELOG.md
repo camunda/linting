@@ -6,8 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.23.0
+
+* `FEAT`: support execution listeners ([#111](https://github.com/camunda/linting/pull/111))
 * `FIX`: improve `no-loop` performance ([bpmnlint-plugin-camunda-compat#165](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/165))
-* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.21.1`
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.22.0`
+* `DEPS`: update to `zeebe-bpmn-moddle@1.4.0`
 
 ## 3.22.0
 

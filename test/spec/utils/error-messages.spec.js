@@ -450,6 +450,30 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Start Event> with <User Task Form> is only supported by Camunda 8.3 or newer');
         });
 
+
+        it('should adjust (zeebe:ExecutionListeners)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.2';
+
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners')
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-execution-listeners');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <Service Task> with <Execution listeners> is only supported by Camunda 8.6 or newer');
+        });
       });
 
 
@@ -1530,6 +1554,33 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Link Intermediate Catch Event> must have a defined <Name>');
         });
 
+
+        it('should adjust (execution listener type)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', { eventType: 'start', type: '' }),
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/execution-listener');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('An <Execution Listener> must have a defined <Type>');
+        });
+
       });
 
 
@@ -1730,6 +1781,35 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <Service Task> with two or more <Headers> with the same <Key> (foo) is not supported');
+
+        });
+
+
+        it('should adjust (two execution listeners with same event type and type)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', { eventType: 'start', type: 'foo' }),
+                    createElement('zeebe:ExecutionListener', { eventType: 'start', type: 'foo' })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/duplicate-execution-listeners');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <Service Task> with two or more <Execution Listeners> with the same <Event Type> (start) and <Type> (foo) is not supported');
 
         });
 
