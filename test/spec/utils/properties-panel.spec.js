@@ -1934,6 +1934,84 @@ describe('utils/properties-panel', function() {
 
         expectErrorMessage(entryIds[ 0 ], 'Must wait for completion.', report);
       });
+
+
+      describe('execution listener', async function() {
+
+        it('should mark type as required', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'start'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/execution-listener');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-executionListener-0-listenerType' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be defined.', report);
+        });
+
+
+        it('duplicated', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'start',
+                      type: 'foo'
+                    }),
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'start',
+                      type: 'foo'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/duplicate-execution-listeners');
+
+          const reports = await getLintErrors(node, rule);
+
+          // when
+          reports.forEach(report => {
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([
+              'ServiceTask_1-executionListener-0-listenerType',
+              'ServiceTask_1-executionListener-1-listenerType'
+            ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
+          });
+        });
+
+      });
     });
 
 
