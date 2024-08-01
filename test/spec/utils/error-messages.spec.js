@@ -1863,6 +1863,31 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Compensate End Event> with <Wait for completion> disabled is not supported by Camunda 8 (Zeebe 1.0)');
         });
 
+
+        it('should adjust (binding type set to false)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  bindingType: 'deployment'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-binding-type');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+          // then
+          expect(errorMessage).to.equal('A <Call Activity> with <Binding: deployment> is only supported by Camunda 8.6 or newer');
+        });
+
       });
 
 
