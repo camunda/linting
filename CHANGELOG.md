@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.24.0
+
+* `FEAT`: handle `no-binding-type` rule ([#112](https://github.com/camunda/linting/pull/112))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.23.0`
+
 ## 3.23.0
 
 * `FEAT`: support execution listeners ([#111](https://github.com/camunda/linting/pull/111))
