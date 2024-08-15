@@ -249,7 +249,6 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.3');
 
           // then
-          console.log(errorMessage);
           expect(errorMessage).to.equal('A collapsed <Ad Hoc Sub Process> is only supported by Camunda 8.4 or newer');
         });
 
@@ -423,6 +422,33 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <User Task> with <Due date> or <Follow up date> is only supported by Camunda 8.2 or newer');
+        });
+
+
+        it('should adjust (user task with zeebe:PriorityDefinition)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.5';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:PriorityDefinition', {
+                  priority: '40'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-priority-definition');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Priority> is only supported by Camunda 8.6 or newer');
         });
 
 
@@ -1749,6 +1775,33 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <User Task> <Follow up date> must be an ISO 8601 date');
+        });
+
+
+        it('should adjust (priority)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.6';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:PriorityDefinition', {
+                  priority: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/priority-definition');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> <Priority> must be an expression, or an integer between 0 and 100');
         });
 
       });
