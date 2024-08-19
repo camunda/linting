@@ -1722,6 +1722,33 @@ describe('utils/properties-panel', function() {
       });
 
 
+      it('user task - Priority', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:PriorityDefinition', {
+                priority: 'foo'
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/priority-definition');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'priorityDefinitionPriority' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an integer between 0 and 100.', report);
+      });
+
+
       it('call activity - Propagate all variables', async function() {
 
         // given
