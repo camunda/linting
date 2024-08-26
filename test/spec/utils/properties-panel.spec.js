@@ -1938,7 +1938,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('should support `waitForCompletion`', async function() {
+      it('intermediate throw event - Wait for completion', async function() {
 
         // given
         const node = createElement('bpmn:IntermediateThrowEvent', {
@@ -1963,7 +1963,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      describe('execution listener', async function() {
+      describe('Execution listeners', async function() {
 
         it('should mark type as required', async function() {
 
@@ -2039,6 +2039,177 @@ describe('utils/properties-panel', function() {
         });
 
       });
+
+
+      describe('Binding', function() {
+
+        it('business rule task', async function() {
+
+          // given
+          const node = createElement('bpmn:BusinessRuleTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledDecision', {
+                  bindingType: 'deployment'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-binding-type');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'bindingType' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+        });
+
+
+        it('call activity', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  bindingType: 'deployment'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-binding-type');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'bindingType' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+        });
+
+
+        it('user task', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition', {
+                  bindingType: 'deployment'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-binding-type');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'bindingType' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+        });
+
+      });
+
+
+      describe('Version tag', function() {
+
+        it('business rule task', async function() {
+
+          // given
+          const node = createElement('bpmn:BusinessRuleTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledDecision', {
+                  versionTag: 'v1.0.0'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'versionTag' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+        });
+
+
+        it('call activity', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  versionTag: 'v1.0.0'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'versionTag' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+        });
+
+
+        it('user task', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition', {
+                  versionTag: 'v1.0.0'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'versionTag' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+        });
+
+      });
+
     });
 
 
