@@ -1,6 +1,6 @@
 import Linter from 'bpmnlint/lib/linter';
 
-async function lintNode(node, rule, config = {},) {
+async function lintNode(node, rule, config = {}) {
   const linter = new Linter({
     resolver: {
       resolveRule: () => Promise.resolve(rule)
