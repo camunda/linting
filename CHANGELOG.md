@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.26.0
+
+* `FEAT`: support zeebe:VersionTag and zeebe:versionTag errors ([#115](https://github.com/camunda/linting/pull/115))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.25.0`
+* `DEPS`: update to `zeebe-bpmn-moddle@1.6.0`
+
 ## 3.25.0
 
 * `FEAT`: validate `zeebe:priorityDefinition:priority` ([#113](https://github.com/camunda/linting/issues/113))
