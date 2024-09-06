@@ -1722,7 +1722,32 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('user task - Priority', async function() {
+      it('user task - Priority not supported', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:PriorityDefinition')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-priority-definition');
+
+        const report = await getLintError(node, rule, { version: '8.5' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'priorityDefinitionPriority' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+      });
+
+
+      it('user task - Priority value not supported', async function() {
 
         // given
         const node = createElement('bpmn:UserTask', {
@@ -1737,7 +1762,7 @@ describe('utils/properties-panel', function() {
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/priority-definition');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '8.6' });
 
         // when
         const entryIds = getEntryIds(report);
