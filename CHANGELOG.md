@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.26.1
+
+* `FIX`: support zeebe:PriorityDefinition errors ([#116](https://github.com/camunda/linting/pull/116))
+
 ## 3.26.0
 
 * `FEAT`: support zeebe:VersionTag and zeebe:versionTag errors ([#115](https://github.com/camunda/linting/pull/115))
