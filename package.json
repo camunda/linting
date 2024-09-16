@@ -47,23 +47,23 @@
     "bpmn-js-element-templates": "^2.2.1",
     "bpmn-js-properties-panel": "^5.23.2",
     "camunda-bpmn-js-behaviors": "^1.6.1",
-    "chai": "^4.4.1",
+    "chai": "^4.5.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-plugin-bpmn-io": "^1.0.0",
-    "karma": "^6.4.3",
+    "karma": "^6.4.4",
     "karma-chrome-launcher": "^3.2.0",
     "karma-debug-launcher": "0.0.5",
     "karma-env-preprocessor": "^0.1.1",
     "karma-mocha": "^2.0.1",
     "karma-sinon-chai": "^2.0.2",
     "karma-webpack": "^5.0.1",
-    "mocha": "^10.5.2",
+    "mocha": "^10.7.3",
     "mocha-test-container-support": "^0.2.0",
     "puppeteer": "^22.12.1",
     "sinon": "^17.0.1",
     "sinon-chai": "^3.7.0",
-    "webpack": "^5.92.1"
+    "webpack": "^5.94.0"
   },
   "peerDependencies": {
     "bpmn-js-properties-panel": ">= 2.0.0"
