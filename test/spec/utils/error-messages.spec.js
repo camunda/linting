@@ -863,85 +863,6 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Timer Intermediate Catch Event> with <Date> is only supported by Camunda 8.3 or newer');
         });
 
-
-        describe('version tag', function() {
-
-          it('should adjust (business rule task)', async function() {
-
-            // given
-            const node = createElement('bpmn:BusinessRuleTask', {
-              extensionElements: createElement('bpmn:ExtensionElements', {
-                values: [
-                  createElement('zeebe:CalledDecision', {
-                    versionTag: 'v1.0.0'
-                  })
-                ]
-              })
-            });
-
-            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
-
-            const report = await getLintError(node, rule);
-
-            // when
-            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0', 'desktop');
-
-            // then
-            expect(errorMessage).to.equal('A <Business Rule Task> with <Version tag> is only supported by Camunda 8.6 or newer');
-          });
-
-
-          it('should adjust (call activity)', async function() {
-
-            // given
-            const node = createElement('bpmn:CallActivity', {
-              extensionElements: createElement('bpmn:ExtensionElements', {
-                values: [
-                  createElement('zeebe:CalledElement', {
-                    versionTag: 'v1.0.0'
-                  })
-                ]
-              })
-            });
-
-            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
-
-            const report = await getLintError(node, rule);
-
-            // when
-            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0', 'desktop');
-
-            // then
-            expect(errorMessage).to.equal('A <Call Activity> with <Version tag> is only supported by Camunda 8.6 or newer');
-          });
-
-
-          it('should adjust (user task)', async function() {
-
-            // given
-            const node = createElement('bpmn:UserTask', {
-              extensionElements: createElement('bpmn:ExtensionElements', {
-                values: [
-                  createElement('zeebe:FormDefinition', {
-                    versionTag: 'v1.0.0'
-                  })
-                ]
-              })
-            });
-
-            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
-
-            const report = await getLintError(node, rule);
-
-            // when
-            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0', 'desktop');
-
-            // then
-            expect(errorMessage).to.equal('A <User Task> with <Version tag> is only supported by Camunda 8.6 or newer');
-          });
-
-        });
-
       });
 
 
@@ -1711,6 +1632,88 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('An <Execution Listener> must have a defined <Type>');
+        });
+
+
+        describe('version tag', function() {
+
+          it('should adjust (business rule task)', async function() {
+
+            // given
+            const node = createElement('bpmn:BusinessRuleTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:CalledDecision', {
+                    bindingType: 'versionTag',
+                    versionTag: ''
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.6', 'desktop');
+
+            // then
+            expect(errorMessage).to.equal('A <Business Rule Task> with <Binding: version tag> must have a defined <Version tag>');
+          });
+
+
+          it('should adjust (call activity)', async function() {
+
+            // given
+            const node = createElement('bpmn:CallActivity', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:CalledElement', {
+                    bindingType: 'versionTag',
+                    versionTag: ''
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.6', 'desktop');
+
+            // then
+            expect(errorMessage).to.equal('A <Call Activity> with <Binding: version tag> must have a defined <Version tag>');
+          });
+
+
+          it('should adjust (user task)', async function() {
+
+            // given
+            const node = createElement('bpmn:UserTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:FormDefinition', {
+                    bindingType: 'versionTag',
+                    versionTag: ''
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.6', 'desktop');
+
+            // then
+            expect(errorMessage).to.equal('A <User Task> with <Binding: version tag> must have a defined <Version tag>');
+          });
+
         });
 
       });

@@ -2160,15 +2160,16 @@ describe('utils/properties-panel', function() {
             extensionElements: createElement('bpmn:ExtensionElements', {
               values: [
                 createElement('zeebe:CalledDecision', {
-                  versionTag: 'v1.0.0'
+                  bindingType: 'versionTag',
+                  versionTag: ''
                 })
               ]
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.6' });
 
           // when
           const entryIds = getEntryIds(report);
@@ -2176,7 +2177,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'versionTag' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Version tag must be defined.', report);
         });
 
 
@@ -2187,15 +2188,16 @@ describe('utils/properties-panel', function() {
             extensionElements: createElement('bpmn:ExtensionElements', {
               values: [
                 createElement('zeebe:CalledElement', {
-                  versionTag: 'v1.0.0'
+                  bindingType: 'versionTag',
+                  versionTag: ''
                 })
               ]
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.6' });
 
           // when
           const entryIds = getEntryIds(report);
@@ -2203,7 +2205,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'versionTag' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Version tag must be defined.', report);
         });
 
 
@@ -2214,15 +2216,16 @@ describe('utils/properties-panel', function() {
             extensionElements: createElement('bpmn:ExtensionElements', {
               values: [
                 createElement('zeebe:FormDefinition', {
-                  versionTag: 'v1.0.0'
+                  bindingType: 'versionTag',
+                  versionTag: ''
                 })
               ]
             })
           });
 
-          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-version-tag');
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.6' });
 
           // when
           const entryIds = getEntryIds(report);
@@ -2230,7 +2233,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'versionTag' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+          expectErrorMessage(entryIds[ 0 ], 'Version tag must be defined.', report);
         });
 
       });
