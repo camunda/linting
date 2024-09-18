@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.27.0
+
+* `FEAT`: introduce `version-tag` rule ([camunda/bpmnlint-plugin-camunda-compat#174](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/174))
+* `FIX`: do not double validate version tag field ([camunda/bpmnlint-plugin-camunda-compat#174](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/174))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.26.0`
+
 ## 3.26.1
 
 * `FIX`: support zeebe:PriorityDefinition errors ([#116](https://github.com/camunda/linting/pull/116))
