@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.27.1
+
+* `FIX`: correct false positive in `global` rule ([bpmn-io/bpmnlint#139](https://github.com/bpmn-io/bpmnlint/issues/139))
+* `FIX`: correct false positive in `no-implicit-end` rule ([bpmn-io/bpmnlint#140](https://github.com/bpmn-io/bpmnlint/issues/140))
+* `FIX`: correct `label-required` not triggering for boundary events ([bpmn-io/bpmnlint#141](https://github.com/bpmn-io/bpmnlint/issues/141))
+* `DEPS`: update to `bpmnlint@10.3.1`
+
 ## 3.27.0
 
 * `FEAT`: introduce `version-tag` rule ([camunda/bpmnlint-plugin-camunda-compat#174](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/174))
