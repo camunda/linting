@@ -14,6 +14,30 @@ describe('utils/documentation', function() {
     expect(url).to.be.null;
   });
 
+  it('should get custom documentation URL', function() {
+
+    // given
+    const rule = 'camunda-compat/foo';
+    const customDocumentationUrl = 'https://docs.camunda.io/docs/test';
+
+    // when
+    // then
+    expect(getDocumentationUrl(rule, customDocumentationUrl)).to.equal(customDocumentationUrl);
+
+  });
+
+  it('should not get URL for null custom documentation URL', function() {
+
+    // given
+    const rule = 'camunda-compat/foo';
+
+    // when
+    const url = getDocumentationUrl(rule, null);
+
+    // then
+    expect(url).to.be.null;
+
+  });
 
   [
     [ 'camunda-compat/called-element', 'https://docs.camunda.io/docs/next/components/modeler/reference/modeling-guidance/rules/called-element' ],
