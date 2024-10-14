@@ -8,7 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 3.27.2
 
-* `FIX`:  ([camunda/bpmnlint-plugin-camunda-compat#175](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/175))
+* `FIX`: report FEEL errors for processes ([camunda/bpmnlint-plugin-camunda-compat#175](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/175))
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.26.1`
 
 ## 3.27.1
