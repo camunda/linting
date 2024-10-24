@@ -654,6 +654,23 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <User Task> should have a defined <Form>');
         });
 
+
+        it('should adjust (zeebe user task)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask');
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/zeebe-user-task');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> must have <Implementation: Zeebe user task>');
+        });
+
       });
 
 
