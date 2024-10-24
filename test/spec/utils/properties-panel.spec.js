@@ -1071,14 +1071,14 @@ describe('utils/properties-panel', function() {
           id: 'UserTask_1',
           extensionElements: createElement('bpmn:ExtensionElements', {
             values: [
-              createElement('zeebe:UserTask', {})
+              createElement('zeebe:UserTask')
             ]
           })
         });
 
         const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-zeebe-user-task');
 
-        const report = await getLintError(node, rule);
+        const report = await getLintError(node, rule, { version: '8.4' });
 
         // when
         const entryIds = getEntryIds(report);
@@ -1086,7 +1086,28 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'userTaskImplementation' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Supported only in Camunda 8.5 or newer.', report);
+        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.5 or newer.', report);
+      });
+
+
+      it('zeebe-user-task', async function() {
+
+        // given
+        const node = createElement('bpmn:UserTask', {
+          id: 'UserTask_1'
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/zeebe-user-task');
+
+        const report = await getLintError(node, rule, { version: '8.7' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'userTaskImplementation' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
       });
 
 
