@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.28.0
+
+* `FEAT`: add `zeebe-user-task` rule ([camunda/bpmnlint-plugin-camunda-compat#179](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/179))
+* `FEAT`: add Camunda 8.7 and 7.23 configurations ([camunda/bpmnlint-plugin-camunda-compat#176](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/176))
+* `FIX`: lint message end events for task definition ([camunda/bpmnlint-plugin-camunda-compat#180](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/180))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.27.0`
+
 ## 3.27.2
 
 * `FIX`: report FEEL errors for processes ([camunda/bpmnlint-plugin-camunda-compat#175](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/175))
