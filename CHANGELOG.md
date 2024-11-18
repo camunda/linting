@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.29.0
+
 * `FEAT`: support for task listeners ([#123](https://github.com/camunda/linting/pull/123))
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.28.0`
 * `DEPS`: update to `zeebe-bpmn-moddle@1.7.0`
