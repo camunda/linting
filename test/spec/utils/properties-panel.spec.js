@@ -2087,6 +2087,43 @@ describe('utils/properties-panel', function() {
       });
 
 
+      describe('Task listeners', async function() {
+
+        it('should mark type as required', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            id: 'UserTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskListeners', {
+                  listeners: [
+                    createElement('zeebe:TaskListener', {
+                      eventType: 'start'
+                    })
+                  ]
+                }),
+                createElement('zeebe:UserTask')
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/task-listener');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'UserTask_1-taskListener-0-listenerType' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be defined.', report);
+        });
+
+      });
+
+
       describe('Binding', function() {
 
         it('business rule task', async function() {

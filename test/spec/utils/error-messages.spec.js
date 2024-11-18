@@ -502,6 +502,31 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (zeebe:TaskListeners)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.2';
+
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskListeners')
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-task-listeners');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Task listeners> is only supported by Camunda 8.7 or newer');
+        });
+
+
         it('should adjust (zeebe:VersionTag)', async function() {
 
           // given
@@ -1649,6 +1674,34 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('An <Execution Listener> must have a defined <Type>');
+        });
+
+
+        it('should adjust (task listener type)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskListeners', {
+                  listeners: [
+                    createElement('zeebe:TaskListener', { eventType: 'start', type: '' }),
+                  ]
+                }),
+                createElement('zeebe:UserTask')
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/task-listener');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <Task Listener> must have a defined <Type>');
         });
 
 
