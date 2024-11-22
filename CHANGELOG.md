@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.29.1
+
+* `FIX`: relax `task-listener` to not check implementation type ([camunda/bpmnlint-plugin-camunda-compat#182](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/182))
+* `FIX`: do not mark job worker user task as incorrect
+* `FIX`: remove `zeebe-user-task` rule
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.28.1`
+
 ## 3.29.0
 
 * `FEAT`: support for task listeners ([#123](https://github.com/camunda/linting/pull/123))

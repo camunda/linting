@@ -1090,27 +1090,6 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('zeebe-user-task', async function() {
-
-        // given
-        const node = createElement('bpmn:UserTask', {
-          id: 'UserTask_1'
-        });
-
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/zeebe-user-task');
-
-        const report = await getLintError(node, rule, { version: '8.7' });
-
-        // when
-        const entryIds = getEntryIds(report);
-
-        // then
-        expect(entryIds).to.eql([ 'userTaskImplementation' ]);
-
-        expectErrorMessage(entryIds[ 0 ], 'Not supported.', report);
-      });
-
-
       it('inclusive-gateway (no condition expression)', async function() {
 
         // given
