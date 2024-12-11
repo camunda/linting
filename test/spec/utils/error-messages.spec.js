@@ -678,6 +678,26 @@ describe('utils/error-messages', function() {
           // then
           expect(errorMessage).to.equal('A <User Task> should have a defined <Form>');
         });
+
+
+        it('should adjust (zeebe:UserTask)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.6';
+
+          const node = createElement('bpmn:UserTask');
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/zeebe-user-task');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Implementation: Job worker> is deprecated on Camunda 8.6. Consider migrating to <Implementation: Zeebe user task>.');
+        });
+
       });
 
 
