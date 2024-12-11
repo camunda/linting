@@ -369,7 +369,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
-          expect(errorMessage).to.equal('A <User Task> with <Implementation: Zeebe user task> is only supported by Camunda 8.5 or newer');
+          expect(errorMessage).to.equal('A <User Task> with <Implementation: Camunda user task> is only supported by Camunda 8.5 or newer');
         });
 
 
@@ -695,7 +695,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
-          expect(errorMessage).to.equal('A <User Task> with <Implementation: Job worker> is deprecated on Camunda 8.6. Consider migrating to <Implementation: Zeebe user task>.');
+          expect(errorMessage).to.equal('A <User Task> with <Implementation: Job worker> is deprecated on Camunda 8.6. Consider migrating to <Implementation: Camunda user task>.');
         });
 
       });
@@ -1389,7 +1389,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (Zeebe User Task) (form ID) (Camunda 8.5 and newer)', async function() {
+        it('should adjust (Camunda User Task) (form ID) (Camunda 8.5 and newer)', async function() {
 
           // given
           const node = createElement('bpmn:UserTask', {
@@ -1453,7 +1453,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (Zeebe User Task) (external reference) (Camunda 8.5 and newer)', async function() {
+        it('should adjust (Camunda User Task) (external reference) (Camunda 8.5 and newer)', async function() {
 
           // given
           const node = createElement('bpmn:UserTask', {
