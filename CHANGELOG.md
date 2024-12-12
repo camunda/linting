@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.30.0
+
+* `FEAT`: rename "Zeebe user task" to "Camunda user task" ([#126](https://github.com/camunda/linting/pull/126))
+* `FEAT`: mark job worker-based user task managed by Camunda as deprecated ([#125](https://github.com/camunda/linting/pull/125))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.29.0`
+
 ## 3.29.1
 
 * `FIX`: relax `task-listener` to not check implementation type ([camunda/bpmnlint-plugin-camunda-compat#182](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/182))
