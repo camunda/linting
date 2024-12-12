@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>bpmn-io/renovate-config:recommended"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "@bpmn-io/.*",
+        "@camunda/.*",
+        "bpmn-js.*",
+        "diagram-js.*",
+        "camunda.*",
+        "zeebe.*"
+      ],
+      "groupName": "modeling dependencies",
+      "groupSlug": "modeling"
+    }
+  ]
+}
