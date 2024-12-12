@@ -695,7 +695,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
-          expect(errorMessage).to.equal('A <User Task> with <Implementation: Job worker> is deprecated on Camunda 8.6. Consider migrating to <Implementation: Camunda user task>.');
+          expect(errorMessage).to.equal('A <User Task> with <Implementation: Job worker> managed by Camunda is deprecated. Consider migrating to <Implementation: Camunda user task>.');
         });
 
       });
