@@ -900,7 +900,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('user-task-form (Zeebe User Task) - Form ID (Camunda 8.5 and newer)', async function() {
+      it('user-task-form (Camunda User Task) - Form ID (Camunda 8.5 and newer)', async function() {
 
         // given
         const node = createElement('bpmn:UserTask', {
@@ -928,7 +928,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      it('user-task-form (Zeebe User Task) - External reference (Camunda 8.5 and newer)', async function() {
+      it('user-task-form (Camunda User Task) - External reference (Camunda 8.5 and newer)', async function() {
 
         // given
         const node = createElement('bpmn:UserTask', {
