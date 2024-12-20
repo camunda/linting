@@ -128,7 +128,7 @@ describe('Linter', function() {
     });
 
 
-    it('should add documentation URL to each report', async function() {
+    it('should ship documentations with reports', async function() {
 
       // given
       const { root } = await createModdle(camundaCloud10ErrorsXML);
@@ -138,7 +138,7 @@ describe('Linter', function() {
 
       // then
       reports.forEach(report => {
-        expect(report.documentation.url).to.exist;
+        expect(report.meta.documentation.url).to.exist;
       });
     });
 
