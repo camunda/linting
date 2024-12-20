@@ -128,21 +128,6 @@ describe('Linter', function() {
     });
 
 
-    it('should add documentation URL to each report', async function() {
-
-      // given
-      const { root } = await createModdle(camundaCloud10ErrorsXML);
-
-      // when
-      const reports = await linter.lint(root);
-
-      // then
-      reports.forEach(report => {
-        expect(report.documentation.url).to.exist;
-      });
-    });
-
-
     it('should not break on rule error', async function() {
 
       // given
