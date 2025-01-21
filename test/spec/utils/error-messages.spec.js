@@ -523,7 +523,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
-          expect(errorMessage).to.equal('A <User Task> with <Task listeners> is only supported by Camunda 8.7 or newer');
+          expect(errorMessage).to.equal('A <User Task> with <Task listeners> is only supported by Camunda 8.8 or newer');
         });
 
 
