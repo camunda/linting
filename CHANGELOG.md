@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.31.0
+
+* `FEAT`: allow task listeners in Camunda 8.8 or newer
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.30.0`
+
 ## 3.30.0
 
 * `FEAT`: rename "Zeebe user task" to "Camunda user task" ([#126](https://github.com/camunda/linting/pull/126))
