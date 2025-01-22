@@ -9,7 +9,9 @@ ___Note:__ Yet to be released changes appear here._
 ## 3.31.0
 
 * `FEAT`: allow task listeners in Camunda 8.8 or newer
-* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.30.0`
+* `FEAT`: support `bpmn:AdHocSubProcess` for Camunda 8.7 or newer
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.31.0`
+* `DEPS`: update to `zeebe-bpmn-moddle@1.9.0`
 
 ## 3.30.0
 
