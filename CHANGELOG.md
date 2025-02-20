@@ -6,9 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.32.0
+
 * `FEAT`: add documentation links to rules ([camunda/bpmnlint-plugin-camunda-compat#193](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/193))
 * `FEAT`: add `ad-hoc-sub-process` rule ([camunda/bpmnlint-plugin-camunda-compat#189](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/189), [camunda/bpmnlint-plugin-camunda-compat#190](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/190))
-* `CHORE`: use rule-provided documentation ([#130](https://github.com/camunda/linting/pull/130)`
+* `CHORE`: use rule-provided documentation ([#130](https://github.com/camunda/linting/pull/130))
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.33.0`
 * `DEPS`: update to `bpmnlint@11.2.0`
 
