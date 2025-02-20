@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.32.1
+
+* `FIX`: correct documentation URLs ([camunda/bpmnlint-plugin-camunda-compat#194](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/194))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.33.1`
+
 ## 3.32.0
 
 * `FEAT`: add documentation links to rules ([camunda/bpmnlint-plugin-camunda-compat#193](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/193))
