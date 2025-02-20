@@ -178,7 +178,7 @@ describe('Linting', function() {
         container.innerHTML = '';
 
         reports.map((report) => {
-          const { id, message, category, rule, documentation } = report;
+          const { id, message, category, rule, meta } = report;
 
           if (category === 'rule-error') {
             return domify(`<div class="errorItem"><strong>${ category }</strong> Rule <${ escapeHTML(rule) }> errored with the following message: ${ escapeHTML(message) }</div>`);
@@ -186,8 +186,8 @@ describe('Linting', function() {
 
           const element = domify(`<div class="errorItem"><strong>${ category }</strong> ${ id }: ${escapeHTML(message) } </div>`);
 
-          if (documentation.url) {
-            const documentationLink = domify(`<a href="${ documentation.url }" rel="noopener" target="_blank">ref</a>`);
+          if (meta?.documentation?.url) {
+            const documentationLink = domify(`<a href="${ meta?.documentation?.url }" rel="noopener" target="_blank">ref</a>`);
 
             documentationLink.addEventListener('click', e => e.stopPropagation());
 
