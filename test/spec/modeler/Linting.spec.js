@@ -116,9 +116,6 @@ describe('Linting', function() {
 
   function createModeler(diagramXML, additionalModules, moddleExtensions) {
     return bootstrapModeler(diagramXML, {
-      keyboard: {
-        bindTo: document
-      },
       additionalModules: [
         lintingModule,
         propertiesPanelModule,
