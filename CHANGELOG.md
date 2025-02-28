@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.34.0
+
+* `FEAT`: rework message on elements that should not be used ([bpmn-io/bpmnlint#173](https://github.com/bpmn-io/bpmnlint/pull/173))
+* `FIX`: make `link-event` rule check only BPMN compliance
+* `DEPS`: update to `bpmnlint@11.4.1`
+
 ## 3.33.0
 
 * `FEAT`: integrate `bpmnlint:correctness` config ([#132](https://github.com/camunda/linting/pull/132))
