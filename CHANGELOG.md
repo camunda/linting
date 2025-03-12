@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add ad-hoc subprocess completion support ([camunda/bpmnlint-plugin-camunda-compat#196](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/196))
+* `DEPS`: update to `bpmn-js-properties-panel@5.34.0`
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.34.0`
+
 ## 3.34.0
 
 * `FEAT`: rework message on elements that should not be used ([bpmn-io/bpmnlint#173](https://github.com/bpmn-io/bpmnlint/pull/173))
