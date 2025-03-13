@@ -649,6 +649,7 @@ describe('utils/properties-panel', function() {
           expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.8 or newer.', report);
         });
 
+
         it('Cancel remaining instances (Camunda 8.7 and older)', async function() {
 
           // given
@@ -1613,6 +1614,7 @@ describe('utils/properties-panel', function() {
           expect(entryIds).to.eql([ 'multiInstance-completionCondition' ]);
         });
 
+
         it('should return error for ad-hoc subprocess completion condition', async function() {
           const node = createElement('bpmn:AdHocSubProcess', {
             completionCondition: createElement('bpmn:FormalExpression', {
@@ -1628,6 +1630,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'completionCondition' ]);
         });
+
 
         it('should return error for conditional flow', async function() {
           const node = createElement('bpmn:SequenceFlow', {
