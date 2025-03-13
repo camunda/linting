@@ -670,7 +670,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'cancelRemainingInstances' ]);
 
-          expectNoErrorMessage(entryIds[ 0 ], report);
+          expectErrorMessage(entryIds[ 0 ], 'Must be checked.', report);
         });
       });
 
