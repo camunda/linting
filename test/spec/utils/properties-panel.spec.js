@@ -622,6 +622,57 @@ describe('utils/properties-panel', function() {
         expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.', report);
       });
 
+      describe('ad-hoc-subprocess', async function() {
+
+        it('Completion condition (Camunda 8.7 and older)', async function() {
+
+          // given
+          const node = createElement('bpmn:AdHocSubProcess', {
+            completionCondition: createElement('bpmn:FormalExpression', {
+              body: '=true'
+            }),
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'completionCondition' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.8 or newer.', report);
+        });
+
+
+        it('Cancel remaining instances (Camunda 8.7 and older)', async function() {
+
+          // given
+          const node = createElement('bpmn:AdHocSubProcess', {
+            cancelRemainingInstances: false,
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'cancelRemainingInstances' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be checked.', report);
+        });
+      });
 
       describe('called-element', function() {
 
@@ -1561,6 +1612,23 @@ describe('utils/properties-panel', function() {
 
           // then
           expect(entryIds).to.eql([ 'multiInstance-completionCondition' ]);
+        });
+
+
+        it('should return error for ad-hoc subprocess completion condition', async function() {
+          const node = createElement('bpmn:AdHocSubProcess', {
+            completionCondition: createElement('bpmn:FormalExpression', {
+              body: INVALID_FEEL
+            })
+          });
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'completionCondition' ]);
         });
 
 

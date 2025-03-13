@@ -32,7 +32,7 @@
     "@bpmn-io/diagram-js-ui": "^0.2.3",
     "bpmn-moddle": "^9.0.1",
     "bpmnlint": "^11.4.1",
-    "bpmnlint-plugin-camunda-compat": "^2.33.1",
+    "bpmnlint-plugin-camunda-compat": "^2.34.0",
     "bpmnlint-utils": "^1.0.2",
     "camunda-bpmn-moddle": "^7.0.1",
     "clsx": "^2.0.0",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "bpmn-js": "^18.3.1",
     "bpmn-js-element-templates": "^2.5.3",
-    "bpmn-js-properties-panel": "^5.32.1",
+    "bpmn-js-properties-panel": "^5.34.0",
     "camunda-bpmn-js-behaviors": "^1.9.1",
     "chai": "^4.5.0",
     "cross-env": "^7.0.3",
