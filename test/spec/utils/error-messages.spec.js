@@ -2480,6 +2480,30 @@ describe('utils/error-messages', function() {
       });
 
 
+      describe('attached to ref element type not allowed', function() {
+
+        it('should adjust', async function() {
+
+          const node = createElement('bpmn:BoundaryEvent', {
+            attachedToRef: createElement('bpmn:UserTask'),
+            cancelActivity: false,
+            eventDefinitions: [
+              createElement('bpmn:EscalationEventDefinition')
+            ]
+          });
+
+          // when
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/escalation-boundary-event-attached-to-ref');
+          const report = await getLintError(node, rule);
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('An <Escalation Boundary Event> is not allowed on a <User Task>');
+        });
+
+      });
+
+
       describe('loop not allowed', function() {
 
         it('should adjust', async function() {
