@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.36.0
+
+* `FEAT`: adjust error message for attached escalation boundary events
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.34.1`
+
 ## 3.35.0 
 
 * `FEAT`: add ad-hoc subprocess completion support ([camunda/bpmnlint-plugin-camunda-compat#196](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/196))
