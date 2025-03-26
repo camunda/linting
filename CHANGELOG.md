@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: correct `zeebe-user-task` documentation URL ([camunda/bpmnlint-plugin-camunda-compat#199](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/199))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.34.2`
+
 ## 3.36.0
 
 * `FEAT`: adjust error message for attached escalation boundary events
