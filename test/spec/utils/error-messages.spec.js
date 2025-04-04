@@ -1415,6 +1415,33 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (versionTag) (Camunda 8.6 and newer)', async function() {
+
+          // given
+          const node = createElement('bpmn:UserTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:FormDefinition', {
+                  formId: 'set',
+                  bindingType: 'versionTag',
+                  versionTag:''
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
+
+          const report = await getLintError(node, rule, { version: '8.6' });
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Binding: version tag> must have a defined <Version tag>');
+        });
+
+
         it('should adjust (body)', async function() {
 
           // given
