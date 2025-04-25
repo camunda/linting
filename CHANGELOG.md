@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.37.0
+
+* `FEAT`: add Camunda 7.24 configurations ([camunda/bpmnlint-plugin-camunda-compat#200](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/200))
+* `FIX`: allow disconnected elements and missing start/end events within ad-hoc subprocess ([bpmn-io/bpmnlint#181](https://github.com/bpmn-io/bpmnlint/pull/181))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.35.0`
+* `DEPS`: update to `bpmnlint@11.4.2`
+
 ## 3.36.1
 
 * `FIX`: do not require start and end events in ad-hoc subprocess ([bpmn-io/bpmnlint#176](https://github.com/bpmn-io/bpmnlint/pull/176))
