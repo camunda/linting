@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.37.1
+
+* `FIX`: allow intermediate throw events without outgoing sequence flows in ad-hoc-subprocess ([#186](https://github.com/bpmn-io/bpmnlint/pull/186))
+* `DEPS`: update to `bpmnlint@11.4.3`
+
 ## 3.37.0
 
 * `FEAT`: add Camunda 7.24 configurations ([camunda/bpmnlint-plugin-camunda-compat#200](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/200))
