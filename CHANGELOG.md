@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.38.0
+
+* `FEAT`: add `single-blank-start-event` to `correctness` ruleset ([bpmn-io/bpmnlint#187](https://github.com/bpmn-io/bpmnlint/pull/187))
+* `FEAT`: allow to pass moddle extensions when validating via CLI ([bpmn-io/bpmnlint#62](https://github.com/bpmn-io/bpmnlint/issues/62), [bpmn-io/bpmnlint#8](https://github.com/bpmn-io/bpmnlint/issues/8), [bpmn-io/bpmnlint#188](https://github.com/bpmn-io/bpmnlint/pull/188))
+* `CHORE`: update documentation link for C7 HTTL ([camunda/bpmnlint-plugin-camunda-compat#202](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/202))
+* `DEPS`: update to `bpmnlint@11.6.0`
+
 ## 3.37.1
 
 * `FIX`: allow intermediate throw events without outgoing sequence flows in ad-hoc-subprocess ([#186](https://github.com/bpmn-io/bpmnlint/pull/186))
