@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+# 3.39.0
+
+* `FEAT`: use parserDialect `camunda` for `feel` rule ([camunda/bpmnlint-plugin-camunda-compat#205](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/205))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.37.0`
+
 ## 3.38.0
 
 * `FEAT`: add `single-blank-start-event` to `correctness` ruleset ([bpmn-io/bpmnlint#187](https://github.com/bpmn-io/bpmnlint/pull/187))
