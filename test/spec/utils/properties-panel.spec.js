@@ -1966,6 +1966,136 @@ describe('utils/properties-panel', function() {
       });
 
 
+      describe('io mapping',function() {
+
+        it('missing input source (<=8.7)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      target: 'target'
+                    })
+                  ],
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Empty variable assignment is only supported by Camunda 8.8 or newer.', report);
+        });
+
+
+        it('missing input target', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {})
+                  ],
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-target' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Variable name must be defined.', report);
+        });
+
+
+        it('missing output source', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  outputParameters: [
+                    createElement('zeebe:Output', {
+                      target: 'target'
+                    })
+                  ],
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-output-0-source' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Variable assignment must be defined.', report);
+        });
+
+
+        it('missing output target', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  outputParameters: [
+                    createElement('zeebe:Output', {
+                      source: 'source'
+                    })
+                  ],
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-output-0-target' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Variable name must be defined.', report);
+        });
+
+      });
+
+
       describe('link event - Name', async function() {
 
         it('required', async function() {
