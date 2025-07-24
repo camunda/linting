@@ -1104,6 +1104,120 @@ describe('utils/error-messages', function() {
         });
 
 
+        describe('input output mapping', function() {
+
+          it('should adjust (input source, <=8.7)', async function() {
+            const executionPlatformVersion = '8.7';
+            const node = createElement('bpmn:ServiceTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    inputParameters: [
+                      createElement('zeebe:Input', {
+                        target: 'target'
+                      })
+                    ]
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+            const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+            // then
+            expect(errorMessage).to.equal('An <Input> must have a defined <Variable assignment value>. Empty variable assignments are only supported by Camunda 8.8 or newer');
+          });
+
+
+          it('should adjust (input target)', async function() {
+            const executionPlatformVersion = '8.8';
+            const node = createElement('bpmn:ServiceTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    inputParameters: [
+                      createElement('zeebe:Input')
+                    ]
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+            const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+            // then
+            expect(errorMessage).to.equal('An <Input> must have a defined <Local variable name>');
+          });
+
+
+          it('should adjust (output source)', async function() {
+            const executionPlatformVersion = '8.7';
+            const node = createElement('bpmn:ServiceTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    inputParameters: [
+                      createElement('zeebe:Output',{
+                        target: 'target'
+                      })
+                    ]
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+            const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+            // then
+            expect(errorMessage).to.equal('An <Output> must have a defined <Variable assignment value>');
+          });
+
+
+          it('should adjust (output target)', async function() {
+            const executionPlatformVersion = '8.7';
+            const node = createElement('bpmn:ServiceTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    inputParameters: [
+                      createElement('zeebe:Output',{
+                        source: 'source'
+                      })
+                    ]
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/io-mapping');
+
+            const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+            // then
+            expect(errorMessage).to.equal('An <Output> must have a defined <Process variable name>');
+          });
+
+        });
+
+
         it('should adjust (message name)', async function() {
 
           // given
