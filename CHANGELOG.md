@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.40.1
+
+* `FIX`: revert inclusion of camunda builtin extensions due to performance issues ([camunda/bpmnlint-plugin-camunda-compat#215](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/215))
+* `FIX`: make `priority-definition` rule handle number value ([camunda/bpmnlint-plugin-camunda-compat#213](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/213))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.39.0` ([#145](https://github.com/camunda/linting/pull/145/files))
+
 ## 3.40.0
 
 * `FEAT`: support camunda builtin extensions in `feel` rule ([camunda/bpmnlint-plugin-camunda-compat#206](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/206))
