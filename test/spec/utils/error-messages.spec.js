@@ -552,6 +552,34 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Process> with <Version tag> is only supported by Camunda 8.6 or newer');
         });
 
+
+        it('should adjust (bpmn:AdHocSubProcess with zeebe:TaskDefinition)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.7';
+
+          const node = createElement('bpmn:AdHocSubProcess', {
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskDefinition')
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Ad Hoc Sub Process> with <Implementation: Job worker> is only supported by Camunda 8.8 or newer');
+        });
+
       });
 
 
