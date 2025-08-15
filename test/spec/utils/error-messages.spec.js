@@ -758,6 +758,66 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Service Task> with <Multi-instance marker> and defined <Output collection> must have a defined <Output element>');
         });
 
+
+        it('should adjust (zeebe:AdHoc output collection)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.8';
+
+          const node = createElement('bpmn:AdHocSubProcess', {
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:AdHoc', {
+                  outputCollection: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Ad Hoc Sub Process> with defined <Output collection> must have a defined <Output element>');
+        });
+
+
+        it('should adjust (zeebe:AdHoc output element)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.8';
+
+          const node = createElement('bpmn:AdHocSubProcess', {
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:AdHoc', {
+                  outputElement: '=foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Ad Hoc Sub Process> with defined <Output element> must have a defined <Output collection>');
+        });
+
       });
 
 
@@ -905,6 +965,66 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <Timer Intermediate Catch Event> with <Date> is only supported by Camunda 8.3 or newer');
+        });
+
+
+        it('should adjust (zeebe:AdHoc output collection)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.7';
+
+          const node = createElement('bpmn:AdHocSubProcess', {
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:AdHoc', {
+                  outputCollection: 'foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Ad Hoc Sub Process> with <Output collection> is only supported by Camunda 8.8 or newer');
+        });
+
+
+        it('should adjust (zeebe:AdHoc output element)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.7';
+
+          const node = createElement('bpmn:AdHocSubProcess', {
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:AdHoc', {
+                  outputElement: '=bar'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Ad Hoc Sub Process> with <Output element> is only supported by Camunda 8.8 or newer');
         });
 
       });

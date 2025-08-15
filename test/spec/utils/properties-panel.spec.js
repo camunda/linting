@@ -2471,6 +2471,130 @@ describe('utils/properties-panel', function() {
           expectErrorMessage(entryIds[ 0 ], 'Version tag must be defined.', report);
         });
 
+
+        describe('zeebe:AdHoc', function() {
+
+          it('output collection dependent required', async function() {
+
+            // given
+            const node = createElement('bpmn:AdHocSubProcess', {
+              flowElements: [
+                createElement('bpmn:Task')
+              ],
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:AdHoc', {
+                    outputElement: '=bar'
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+            const report = await getLintError(node, rule, { version: '8.8' });
+
+            // when
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([ 'adHocOutputCollection' ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Output collection must be defined.', report);
+          });
+
+
+          it('output element dependent required', async function() {
+
+            // given
+            const node = createElement('bpmn:AdHocSubProcess', {
+              flowElements: [
+                createElement('bpmn:Task')
+              ],
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:AdHoc', {
+                    outputCollection: 'foo'
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+            const report = await getLintError(node, rule, { version: '8.8' });
+
+            // when
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([ 'adHocOutputElement' ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.', report);
+          });
+
+
+          it('output collection not supported', async function() {
+
+            // given
+            const node = createElement('bpmn:AdHocSubProcess', {
+              flowElements: [
+                createElement('bpmn:Task')
+              ],
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:AdHoc', {
+                    outputCollection: 'foo'
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+            const report = await getLintError(node, rule, { version: '8.7' });
+
+            // when
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([ 'adHocOutputCollection' ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Output collection is only supported by Camunda 8.8 or newer.', report);
+          });
+
+
+          it('output element not supported', async function() {
+
+            // given
+            const node = createElement('bpmn:AdHocSubProcess', {
+              flowElements: [
+                createElement('bpmn:Task')
+              ],
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:AdHoc', {
+                    outputElement: '=bar'
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/ad-hoc-sub-process');
+
+            const report = await getLintError(node, rule, { version: '8.7' });
+
+            // when
+            const entryIds = getEntryIds(report);
+
+            // then
+            expect(entryIds).to.eql([ 'adHocOutputElement' ]);
+
+            expectErrorMessage(entryIds[ 0 ], 'Output element is only supported by Camunda 8.8 or newer.', report);
+          });
+
+        });
+
       });
 
     });
