@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: handle `bpmn:AdHocSubProcess` with `zeebe:TaskDefinition` error ([#146](https://github.com/camunda/linting/pull/146))
+* `FEAT`: handle `zeebe:AdHoc` `outputCollection` and `outputElement` errors ([#146](https://github.com/camunda/linting/pull/146))
+
 ## 3.40.1
 
 * `FIX`: revert inclusion of camunda builtin extensions due to performance issues ([camunda/bpmnlint-plugin-camunda-compat#215](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/215))
