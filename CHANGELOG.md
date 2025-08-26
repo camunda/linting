@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.42.0
+
+* `FEAT`: update language support for feel rule ([bpmn-io/feel-lint#39](https://github.com/bpmn-io/feel-lint/pull/39))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.42.0` ([#147](https://github.com/camunda/linting/pull/147))
+
 ## 3.41.0
 
 * `FEAT`: handle `bpmn:AdHocSubProcess` with `zeebe:TaskDefinition` error ([#146](https://github.com/camunda/linting/pull/146))
