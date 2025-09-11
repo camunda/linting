@@ -2490,6 +2490,35 @@ describe('utils/error-messages', function() {
 
         });
 
+
+        it('should adjust (interrupting event subprocess in ad-hoc subprocess)', async function() {
+
+          // given
+          const node = createElement('bpmn:AdHocSubProcess', {
+            flowElements: [
+              createElement('bpmn:SubProcess', {
+                triggeredByEvent: true,
+                flowElements: [
+                  createElement('bpmn:StartEvent', {
+                    eventDefinitions: [
+                      createElement('bpmn:TimerEventDefinition')
+                    ]
+                  })
+                ]
+              })
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-interrupting-event-subprocess');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.7');
+
+          // then
+          expect(errorMessage).to.equal('An interrupting <Timer Start Event> in an <Event Sub Process> placed in an <Ad Hoc Sub Process> is not supported by Camunda 8.7');
+        });
       });
 
 
