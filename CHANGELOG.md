@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.43.0
+
+* `FEAT`: adjust error messages for `no-interrupting-event-subprocess` ([#148](https://github.com/camunda/linting/pull/148))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.43.1`
+
 ## 3.42.0
 
 * `FEAT`: update language support for feel rule ([bpmn-io/feel-lint#39](https://github.com/bpmn-io/feel-lint/pull/39))
