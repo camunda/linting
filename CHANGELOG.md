@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.43.1
+
+* `DEPS`: update to `bpmnlint@11.6.1`
+
 ## 3.43.0
 
 * `FEAT`: adjust error messages for `no-interrupting-event-subprocess` ([#148](https://github.com/camunda/linting/pull/148))

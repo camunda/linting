@@ -496,7 +496,7 @@ describe('Linter', function() {
       const reports = await linter.lint(root);
 
       // then
-      expect(reports).to.have.length(8);
+      expect(reports).to.have.length(7);
 
       expect(reports.find(({ message }) => message === 'Start event must be blank')).to.exist;
       expect(reports.find(({ message }) => message === 'Start event is missing event definition')).to.exist;
