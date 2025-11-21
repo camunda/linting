@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.45.0
+
+* `DEPS`: update to `bpmnlint@11.7.1`
+* `FEAT`: add `event-based-gataway` rule
+
 ## 3.44.0
 
 * `FEAT`: support Camunda 8.9
