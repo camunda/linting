@@ -3,6 +3,12 @@
   <bpmn:process id="Process_09qm081" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1m1s8rd</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_1rp6yz6">
+  <bpmn:extensionElements>
+    <zeebe:conditionalFilter variableNames="12345" />
+  </bpmn:extensionElements>
+</bpmn:conditionalEventDefinition>
+
     </bpmn:startEvent>
     <bpmn:exclusiveGateway id="Gateway_0a303iy" default="Flow_0zzdw7g">
       <bpmn:incoming>Flow_1m1s8rd</bpmn:incoming>
