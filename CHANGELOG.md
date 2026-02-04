@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add conditional-event rule to correctness ruleset ([bpmn-io/bpmnlint#203](https://github.com/bpmn-io/bpmnlint/pull/203))
+* `DEPS`: update to `bpmnlint@11.10.0`
+
 ## 3.46.0
 
 * `DEPS`: update to `bpmn-moddle@10.0.0`

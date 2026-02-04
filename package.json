@@ -31,7 +31,7 @@
   "dependencies": {
     "@bpmn-io/diagram-js-ui": "^0.2.3",
     "bpmn-moddle": "^10.0.0",
-    "bpmnlint": "^11.7.1",
+    "bpmnlint": "^11.10.0",
     "bpmnlint-plugin-camunda-compat": "^2.44.0",
     "bpmnlint-utils": "^1.0.2",
     "camunda-bpmn-moddle": "^7.0.1",
