@@ -8,6 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: add conditional-event rule to correctness ruleset ([bpmn-io/bpmnlint#203](https://github.com/bpmn-io/bpmnlint/pull/203))
 * `FEAT`: add `variable-name` rule ([bpmn-io/bpmnlint#221](https://github.com/bpmn-io/bpmnlint/pull/221))
+* `DEPS`: update to `zeebe-bpmn-moddle@1.12.0`
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.45.1`
 * `DEPS`: update to `bpmnlint@11.10.0`
 
