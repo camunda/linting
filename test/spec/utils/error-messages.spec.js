@@ -208,6 +208,29 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('A <Terminate End Event> is only supported by Camunda 8.1 or newer');
         });
 
+
+        it('should adjust (conditional start event)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.8';
+
+          const node = createElement('bpmn:StartEvent', {
+            eventDefinitions: [
+              createElement('bpmn:ConditionalEventDefinition')
+            ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/element-type');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <Conditional Start Event> is only supported by Camunda 8.9 or newer');
+        });
+
       });
 
 
