@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.46.0
+
 * `DEPS`: update to `bpmn-moddle@10.0.0`
 * `DEPS`: update to `min-dom@5.2.0`
 * `DEPS`: update to `min-dash@5.0.0`
