@@ -2667,7 +2667,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'variableNames' ]);
 
-          expectErrorMessage(entryIds[0], 'Invalid variables list.', report);
+          expectErrorMessage(entryIds[0], 'Variable name "1234" is not a valid variable identifier', report);
         });
 
 
@@ -2706,7 +2706,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'variableNames' ]);
 
-          expectErrorMessage(entryIds[0], 'Invalid variables list.', report);
+          expectErrorMessage(entryIds[0], 'Variable names must be a comma-separated list', report);
         });
 
       });
