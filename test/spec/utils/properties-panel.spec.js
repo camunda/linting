@@ -2597,6 +2597,120 @@ describe('utils/properties-panel', function() {
 
       });
 
+
+      describe('conditional-event', function() {
+
+        it('missing condition (bpmnlint rule)', async function() {
+
+          // given
+          const node = createElement('bpmn:StartEvent', {
+            eventDefinitions: [
+              createElement('bpmn:ConditionalEventDefinition', {
+                condition: createElement('bpmn:FormalExpression', {
+                  body: ''
+                })
+              })
+            ]
+          });
+
+          createElement('bpmn:Process', {
+            isExecutable: true,
+            flowElements: [ node ]
+          });
+
+          const { default: rule } = await import('bpmnlint/rules/conditional-event');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'condition' ]);
+
+          expectErrorMessage(entryIds[0], 'Condition expression must be defined.', report);
+        });
+
+
+        it('variableNames (invalid variable identifier)', async function() {
+
+          // given
+          const node = createElement('bpmn:StartEvent', {
+            eventDefinitions: [
+              createElement('bpmn:ConditionalEventDefinition', {
+                condition: createElement('bpmn:FormalExpression', {
+                  body: '=foo > 1'
+                }),
+                extensionElements: createElement('bpmn:ExtensionElements', {
+                  values: [
+                    createElement('zeebe:ConditionalFilter', {
+                      variableNames: '1234'
+                    })
+                  ]
+                })
+              })
+            ]
+          });
+
+          createElement('bpmn:Process', {
+            isExecutable: true,
+            flowElements: [ node ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/conditional-event');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'variableNames' ]);
+
+          expectErrorMessage(entryIds[0], 'Invalid variables list.', report);
+        });
+
+
+        it('variableNames (invalid list format)', async function() {
+
+          // given
+          const node = createElement('bpmn:StartEvent', {
+            eventDefinitions: [
+              createElement('bpmn:ConditionalEventDefinition', {
+                condition: createElement('bpmn:FormalExpression', {
+                  body: '=foo > 1'
+                }),
+                extensionElements: createElement('bpmn:ExtensionElements', {
+                  values: [
+                    createElement('zeebe:ConditionalFilter', {
+                      variableNames: 'foo,'
+                    })
+                  ]
+                })
+              })
+            ]
+          });
+
+          createElement('bpmn:Process', {
+            isExecutable: true,
+            flowElements: [ node ]
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/conditional-event');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'variableNames' ]);
+
+          expectErrorMessage(entryIds[0], 'Invalid variables list.', report);
+        });
+
+      });
+
     });
 
 
