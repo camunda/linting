@@ -6,11 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
-* `FEAT`: add `conditional-event` rule to Camunda Cloud 8.9 rules ([camunda/bpmnlint-plugin-camunda-compat#222](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/222))
-* `FEAT`: support Conditional Events in Camunda 8.9 or newer ([camunda/bpmnlint-plugin-camunda-compat#224](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/224))
+## 3.47.0
+
+* `FEAT`: add `conditional-event` rule to Camunda Cloud 8.9 rules ([camunda/bpmnlint-plugin-camunda-compat#222](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/222), [#150](https://github.com/camunda/linting/pull/150))
+* `FEAT`: support Conditional Events in Camunda 8.9 or newer ([camunda/bpmnlint-plugin-camunda-compat#224](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/224), [#150](https://github.com/camunda/linting/pull/150))
 * `FEAT`: add `variable-name` rule ([bpmn-io/bpmnlint#221](https://github.com/bpmn-io/bpmnlint/pull/221))
 * `DEPS`: update to `zeebe-bpmn-moddle@1.12.0`
-* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.46.0`
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.47.0`
 * `DEPS`: update to `bpmnlint@11.10.0`
 
 ## 3.46.0
