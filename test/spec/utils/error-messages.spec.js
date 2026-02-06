@@ -2542,6 +2542,207 @@ describe('utils/error-messages', function() {
           // then
           expect(errorMessage).to.equal('An interrupting <Timer Start Event> in an <Event Sub Process> placed in an <Ad Hoc Sub Process> is not supported by Camunda 8.7');
         });
+
+
+        describe('variable name invalid', function() {
+
+          it('should adjust (input variable)', async function() {
+
+            // given
+            const node = createElement('bpmn:ServiceTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    inputParameters: [
+                      createElement('zeebe:Input', {
+                        source: 'foo',
+                        target: '1invalid'
+                      })
+                    ]
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+            // then
+            expect(errorMessage).to.equal('Variable name must start with a letter or an underscore, and may contain only letters, digits, underscores, and dots.');
+          });
+
+
+          it('should adjust (output variable)', async function() {
+
+            // given
+            const node = createElement('bpmn:ServiceTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    outputParameters: [
+                      createElement('zeebe:Output', {
+                        source: 'foo',
+                        target: '1invalid'
+                      })
+                    ]
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+            // then
+            expect(errorMessage).to.equal('Variable name must start with a letter or an underscore, and may contain only letters, digits, underscores, and dots.');
+          });
+
+
+          it('should adjust (script task result variable)', async function() {
+
+            // given
+            const node = createElement('bpmn:ScriptTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:Script', {
+                    expression: '=foo',
+                    resultVariable: '1invalid'
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.2');
+
+            // then
+            expect(errorMessage).to.equal('Variable name must start with a letter or an underscore, and may contain only letters, digits, underscores, and dots.');
+          });
+
+
+          it('should adjust (business rule task result variable)', async function() {
+
+            // given
+            const node = createElement('bpmn:BusinessRuleTask', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:CalledDecision', {
+                    decisionId: 'decision',
+                    resultVariable: '1invalid'
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.3');
+
+            // then
+            expect(errorMessage).to.equal('Variable name must start with a letter or an underscore, and may contain only letters, digits, underscores, and dots.');
+          });
+
+
+          it('should adjust (ad-hoc subprocess output collection)', async function() {
+
+            // given
+            const node = createElement('bpmn:AdHocSubProcess', {
+              flowElements: [
+                createElement('bpmn:Task')
+              ],
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:AdHoc', {
+                    outputCollection: '1invalid',
+                    outputElement: 'item'
+                  })
+                ]
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.8');
+
+            // then
+            expect(errorMessage).to.equal('Variable name must start with a letter or an underscore, and may contain only letters, digits, underscores, and dots.');
+          });
+
+
+          it('should adjust (multi-instance input element)', async function() {
+
+            // given
+            const node = createElement('bpmn:ServiceTask', {
+              loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics', {
+                extensionElements: createElement('bpmn:ExtensionElements', {
+                  values: [
+                    createElement('zeebe:LoopCharacteristics', {
+                      inputCollection: '=items',
+                      inputElement: '1invalid'
+                    })
+                  ]
+                })
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+            // then
+            expect(errorMessage).to.equal('Variable name must start with a letter or an underscore, and may contain only letters, digits, underscores, and dots.');
+          });
+
+
+          it('should adjust (multi-instance output collection)', async function() {
+
+            // given
+            const node = createElement('bpmn:ServiceTask', {
+              loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics', {
+                extensionElements: createElement('bpmn:ExtensionElements', {
+                  values: [
+                    createElement('zeebe:LoopCharacteristics', {
+                      inputCollection: '=items',
+                      outputCollection: '1invalid',
+                      outputElement: 'item'
+                    })
+                  ]
+                })
+              })
+            });
+
+            const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+            const report = await getLintError(node, rule);
+
+            // when
+            const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+            // then
+            expect(errorMessage).to.equal('Variable name must start with a letter or an underscore, and may contain only letters, digits, underscores, and dots.');
+          });
+        });
       });
 
 
