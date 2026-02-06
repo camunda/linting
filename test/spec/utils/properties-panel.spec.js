@@ -2096,6 +2096,223 @@ describe('utils/properties-panel', function() {
       });
 
 
+      describe('variable-name', function() {
+
+        it('input target with invalid variable name', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      target: 'invalid-name',
+                      source: '=value'
+                    })
+                  ],
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-target' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+        });
+
+
+        it('output target with invalid variable name', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  outputParameters: [
+                    createElement('zeebe:Output', {
+                      target: 'invalid-name',
+                      source: '=result'
+                    })
+                  ],
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-output-0-target' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+        });
+
+
+        it('script task result variable with invalid variable name', async function() {
+
+          // given
+          const node = createElement('bpmn:ScriptTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:Script', {
+                  expression: '=someExpression',
+                  resultVariable: 'invalid-result'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'resultVariable' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+        });
+
+
+        it('business rule task result variable with invalid variable name', async function() {
+
+          // given
+          const node = createElement('bpmn:BusinessRuleTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledDecision', {
+                  decisionId: 'decision',
+                  resultVariable: 'invalid-result'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'resultVariable' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+        });
+
+
+        it('multi-instance input element with invalid variable name', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:LoopCharacteristics', {
+                    inputCollection: '=items',
+                    inputElement: 'invalid-item'
+                  })
+                ]
+              })
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'multiInstance-inputElement' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+        });
+
+
+        it('multi-instance output collection with invalid variable name', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics', {
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:LoopCharacteristics', {
+                    outputCollection: 'invalid-output',
+                    outputElement: '=items'
+                  })
+                ]
+              })
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+          const report = await getLintError(node, rule, { version: '8.7' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'multiInstance-outputCollection' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+        });
+
+
+        it('ad-hoc subprocess output collection with invalid variable name', async function() {
+
+          // given
+          const node = createElement('bpmn:AdHocSubProcess', {
+            flowElements: [
+              createElement('bpmn:Task')
+            ],
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:AdHoc', {
+                  outputCollection: 'invalid-results',
+                  outputElement: '=item'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/variable-name');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'adHocOutputCollection' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+        });
+
+      });
+
+
       describe('link event - Name', async function() {
 
         it('required', async function() {
