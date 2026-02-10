@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.48.0
+
 * `FEAT`: adjust `variable-name` rule errors
 
 ## 3.47.0
