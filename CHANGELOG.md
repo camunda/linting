@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: adjust `variable-name` rule errors
+
 ## 3.47.0
 
 * `FEAT`: add `conditional-event` rule to Camunda Cloud 8.9 rules ([camunda/bpmnlint-plugin-camunda-compat#222](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/222), [#150](https://github.com/camunda/linting/pull/150))
