@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: validate Camunda `get or else` built-in ([camunda/bpmnlint-plugin-camunda-compat#226](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/226))
+
 ## 3.48.0
 
 * `FEAT`: adjust `variable-name` rule errors
