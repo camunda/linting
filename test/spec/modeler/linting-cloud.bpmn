@@ -24,7 +24,7 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="ServiceTask_2" name="Bar">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="Foo" />
+        <zeebe:taskDefinition />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1fo9xb9</bpmn:incoming>
       <bpmn:incoming>Flow_192e6hp</bpmn:incoming>
