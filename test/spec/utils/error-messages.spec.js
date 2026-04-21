@@ -731,10 +731,10 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (zeebe:UserTask)', async function() {
+        it('should adjust (zeebe:UserTask, Camunda 8.9)', async function() {
 
           // given
-          const executionPlatformVersion = '8.6';
+          const executionPlatformVersion = '8.9';
 
           const node = createElement('bpmn:UserTask');
 
@@ -747,6 +747,25 @@ describe('utils/error-messages', function() {
 
           // then
           expect(errorMessage).to.equal('A <User Task> with <Implementation: Job worker> managed by Camunda is deprecated. Consider migrating to <Implementation: Camunda user task>.');
+        });
+
+
+        it('should adjust (zeebe:UserTask, Camunda 8.10)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.10';
+
+          const node = createElement('bpmn:UserTask');
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/zeebe-user-task');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <User Task> with <Implementation: Job worker> managed by Camunda is not supported. Migrate to <Implementation: Camunda user task>.');
         });
 
       });
