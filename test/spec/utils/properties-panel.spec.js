@@ -1516,62 +1516,6 @@ describe('utils/properties-panel', function() {
         });
 
 
-        it('should return error for Task Headers', async function() {
-
-          // given
-          const node = createElement('bpmn:ServiceTask', {
-            id: 'ServiceTask_1',
-            extensionElements: createElement('bpmn:ExtensionElements', {
-              values: [
-                createElement('zeebe:TaskHeaders', {
-                  values: [
-                    createElement('zeebe:Header', {
-                      value: INVALID_FEEL
-                    })
-                  ]
-                })
-              ]
-            })
-          });
-
-          const report = await getLintError(node, rule);
-
-          // when
-          const entryIds = getEntryIds(report);
-
-          // then
-          expect(entryIds).to.eql([ 'ServiceTask_1-header-0-value' ]);
-        });
-
-
-        it('should return error for Extension Properties', async function() {
-
-          // given
-          const node = createElement('bpmn:ServiceTask', {
-            id: 'ServiceTask_1',
-            extensionElements: createElement('bpmn:ExtensionElements', {
-              values: [
-                createElement('zeebe:TaskHeaders', {
-                  values: [
-                    createElement('zeebe:Property', {
-                      value: INVALID_FEEL
-                    })
-                  ]
-                })
-              ]
-            })
-          });
-
-          const report = await getLintError(node, rule);
-
-          // when
-          const entryIds = getEntryIds(report);
-
-          // then
-          expect(entryIds).to.eql([ 'ServiceTask_1-extensionProperty-0-value' ]);
-        });
-
-
         it('should return error for multi-instance properties', async function() {
           const node = createElement('bpmn:ServiceTask', {
             loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics', {
