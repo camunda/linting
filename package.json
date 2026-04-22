@@ -43,10 +43,10 @@
     "zeebe-bpmn-moddle": "^1.13.0"
   },
   "devDependencies": {
-    "bpmn-js": "^18.11.0",
-    "bpmn-js-element-templates": "^2.19.0",
-    "bpmn-js-properties-panel": "^5.50.1",
-    "camunda-bpmn-js-behaviors": "^1.14.0",
+    "bpmn-js": "^18.14.0",
+    "bpmn-js-element-templates": "^2.23.1",
+    "bpmn-js-properties-panel": "^5.54.0",
+    "camunda-bpmn-js-behaviors": "^1.14.1",
     "chai": "^4.5.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
