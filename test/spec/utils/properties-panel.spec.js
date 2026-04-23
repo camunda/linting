@@ -1081,6 +1081,47 @@ describe('utils/properties-panel', function() {
       });
 
 
+      it('duplicate-execution-listener-headers - Key', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          id: 'ServiceTask_1',
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:ExecutionListeners', {
+                listeners: [
+                  createElement('zeebe:ExecutionListener', {
+                    eventType: 'start',
+                    headers: createElement('zeebe:TaskHeaders', {
+                      values: [
+                        createElement('zeebe:Header', { key: 'foo' }),
+                        createElement('zeebe:Header', { key: 'foo' })
+                      ]
+                    })
+                  })
+                ]
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/duplicate-execution-listener-headers');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([
+          'ServiceTask_1-executionListener-0-headers-header-0-key',
+          'ServiceTask_1-executionListener-0-headers-header-1-key'
+        ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
+      });
+
+
       it('no-zeebe-properties - Name', async function() {
 
         // given

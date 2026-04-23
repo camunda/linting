@@ -2378,6 +2378,42 @@ describe('utils/error-messages', function() {
 
         });
 
+
+        it('should adjust (two execution listener headers with same key)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'start',
+                      headers: createElement('zeebe:TaskHeaders', {
+                        values: [
+                          createElement('zeebe:Header', { key: 'foo' }),
+                          createElement('zeebe:Header', { key: 'foo' })
+                        ]
+                      })
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/duplicate-execution-listener-headers');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('An <Execution Listener> with two or more <Headers> with the same <Key> (foo) is not supported');
+
+        });
+
       });
 
 
