@@ -9,7 +9,6 @@ ___Note:__ Yet to be released changes appear here._
 ## 3.49.0
 
 * `FEAT`: add Camunda 8.10 config ([camunda/bpmnlint-plugin-camunda-compat#233](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/233))
-* `FEAT`: report missing zeebe:UserTask as error in 8.10 ([camunda/bpmnlint-plugin-camunda-compat#233](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/233))
 * `FEAT`: add `duplicate-execution-listener-headers` rule ([camunda/bpmnlint-plugin-camunda-compat#232](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/232))
 * `FEAT`: add `no-execution-listener-headers` rule ([camunda/bpmnlint-plugin-camunda-compat#232](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/232))
 * `FIX`: remove `conditional-event` rule ([camunda/bpmnlint-plugin-camunda-compat#228](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/228))
@@ -17,7 +16,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: add guard to throw an error when rule config is missing version ([camunda/bpmnlint-plugin-camunda-compat#234](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/234))
 * `DEPS`: update to `zeebe-bpmn-moddle@1.13.0`
 * `DEPS`: update to `bpmnlint@11.12.1`
-* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.49.1`
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.49.2`
 * `DEPS`: update to `zeebe-bpmn-moddle@1.13.0`
 
 ## 3.48.1
