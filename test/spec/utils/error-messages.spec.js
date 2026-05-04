@@ -550,6 +550,39 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (zeebe:ExecutionListener with headers)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.9';
+
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'start',
+                      type: 'foo',
+                      headers: createElement('zeebe:TaskHeaders')
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-execution-listener-headers');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Execution listener> with <Headers> is only supported by Camunda 8.10 or newer');
+        });
+
+
         it('should adjust (zeebe:VersionTag)', async function() {
 
           // given
