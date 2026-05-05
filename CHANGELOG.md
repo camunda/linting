@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.49.1
+
+* `FIX`: adjust an error message for execution listener with headers ([#154](https://github.com/camunda/linting/pull/154))
+
 ## 3.49.0
 
 * `FEAT`: add Camunda 8.10 config ([camunda/bpmnlint-plugin-camunda-compat#233](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/233))
