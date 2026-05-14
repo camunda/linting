@@ -583,6 +583,71 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (zeebe:ExecutionListener with `beforeAll` event type)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.9';
+
+          const node = createElement('bpmn:ServiceTask', {
+            loopCharacteristics: createElement('bpmn:MultiInstanceLoopCharacteristics'),
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'beforeAll',
+                      type: 'mi-body-init'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-before-all-execution-listener');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Execution listener> with <Before all> event type is only supported by Camunda 8.10 or newer');
+        });
+
+
+        it('should adjust (zeebe:ExecutionListener with `beforeAll` event type on non-multi-instance element)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.10';
+
+          const node = createElement('bpmn:Task', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'beforeAll',
+                      type: 'mi-body-init'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/before-all-execution-listener');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Execution listener> with <Before all> event type is only allowed on multi-instance elements');
+        });
+
+
         it('should adjust (zeebe:VersionTag)', async function() {
 
           // given
