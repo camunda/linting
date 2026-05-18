@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add and adjust `before-all-execution-listener`, `no-before-all-execution-listener` rules ([#155](https://github.com/camunda/linting/pull/155), [camunda/bpmnlint-plugin-camunda-compat#239](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/239))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.50.0`
+
+
 ## 3.49.1
 
 * `FIX`: adjust an error message for execution listener with headers ([#154](https://github.com/camunda/linting/pull/154))
