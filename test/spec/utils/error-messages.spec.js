@@ -648,6 +648,39 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (zeebe:ExecutionListener with `cancel` event type)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.9';
+
+          const node = createElement('bpmn:Process', {
+            isExecutable: true,
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:ExecutionListeners', {
+                  listeners: [
+                    createElement('zeebe:ExecutionListener', {
+                      eventType: 'cancel',
+                      type: 'process-cancelled'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-cancel-execution-listener');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('An <Execution listener> with <Cancel> event type is only supported by Camunda 8.10 or newer');
+        });
+
+
         it('should adjust (zeebe:VersionTag)', async function() {
 
           // given
