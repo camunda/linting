@@ -842,6 +842,33 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryIds).to.eql([ 'formType' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.3 or newer.', report);
+      });
+
+
+      it('start-event-form-embedded - Form', async function() {
+
+        // given
+        const node = createElement('bpmn:StartEvent', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:FormDefinition', {
+                formKey: 'camunda-forms:bpmn:UserTaskForm_1'
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/start-event-form-embedded');
+
+        const report = await getLintError(node, rule, { version: '8.9' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'formType' ]);
       });
 
 
