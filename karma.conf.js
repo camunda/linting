@@ -41,7 +41,7 @@ module.exports = function(karma) {
       [suite]: [ 'webpack', 'env' ]
     },
 
-    reporters: [ 'progress' ],
+    reporters: [ 'tldr' ],
 
     browsers: singleStart ? browsers.concat('Debug') : browsers,
 
