@@ -475,6 +475,33 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (service task with zeebe:JobPriorityDefinition)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.5';
+
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:JobPriorityDefinition', {
+                  priority: '50'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-job-priority-definition');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('A <Service Task> with <Job priority> is only supported by Camunda 8.10 or newer');
+        });
+
+
         it('should adjust (start event with zeebe:FormDefinition)', async function() {
 
           // given

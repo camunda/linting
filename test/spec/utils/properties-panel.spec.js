@@ -1854,6 +1854,31 @@ describe('utils/properties-panel', function() {
       });
 
 
+      it('service task - Job priority not supported', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:JobPriorityDefinition')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-job-priority-definition');
+
+        const report = await getLintError(node, rule, { version: '8.9' });
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'jobPriorityDefinitionPriority' ]);
+
+        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.10 or newer.', report);
+      });
+
+
       it('call activity - Propagate all variables', async function() {
 
         // given
