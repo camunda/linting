@@ -18,6 +18,7 @@ import {
 
 import propertiesPanelXML from './properties-panel.bpmn';
 import propertiesPanelInfoXML from './properties-panel-info.bpmn';
+import collaborationELXML from '../modeler/linting-collaboration-el.bpmn';
 
 describe('utils/properties-panel', function() {
 
@@ -2962,6 +2963,29 @@ describe('utils/properties-panel', function() {
         // then
         expect(errors).to.eql({
           targetProcessId: 'Process ID must be defined.'
+        });
+      });
+
+
+      it('should return errors for participant (expanded participant)', async function() {
+
+        // given
+        const linter = new Linter();
+
+        const { root } = await createModdle(collaborationELXML);
+
+        const reports = await linter.lint(root);
+
+        // when
+        const collaboration = root.rootElements.find(({ $type }) => $type === 'bpmn:Collaboration');
+
+        const participant = collaboration.participants.find(({ id }) => id === 'Participant_1');
+
+        const errors = getErrors(reports, participant);
+
+        // then
+        expect(errors).to.eql({
+          'Participant_1-executionListener-0-listenerType': 'Must be defined.'
         });
       });
 

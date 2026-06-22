@@ -13,6 +13,7 @@ import simpleXML from './simple.bpmn';
 import missingDiXML from './simple-no-di.bpmn';
 import correctnessXML from './correctness.bpmn';
 import noExecutionPlatformXML from './no-execution-platform.bpmn';
+import collaborationELXML from './modeler/linting-collaboration-el.bpmn';
 import camundaCloud10XML from './camunda-cloud-1-0.bpmn';
 import camundaCloud10ErrorsXML from './camunda-cloud-1-0-errors.bpmn';
 import camundaCloud11XML from './camunda-cloud-1-1.bpmn';
@@ -141,6 +142,22 @@ describe('Linter', function() {
       reports.forEach(report => {
         expect(report.meta.documentation.url).to.exist;
       });
+    });
+
+
+    it('should prefix entry ids with participant id (expanded participant)', async function() {
+
+      // given
+      const { root } = await createModdle(collaborationELXML);
+
+      // when
+      const reports = await linter.lint(root);
+
+      // then
+      const report = reports.find(report => report.rule === 'camunda-compat/execution-listener');
+
+      expect(report).to.exist;
+      expect(report.propertiesPanel.entryIds).to.eql([ 'Participant_1-executionListener-0-listenerType' ]);
     });
 
 
