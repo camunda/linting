@@ -45,6 +45,7 @@ import lintingCSS from '../../../assets/linting.css';
 
 import diagramXMLCloud from './linting-cloud.bpmn';
 import diagramCollaborationXMLCloud from './linting-collaboration-cloud.bpmn';
+import diagramCollaborationELXMLCloud from './linting-collaboration-el.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
 
@@ -661,6 +662,64 @@ describe('Linting', function() {
 
             // then
             expect(selection.get()).to.eql([ participant ]);
+          }
+        ));
+
+      });
+
+
+      describe('collaboration with execution listener', function() {
+
+        beforeEach(createModeler(diagramCollaborationELXMLCloud,
+          [
+            zeebePropertiesProviderModule,
+            cloudElementTemplatesPropertiesProvider
+          ],
+          {
+            zeebe: zeebeModdleExtension
+          })
+        );
+
+
+        it('should show error on participant', inject(
+          async function(bpmnjs, elementRegistry, eventBus, linting, selection) {
+
+            // given
+            const participant = elementRegistry.get('Participant_1');
+
+            const reports = await linter.lint(bpmnjs.getDefinitions());
+
+            const report = reports.find(report => report.id === 'Process_1');
+
+            linting.setErrors(reports);
+
+            linting.activate();
+
+            const propertiesPanelSetErrorSpy = sinon.spy();
+
+            eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+
+            const propertiesPanelShowEntrySpy = sinon.spy();
+
+            eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
+
+            // when
+            linting.showError(report);
+
+            clock.tick();
+
+            // then
+            expect(selection.get()).to.eql([ participant ]);
+
+            expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
+            expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
+              errors: getErrors(reports, participant)
+            });
+
+            expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
+            expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
+              id: 'Participant_1-executionListener-0-listenerType'
+            });
           }
         ));
 
