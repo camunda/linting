@@ -2212,7 +2212,7 @@ describe('utils/error-messages', function() {
 
             const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
 
-            const report = await getLintError(node, rule);
+            const report = await getLintError(node, rule, { version: '8.6' });
 
             // when
             const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.6', 'desktop');
@@ -2238,7 +2238,7 @@ describe('utils/error-messages', function() {
 
             const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
 
-            const report = await getLintError(node, rule);
+            const report = await getLintError(node, rule, { version: '8.6' });
 
             // when
             const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.6', 'desktop');
@@ -2264,7 +2264,7 @@ describe('utils/error-messages', function() {
 
             const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
 
-            const report = await getLintError(node, rule);
+            const report = await getLintError(node, rule, { version: '8.6' });
 
             // when
             const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.6', 'desktop');
