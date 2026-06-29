@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.51.0
+
+* `FEAT`: integrate job priority definition rule ([#160](https://github.com/camunda/linting/pull/160))
+* `FEAT`: integrate version tag as expression ([#160](https://github.com/camunda/linting/pull/160))
+* `FIX`: show lint errors for process in a collaboration diagram ([#159](https://github.com/camunda/linting/pull/159))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.55.0`
+
 ## 3.50.0
 
 * `FEAT`: support cancel execution listener rules ([#156](https://github.com/camunda/linting/pull/156))
