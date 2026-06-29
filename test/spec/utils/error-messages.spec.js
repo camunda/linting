@@ -3104,6 +3104,31 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('Escalation code used in a catch event must be a static value');
         });
 
+
+        it('should adjust (version tag, business rule task)', async function() {
+
+          // given
+          const node = createElement('bpmn:BusinessRuleTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledDecision', {
+                  bindingType: 'versionTag',
+                  versionTag: '=foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
+
+          const report = await getLintError(node, rule, { version: '8.6' });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.6', 'desktop');
+
+          // then
+          expect(errorMessage).to.equal('A <Business Rule Task> with an expression as <Version tag> is only supported by Camunda 8.10 or newer');
+        });
       });
 
 

@@ -2739,6 +2739,34 @@ describe('utils/properties-panel', function() {
         });
 
 
+        it('business rule task (expression, <8.10)', async function() {
+
+          // given
+          const node = createElement('bpmn:BusinessRuleTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledDecision', {
+                  bindingType: 'versionTag',
+                  versionTag: '=foo'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/version-tag');
+
+          const report = await getLintError(node, rule, { version: '8.6' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'versionTag' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Version tag expression is only supported by Camunda 8.10 or newer.', report);
+        });
+
+
         it('call activity', async function() {
 
           // given
