@@ -1,3 +1,5 @@
+import './globals.js';
+
 var allTests = require.context('.', true, /\.spec\.js$/);
 
 allTests.keys().forEach(allTests);

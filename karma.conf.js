@@ -25,7 +25,6 @@ module.exports = function(karma) {
 
     frameworks: [
       'mocha',
-      'sinon-chai',
       'webpack'
     ],
 
@@ -57,6 +56,10 @@ module.exports = function(karma) {
           {
             test: /\.(css|bpmn)$/,
             type: 'asset/source'
+          },
+          {
+            test: require.resolve('./test/globals.js'),
+            sideEffects: true
           }
         ]
       },
