@@ -1283,7 +1283,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (result variable)', async function() {
+        it('should adjust (result variable, Business Rule Task)', async function() {
 
           // given
           const node = createElement('bpmn:BusinessRuleTask', {
@@ -1308,7 +1308,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (task definition type)', async function() {
+        it('should adjust (task definition type, Business Rule Task)', async function() {
 
           // given
           const node = createElement('bpmn:BusinessRuleTask', {
@@ -1640,7 +1640,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (task definition type)', async function() {
+        it('should adjust (task definition type, Service Task)', async function() {
 
           // given
           const node = createElement('bpmn:ServiceTask', {
@@ -2070,7 +2070,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (result variable)', async function() {
+        it('should adjust (result variable, Script Task)', async function() {
 
           // given
           const node = createElement('bpmn:ScriptTask', {
@@ -2095,7 +2095,7 @@ describe('utils/error-messages', function() {
         });
 
 
-        it('should adjust (task definition type)', async function() {
+        it('should adjust (task definition type, Script Task)', async function() {
 
           // given
           const node = createElement('bpmn:ScriptTask', {
@@ -2280,7 +2280,7 @@ describe('utils/error-messages', function() {
 
       describe('expression value not allowed', function() {
 
-        describe('should adjust (time cycle)', async function() {
+        describe('should adjust (time cycle)', function() {
 
           it('< Camunda 8.1', async function() {
 
