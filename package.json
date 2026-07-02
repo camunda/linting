@@ -48,7 +48,7 @@
     "bpmn-js-properties-panel": "^5.60.0",
     "camunda-bpmn-js-behaviors": "^1.17.0",
     "chai": "^6.2.2",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.1.0",
     "eslint": "^8.57.1",
     "eslint-plugin-bpmn-io": "^1.0.1",
     "karma": "^6.4.4",
