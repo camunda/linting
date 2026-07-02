@@ -62,7 +62,7 @@
     "mocha-test-container-support": "^0.2.0",
     "sinon": "^22.0.0",
     "sinon-chai": "^4.0.1",
-    "webpack": "^5.101.2"
+    "webpack": "^5.107.2"
   },
   "peerDependencies": {
     "bpmn-js-properties-panel": ">= 2.0.0"
