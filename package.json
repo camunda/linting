@@ -58,7 +58,7 @@
     "karma-mocha": "^2.0.1",
     "karma-tldr-reporter": "^0.0.1",
     "karma-webpack": "^5.0.1",
-    "mocha": "^11.7.1",
+    "mocha": "^11.7.6",
     "mocha-test-container-support": "^0.2.0",
     "sinon": "^22.0.0",
     "sinon-chai": "^4.0.1",
