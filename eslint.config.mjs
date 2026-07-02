@@ -38,17 +38,13 @@ export default [
     files: files.test
   })),
 
-  // test files: webpack provides `require`; turn off rules not previously enforced
+  // test files: webpack provides `require`
   {
     files: files.test,
     languageOptions: {
       globals: {
         require: 'readonly'
       }
-    },
-    rules: {
-      'mocha/no-async-suite': 'off',
-      'mocha/no-identical-title': 'off'
     }
   }
 ];

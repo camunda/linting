@@ -623,7 +623,7 @@ describe('utils/properties-panel', function() {
         expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.', report);
       });
 
-      describe('ad-hoc-subprocess', async function() {
+      describe('ad-hoc-subprocess', function() {
 
         it('Completion condition (Camunda 8.7 and older)', async function() {
 
@@ -1373,7 +1373,7 @@ describe('utils/properties-panel', function() {
         });
 
 
-        describe('invalid time cycle value', async function() {
+        describe('invalid time cycle value', function() {
 
           it('< Camunda 8.1', async function() {
 
@@ -1495,11 +1495,14 @@ describe('utils/properties-panel', function() {
       });
 
 
-      describe('FEEL', async function() {
+      describe('FEEL', function() {
 
-        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/feel');
-
+        let rule;
         const INVALID_FEEL = '===';
+
+        before(async function() {
+          ({ default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/feel'));
+        });
 
 
         it('should adjust error message', async function() {
@@ -2351,7 +2354,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      describe('link event - Name', async function() {
+      describe('link event - Name', function() {
 
         it('required', async function() {
 
@@ -2441,7 +2444,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      describe('Execution listeners', async function() {
+      describe('Execution listeners', function() {
 
         it('should mark type as required', async function() {
 
@@ -2587,7 +2590,7 @@ describe('utils/properties-panel', function() {
       });
 
 
-      describe('Task listeners', async function() {
+      describe('Task listeners', function() {
 
         it('should mark type as required', async function() {
 
