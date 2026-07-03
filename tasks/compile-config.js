@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 const fs = require('fs');
 
 const compileConfig = require('bpmnlint/lib/support/compile-config');
