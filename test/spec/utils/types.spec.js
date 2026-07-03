@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+
 import { getTypeString } from '../../../lib/utils/types';
 
 import { createElement } from '../../helper';
