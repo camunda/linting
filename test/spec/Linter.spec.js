@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import sinon from 'sinon';
 
 import StaticResolver from 'bpmnlint/lib/resolver/static-resolver';
