@@ -1,5 +1,4 @@
 import bpmnIoPlugin from 'eslint-plugin-bpmn-io';
-import globals from 'globals';
 
 const files = {
   ignored: [
@@ -22,12 +21,13 @@ export default [
   ...bpmnIoPlugin.configs.browser,
 
   // node/CJS globals for build tooling
+  ...bpmnIoPlugin.configs.node.map(config => ({
+    ...config,
+    files: files.build
+  })),
   {
     files: files.build,
     languageOptions: {
-      globals: {
-        ...globals.node
-      },
       sourceType: 'commonjs'
     }
   },
