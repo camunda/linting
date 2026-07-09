@@ -3095,6 +3095,130 @@ describe('utils/properties-panel', function() {
         expect(errors).to.be.empty;
       });
 
+
+      describe('template-bound entry ids', function() {
+
+        let rule;
+
+        const INVALID_FEEL = '===';
+
+        const TEMPLATE = {
+          id: 'io.camunda.connectors.HttpJson.v2',
+          version: 12,
+          groups: [
+            { id: 'endpoint', label: 'HTTP endpoint' }
+          ],
+          properties: [
+            { binding: { type: 'zeebe:input', name: 'method' }, group: 'endpoint' },
+            { binding: { type: 'zeebe:input', name: 'url' }, group: 'endpoint' }
+          ]
+        };
+
+        before(async function() {
+          ({ default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/feel'));
+        });
+
+        function createTemplatedNode(templateProperties = {}) {
+          return createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            ...templateProperties,
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      target: 'method',
+                      source: '="GET"'
+                    }),
+                    createElement('zeebe:Input', {
+                      target: 'url',
+                      source: INVALID_FEEL
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+        }
+
+        it('remaps a template-bound input entry id to the template\'s custom-entry id', async function() {
+
+          // given
+          const node = createTemplatedNode({
+            modelerTemplate: 'io.camunda.connectors.HttpJson.v2',
+            modelerTemplateVersion: 12
+          });
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errors = getErrors([ report ], node, [ TEMPLATE ]);
+
+          // then
+          expect(errors).to.eql({
+            'custom-entry-io.camunda.connectors.HttpJson.v2-endpoint-1': 'Unparsable FEEL expression.'
+          });
+        });
+
+
+        it('leaves the entry id unchanged when no templates are passed', async function() {
+
+          // given
+          const node = createTemplatedNode({
+            modelerTemplate: 'io.camunda.connectors.HttpJson.v2',
+            modelerTemplateVersion: 12
+          });
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errors = getErrors([ report ], node);
+
+          // then
+          expect(errors).to.eql({
+            'ServiceTask_1-input-1-source': 'Unparsable FEEL expression.'
+          });
+        });
+
+
+        it('leaves the entry id unchanged when the element has no applied template', async function() {
+
+          // given
+          const node = createTemplatedNode();
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errors = getErrors([ report ], node, [ TEMPLATE ]);
+
+          // then
+          expect(errors).to.eql({
+            'ServiceTask_1-input-1-source': 'Unparsable FEEL expression.'
+          });
+        });
+
+
+        it('leaves the entry id unchanged when the applied template is not found in the provided templates array', async function() {
+
+          // given
+          const node = createTemplatedNode({
+            modelerTemplate: 'io.camunda.connectors.HttpJson.v2',
+            modelerTemplateVersion: 12
+          });
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errors = getErrors([ report ], node, []);
+
+          // then
+          expect(errors).to.eql({
+            'ServiceTask_1-input-1-source': 'Unparsable FEEL expression.'
+          });
+        });
+
+      });
+
     });
 
   });
