@@ -49,6 +49,7 @@ import diagramXMLCloud from './linting-cloud.bpmn';
 import diagramCollaborationXMLCloud from './linting-collaboration-cloud.bpmn';
 import diagramCollaborationELXMLCloud from './linting-collaboration-el.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
+import diagramXMLCloudTemplate from './linting-cloud-template.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
@@ -923,6 +924,87 @@ describe('Linting', function() {
         }
       ));
     });
+
+  });
+
+
+  describe('template-bound entry-id remap (integration)', function() {
+
+    // A real element template. `resolveTemplateEntryId` in
+    // lib/utils/properties-panel.js reverse-engineers the entry id that
+    // bpmn-js-element-templates generates for a template-bound property. This
+    // guards that reverse-engineering against the real library: if a future
+    // bpmn-js-element-templates version changes its id scheme, the remapped id
+    // will no longer be one the provider actually generates and this test
+    // fails, instead of the remap silently degrading in production.
+    const TEMPLATE = {
+      $schema: 'https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json',
+      name: 'REST Connector',
+      id: 'my.rest.template',
+      version: 1,
+      appliesTo: [ 'bpmn:ServiceTask' ],
+      groups: [
+        { id: 'endpoint', label: 'HTTP endpoint' }
+      ],
+      properties: [
+        {
+          label: 'URL',
+          type: 'String',
+          group: 'endpoint',
+          binding: { type: 'zeebe:input', name: 'url' }
+        }
+      ]
+    };
+
+    beforeEach(bootstrapModeler(diagramXMLCloudTemplate, {
+      additionalModules: [
+        lintingModule,
+        propertiesPanelModule,
+        bpmnPropertiesProviderModule,
+        zeebePropertiesProviderModule,
+        cloudElementTemplatesPropertiesProvider
+      ],
+      moddleExtensions: {
+        modeler: modelerModdleExtension,
+        zeebe: zeebeModdleExtension
+      },
+      elementTemplates: [ TEMPLATE ]
+    }));
+
+
+    it('remaps to an id the element-templates provider actually generates', inject(
+      function(elementRegistry, elementTemplates, elementTemplatesPropertiesProvider) {
+
+        // given
+        const task = elementRegistry.get('ServiceTask_1');
+
+        // the ids the real bpmn-js-element-templates provider renders for this element
+        const providerEntryIds = elementTemplatesPropertiesProvider
+          .getGroups(task)([])
+          .reduce((ids, group) => ids.concat((group.entries || []).map(entry => entry.id)), []);
+
+        // a lint error on the template-bound `url` input, carrying the generic
+        // io-mapping entry id the rules emit
+        const report = {
+          id: 'ServiceTask_1',
+          category: 'error',
+          message: 'Unparsable FEEL expression.',
+          propertiesPanel: { entryIds: [ 'ServiceTask_1-input-0-source' ] }
+        };
+
+        // when
+        const errors = getErrors([ report ], task, elementTemplates.getAll());
+
+        const remappedId = Object.keys(errors)[ 0 ];
+
+        // then: our remap produced a template custom-entry id ...
+        expect(remappedId).to.match(/^custom-entry-/);
+
+        // ... and it is one the provider really generates (guards the
+        // reverse-engineered id scheme against library drift)
+        expect(providerEntryIds).to.include(remappedId);
+      }
+    ));
 
   });
 
