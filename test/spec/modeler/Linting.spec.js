@@ -1006,6 +1006,55 @@ describe('Linting', function() {
       }
     ));
 
+
+    it('remaps the entry id on click-to-jump, not just on inline highlighting', inject(
+      function(elementRegistry, elementTemplates, elementTemplatesPropertiesProvider, eventBus, linting, selection) {
+
+        // given
+        const clock = sinon.useFakeTimers();
+
+        try {
+          const task = elementRegistry.get('ServiceTask_1');
+
+          const providerEntryIds = elementTemplatesPropertiesProvider
+            .getGroups(task)([])
+            .reduce((ids, group) => ids.concat((group.entries || []).map(entry => entry.id)), []);
+
+          const report = {
+            id: 'ServiceTask_1',
+            category: 'error',
+            message: 'Unparsable FEEL expression.',
+            propertiesPanel: { entryIds: [ 'ServiceTask_1-input-0-source' ] }
+          };
+
+          linting.setErrors([ report ]);
+          linting.activate();
+
+          const propertiesPanelShowEntrySpy = sinon.spy();
+
+          eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
+
+          // when
+          linting.showError(report);
+
+          clock.tick();
+
+          // then
+          expect(selection.get()).to.eql([ task ]);
+
+          expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
+
+          const { id: shownEntryId } = propertiesPanelShowEntrySpy.getCall(0).args[ 0 ];
+
+          expect(shownEntryId).not.to.equal('ServiceTask_1-input-0-source');
+          expect(shownEntryId).to.match(/^custom-entry-/);
+          expect(providerEntryIds).to.include(shownEntryId);
+        } finally {
+          clock.restore();
+        }
+      }
+    ));
+
   });
 
 
