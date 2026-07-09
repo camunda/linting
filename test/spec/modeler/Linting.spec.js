@@ -314,6 +314,43 @@ describe('Linting', function() {
     });
 
 
+    describe('elementTemplates not registered', function() {
+
+      beforeEach(bootstrapModeler(diagramXMLCloud, {
+        additionalModules: [
+          lintingModule
+        ]
+      }));
+
+
+      it('should not crash and should return unremapped errors', inject(
+        async function(bpmnjs, elementRegistry, eventBus, linting, selection) {
+
+          // given
+          const serviceTask = elementRegistry.get('ServiceTask_1');
+
+          const reports = await linter.lint(bpmnjs.getDefinitions());
+
+          selection.select(serviceTask);
+
+          const propertiesPanelSetErrorSpy = sinon.spy();
+
+          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+
+          // when
+          expect(() => linting.setErrors(reports)).to.not.throw();
+
+          // then
+          expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
+          expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
+            errors: getErrors(reports, serviceTask)
+          });
+        }
+      ));
+
+    });
+
+
     it('should activate', inject(
       async function(bpmnjs, elementRegistry, eventBus, linting, lintingAnnotations, overlays, selection) {
 
@@ -431,6 +468,27 @@ describe('Linting', function() {
         });
 
         expect(overlays.get({ type: 'linting' })).to.have.length(1);
+      }
+    ));
+
+
+    it('should call elementTemplates.getAll before computing properties panel errors', inject(
+      async function(bpmnjs, elementRegistry, elementTemplates, linting, selection) {
+
+        // given
+        const serviceTask = elementRegistry.get('ServiceTask_1');
+
+        const reports = await linter.lint(bpmnjs.getDefinitions());
+
+        selection.select(serviceTask);
+
+        const getAllSpy = sinon.spy(elementTemplates, 'getAll');
+
+        // when
+        linting.setErrors(reports);
+
+        // then
+        expect(getAllSpy).to.have.been.called;
       }
     ));
 
