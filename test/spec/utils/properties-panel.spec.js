@@ -3118,23 +3118,17 @@ describe('utils/properties-panel', function() {
           ({ default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/feel'));
         });
 
-        function createTemplatedNode(templateProperties = {}) {
+        function createTemplatedNode(templateProperties = {}, inputs = [
+          { target: 'method', source: '="GET"' },
+          { target: 'url', source: INVALID_FEEL }
+        ]) {
           return createElement('bpmn:ServiceTask', {
             id: 'ServiceTask_1',
             ...templateProperties,
             extensionElements: createElement('bpmn:ExtensionElements', {
               values: [
                 createElement('zeebe:IoMapping', {
-                  inputParameters: [
-                    createElement('zeebe:Input', {
-                      target: 'method',
-                      source: '="GET"'
-                    }),
-                    createElement('zeebe:Input', {
-                      target: 'url',
-                      source: INVALID_FEEL
-                    })
-                  ]
+                  inputParameters: inputs.map((input) => createElement('zeebe:Input', input))
                 })
               ]
             })
@@ -3215,6 +3209,94 @@ describe('utils/properties-panel', function() {
           expect(errors).to.eql({
             'ServiceTask_1-input-1-source': 'Unparsable FEEL expression.'
           });
+        });
+
+
+        describe('duplicate fromAi() key', function() {
+
+          const DUPLICATE_KEY_MESSAGE = 'fromAi() key toolCall.foo is declared more than once in this tool. ' +
+            'Declare it once and reference it directly elsewhere.';
+
+          function duplicateKeyReport() {
+            return {
+              id: 'ServiceTask_1',
+              category: 'error',
+              message: DUPLICATE_KEY_MESSAGE,
+
+              // the real constant (bpmnlint-plugin-camunda-compat's
+              // ERROR_TYPES.AGENT_FEEL_KEY_DUPLICATE) isn't in the published
+              // dependency yet; hardcode its string value so this test is
+              // meaningful whether or not a PR245 checkout happens to be linked
+              data: { type: 'camunda.agentFeelKeyDuplicate' },
+              propertiesPanel: { entryIds: [ 'inputs' ] }
+            };
+          }
+
+          it('remaps the generic \'inputs\' id to every template-bound input declaring the duplicated key', function() {
+
+            // given
+            const node = createTemplatedNode({
+              modelerTemplate: 'io.camunda.connectors.HttpJson.v2',
+              modelerTemplateVersion: 12
+            }, [
+              { target: 'method', source: '=fromAi(toolCall.foo, "x")' },
+              { target: 'url', source: '=fromAi(toolCall.foo, "y")' }
+            ]);
+
+            // when
+            const errors = getErrors([ duplicateKeyReport() ], node, [ TEMPLATE ]);
+
+            // then
+            expect(errors).to.eql({
+              'custom-entry-io.camunda.connectors.HttpJson.v2-endpoint-0': DUPLICATE_KEY_MESSAGE,
+              'custom-entry-io.camunda.connectors.HttpJson.v2-endpoint-1': DUPLICATE_KEY_MESSAGE
+            });
+          });
+
+
+          it('leaves the generic \'inputs\' id unchanged when no structural duplicate is found', function() {
+
+            // given
+            const node = createTemplatedNode({
+              modelerTemplate: 'io.camunda.connectors.HttpJson.v2',
+              modelerTemplateVersion: 12
+            }, [
+              { target: 'method', source: '=fromAi(toolCall.foo, "x")' },
+              { target: 'url', source: '=fromAi(toolCall.bar, "y")' }
+            ]);
+
+            // when
+            const errors = getErrors([ duplicateKeyReport() ], node, [ TEMPLATE ]);
+
+            // then
+            expect(errors).to.eql({
+              inputs: DUPLICATE_KEY_MESSAGE
+            });
+          });
+
+
+          it('leaves the generic \'inputs\' id unchanged for a non-duplicate-key error', async function() {
+
+            // given
+            const node = createTemplatedNode({
+              modelerTemplate: 'io.camunda.connectors.HttpJson.v2',
+              modelerTemplateVersion: 12
+            });
+
+            const report = {
+              ...await getLintError(node, rule),
+              propertiesPanel: { entryIds: [ 'inputs' ] }
+            };
+
+            // when
+            const errors = getErrors([ report ], node, [ TEMPLATE ]);
+
+            // then
+            expect(errors).to.eql({
+              inputs: 'Unparsable FEEL expression.'
+            });
+          });
+
         });
 
       });

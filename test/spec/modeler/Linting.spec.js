@@ -50,6 +50,7 @@ import diagramCollaborationXMLCloud from './linting-collaboration-cloud.bpmn';
 import diagramCollaborationELXMLCloud from './linting-collaboration-el.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
 import diagramXMLCloudTemplate from './linting-cloud-template.bpmn';
+import diagramXMLCloudTemplateDuplicate from './linting-cloud-template-duplicate.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
@@ -952,6 +953,12 @@ describe('Linting', function() {
           type: 'String',
           group: 'endpoint',
           binding: { type: 'zeebe:input', name: 'url' }
+        },
+        {
+          label: 'Headers',
+          type: 'String',
+          group: 'endpoint',
+          binding: { type: 'zeebe:input', name: 'headers' }
         }
       ]
     };
@@ -1054,6 +1061,77 @@ describe('Linting', function() {
         }
       }
     ));
+
+
+    describe('duplicate fromAi() key', function() {
+
+      beforeEach(bootstrapModeler(diagramXMLCloudTemplateDuplicate, {
+        additionalModules: [
+          lintingModule,
+          propertiesPanelModule,
+          bpmnPropertiesProviderModule,
+          zeebePropertiesProviderModule,
+          cloudElementTemplatesPropertiesProvider
+        ],
+        moddleExtensions: {
+          modeler: modelerModdleExtension,
+          zeebe: zeebeModdleExtension
+        },
+        elementTemplates: [ TEMPLATE ]
+      }));
+
+
+      it('focuses the first template-bound input declaring the duplicated key', inject(
+        function(elementRegistry, elementTemplatesPropertiesProvider, eventBus, linting, selection) {
+
+          // given
+          const clock = sinon.useFakeTimers();
+
+          try {
+            const task = elementRegistry.get('ServiceTask_1');
+
+            const providerEntryIds = elementTemplatesPropertiesProvider
+              .getGroups(task)([])
+              .reduce((ids, group) => ids.concat((group.entries || []).map(entry => entry.id)), []);
+
+            const report = {
+              id: 'ServiceTask_1',
+              category: 'error',
+              message: 'fromAi() key toolCall.foo is declared more than once in this tool. ' +
+                'Declare it once and reference it directly elsewhere.',
+              data: { type: 'camunda.agentFeelKeyDuplicate' },
+              propertiesPanel: { entryIds: [ 'inputs' ] }
+            };
+
+            linting.setErrors([ report ]);
+            linting.activate();
+
+            const propertiesPanelShowEntrySpy = sinon.spy();
+
+            eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
+
+            // when
+            linting.showError(report);
+
+            clock.tick();
+
+            // then
+            expect(selection.get()).to.eql([ task ]);
+
+            expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
+
+            const { id: shownEntryId } = propertiesPanelShowEntrySpy.getCall(0).args[ 0 ];
+
+            // first input in io-mapping order (url), not the generic group id
+            expect(shownEntryId).to.equal('custom-entry-my.rest.template-endpoint-0');
+            expect(providerEntryIds).to.include(shownEntryId);
+          } finally {
+            clock.restore();
+          }
+        }
+      ));
+
+    });
 
   });
 
