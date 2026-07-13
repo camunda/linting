@@ -1242,6 +1242,27 @@ describe('utils/properties-panel', function() {
       });
 
 
+      it('does not show "must be defined" when a condition is present but not allowed', async function() {
+
+        // given
+        const node = createElement('bpmn:SequenceFlow', {
+          sourceRef: createElement('bpmn:Task'),
+          conditionExpression: createElement('bpmn:FormalExpression', { body: '=true' })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/sequence-flow-condition');
+
+        const report = await getLintError(node, rule);
+
+        // when
+        const entryIds = getEntryIds(report);
+
+        // then
+        expect(entryIds).to.eql([ 'conditionExpression' ]);
+        expectErrorMessage(entryIds[ 0 ], 'Property <conditionExpression> only allowed if source is of type <bpmn:ExclusiveGateway> or <bpmn:InclusiveGateway>', report);
+      });
+
+
       describe('timer', function() {
 
         it('no type', async function() {
