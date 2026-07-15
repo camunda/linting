@@ -2735,6 +2735,92 @@ describe('utils/properties-panel', function() {
       });
 
 
+      describe('Business ID', function() {
+
+        it('call activity (expression)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  businessId: '=order.customerId'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-business-id');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'businessId' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Business ID is only supported by Camunda 8.10 or newer.', report);
+        });
+
+
+        it('call activity (empty null override)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  businessId: ''
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-business-id');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'businessId' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Business ID is only supported by Camunda 8.10 or newer.', report);
+        });
+
+
+        it('call activity (literal too long)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  processId: 'foo',
+                  businessId: 'a'.repeat(256)
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/called-element');
+
+          const report = await getLintError(node, rule, { version: '8.10' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'businessId' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Business ID must be shorter than 256 characters.', report);
+        });
+
+      });
+
+
       describe('Version tag', function() {
 
         it('business rule task', async function() {

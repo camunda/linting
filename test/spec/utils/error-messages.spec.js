@@ -2648,6 +2648,57 @@ describe('utils/error-messages', function() {
         });
 
 
+        it('should adjust (business ID set)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  businessId: '=order.customerId'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/no-business-id');
+
+          const report = await getLintError(node, rule);
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '1.0');
+
+          // then
+          expect(errorMessage).to.equal('A <Call Activity> with <Business ID> is only supported by Camunda 8.10 or newer');
+        });
+
+
+        it('should adjust (business ID too long)', async function() {
+
+          // given
+          const node = createElement('bpmn:CallActivity', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:CalledElement', {
+                  processId: 'foo',
+                  businessId: 'a'.repeat(256)
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/called-element');
+
+          const report = await getLintError(node, rule, { version: '8.10' });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.10');
+
+          // then
+          expect(errorMessage).to.equal('A <Call Activity> with a <Business ID> longer than 255 characters is not supported');
+        });
+
+
         describe('binding type set to version tag', function() {
 
           it('should adjust (business rule task)', async function() {
