@@ -36,7 +36,7 @@ import { Linter } from '../../..';
 
 import lintingModule from '../../../modeler';
 
-import { getErrors } from '../../../lib/utils/properties-panel';
+import { getErrors, getReportEntryIds } from '../../../lib/utils/properties-panel';
 
 import diagramCSS from 'bpmn-js/dist/assets/diagram-js.css';
 import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
@@ -49,6 +49,7 @@ import diagramXMLCloud from './linting-cloud.bpmn';
 import diagramCollaborationXMLCloud from './linting-collaboration-cloud.bpmn';
 import diagramCollaborationELXMLCloud from './linting-collaboration-el.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
+import diagramDuplicateHeadersXMLCloud from './linting-duplicate-headers-cloud.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
@@ -310,6 +311,102 @@ describe('Linting', function() {
         // then
         expect(linting.isActive()).to.be.true;
       }));
+
+    });
+
+
+    describe('entry id resolution (getEntryId API)', function() {
+
+      it('should resolve entry id through propertiesPanel#getEntryId', inject(
+        async function(bpmnjs, elementRegistry, propertiesPanel) {
+
+          // given
+          const serviceTask = elementRegistry.get('ServiceTask_1');
+
+          const reports = await linter.lint(bpmnjs.getDefinitions());
+
+          const [ report ] = reports;
+
+          // assume
+          expect(report.path).to.exist;
+
+          // when
+          const entryId = propertiesPanel.getEntryId(serviceTask, report.path);
+
+          // then
+          expect(entryId).to.equal('taskDefinitionType');
+        }
+      ));
+
+
+      it('should prefer propertiesPanel#getEntryId over custom handling', inject(
+        async function(bpmnjs, elementRegistry, eventBus, linting, propertiesPanel, selection) {
+
+          // given
+          const serviceTask = elementRegistry.get('ServiceTask_1');
+
+          selection.select(serviceTask);
+
+          const reports = await linter.lint(bpmnjs.getDefinitions());
+
+          linting.setErrors(reports);
+
+          sinon.stub(propertiesPanel, 'getEntryId').returns('customApiEntryId');
+
+          const setErrorsSpy = sinon.spy();
+
+          eventBus.on('propertiesPanel.setErrors', setErrorsSpy);
+
+          // when
+          linting.activate();
+
+          // then
+          const { errors } = setErrorsSpy.getCall(0).args[ 0 ];
+
+          expect(errors).to.have.property('customApiEntryId');
+          expect(errors).not.to.have.property('taskDefinitionType');
+        }
+      ));
+
+
+      describe('multiple targets', function() {
+
+        beforeEach(createModeler(diagramDuplicateHeadersXMLCloud,
+          [
+            zeebePropertiesProviderModule,
+            cloudElementTemplatesPropertiesProvider
+          ],
+          {
+            zeebe: zeebeModdleExtension
+          })
+        );
+
+        it('should resolve every offender through propertiesPanel#getEntryId', inject(
+          async function(bpmnjs, elementRegistry, propertiesPanel) {
+
+            // given
+            const serviceTask = elementRegistry.get('ServiceTask_1');
+
+            const reports = await linter.lint(bpmnjs.getDefinitions());
+
+            const report = reports.find(({ data }) => data && data.properties);
+
+            const getEntryIdSpy = sinon.spy(propertiesPanel, 'getEntryId');
+
+            // when
+            const entryIds = getReportEntryIds(report, serviceTask, propertiesPanel);
+
+            // then
+            expect(getEntryIdSpy).to.have.been.calledTwice;
+            expect(getEntryIdSpy.returnValues).to.eql([
+              'ServiceTask_1-header-0-key',
+              'ServiceTask_1-header-1-key'
+            ]);
+            expect(entryIds).to.eql(getEntryIdSpy.returnValues);
+          }
+        ));
+
+      });
 
     });
 

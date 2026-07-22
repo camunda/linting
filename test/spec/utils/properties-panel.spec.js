@@ -2,10 +2,13 @@ import { expect } from 'chai';
 
 import { Linter } from '../../..';
 
+import sinon from 'sinon';
+
 import {
   getEntryIds,
   getErrorMessage,
-  getErrors
+  getErrors,
+  getReportEntryIds
 } from '../../../lib/utils/properties-panel';
 
 import {
@@ -3114,6 +3117,194 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(errors).to.be.empty;
+      });
+
+    });
+
+
+    describe('#getReportEntryIds', function() {
+
+      function createReport(overrides = {}) {
+        return {
+          id: 'ServiceTask_1',
+          path: [ 'extensionElements', 'values', 0, 'type' ],
+          propertiesPanel: {
+            entryIds: [ 'taskDefinitionType' ]
+          },
+          ...overrides
+        };
+      }
+
+      it('should prefer propertiesPanel#getEntryId', function() {
+
+        // given
+        const element = { id: 'ServiceTask_1' };
+
+        const report = createReport();
+
+        const propertiesPanel = {
+          getEntryId: () => 'resolvedEntryId'
+        };
+
+        // when
+        const entryIds = getReportEntryIds(report, element, propertiesPanel);
+
+        // then
+        expect(entryIds).to.eql([ 'resolvedEntryId' ]);
+      });
+
+
+      it('should call propertiesPanel#getEntryId with element and path', function() {
+
+        // given
+        const element = { id: 'ServiceTask_1' };
+
+        const report = createReport();
+
+        const getEntryId = sinon.stub().returns('resolvedEntryId');
+
+        // when
+        getReportEntryIds(report, element, { getEntryId });
+
+        // then
+        expect(getEntryId).to.have.been.calledOnceWith(element, report.path);
+      });
+
+
+      it('should fall back to custom handling if API resolves nothing', function() {
+
+        // given
+        const element = { id: 'ServiceTask_1' };
+
+        const report = createReport();
+
+        const propertiesPanel = {
+          getEntryId: () => null
+        };
+
+        // when
+        const entryIds = getReportEntryIds(report, element, propertiesPanel);
+
+        // then
+        expect(entryIds).to.eql([ 'taskDefinitionType' ]);
+      });
+
+
+      it('should fall back to custom handling without properties panel', function() {
+
+        // given
+        const element = { id: 'ServiceTask_1' };
+
+        const report = createReport();
+
+        // when
+        const entryIds = getReportEntryIds(report, element);
+
+        // then
+        expect(entryIds).to.eql([ 'taskDefinitionType' ]);
+      });
+
+
+      it('should fall back to custom handling if API not implemented', function() {
+
+        // given
+        const element = { id: 'ServiceTask_1' };
+
+        const report = createReport();
+
+        // when
+        const entryIds = getReportEntryIds(report, element, {});
+
+        // then
+        expect(entryIds).to.eql([ 'taskDefinitionType' ]);
+      });
+
+
+      it('should not call API without path', function() {
+
+        // given
+        const element = { id: 'ServiceTask_1' };
+
+        const report = createReport({ path: undefined });
+
+        const getEntryId = sinon.stub().returns('resolvedEntryId');
+
+        // when
+        const entryIds = getReportEntryIds(report, element, { getEntryId });
+
+        // then
+        expect(getEntryId).not.to.have.been.called;
+        expect(entryIds).to.eql([ 'taskDefinitionType' ]);
+      });
+
+
+      it('should resolve every offender of a duplicate value report', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          id: 'ServiceTask_1',
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:TaskHeaders', {
+                values: [
+                  createElement('zeebe:Header', { key: 'foo' }),
+                  createElement('zeebe:Header', { key: 'foo' })
+                ]
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/duplicate-task-headers');
+
+        const report = await getLintError(node, rule);
+
+        const getEntryId = (element, path) =>
+          `api-${ element.id }-header-${ path[ path.length - 2 ] }`;
+
+        // when
+        const entryIds = getReportEntryIds(report, node, { getEntryId });
+
+        // then
+        expect(entryIds).to.eql([
+          'api-ServiceTask_1-header-0',
+          'api-ServiceTask_1-header-1'
+        ]);
+      });
+
+
+      it('should fall back to custom handling if any offender is unresolved', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          id: 'ServiceTask_1',
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:TaskHeaders', {
+                values: [
+                  createElement('zeebe:Header', { key: 'foo' }),
+                  createElement('zeebe:Header', { key: 'foo' })
+                ]
+              })
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/duplicate-task-headers');
+
+        const report = await getLintError(node, rule);
+
+        const getEntryId = (element, path) =>
+          path[ path.length - 2 ] === 1 ? null : 'resolvedEntryId';
+
+        // when
+        const entryIds = getReportEntryIds(report, node, { getEntryId });
+
+        // then
+        expect(entryIds).to.eql([
+          'ServiceTask_1-header-0-key',
+          'ServiceTask_1-header-1-key'
+        ]);
       });
 
     });
