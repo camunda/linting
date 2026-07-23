@@ -3010,6 +3010,196 @@ describe('utils/properties-panel', function() {
 
       });
 
+
+      describe('agent tool contracts', function() {
+
+        function createAgenticSubProcess(flowElements) {
+          const adHocSubProcess = createElement('bpmn:AdHocSubProcess', {
+            id: 'AdHocSubProcess_1',
+            flowElements,
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:Properties', {
+                  properties: [
+                    createElement('zeebe:Property', {
+                      name: 'io.camunda.agenticai.toolContainer',
+                      value: 'true'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          createElement('bpmn:Process', {
+            isExecutable: true,
+            flowElements: [ adHocSubProcess ]
+          });
+
+          return adHocSubProcess;
+        }
+
+
+        it('agent-fromai-contract - fromAi() in input source', async function() {
+
+          // given
+          const node = createAgenticSubProcess([
+            createElement('bpmn:ServiceTask', {
+              id: 'ServiceTask_1',
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    inputParameters: [
+                      createElement('zeebe:Input', { source: '=fromAi("foo")', target: 'foo' })
+                    ]
+                  })
+                ]
+              })
+            })
+          ]);
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/agent-fromai-contract');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+        });
+
+
+        it('agent-fromai-contract - fromAi() in output source', async function() {
+
+          // given
+          const node = createAgenticSubProcess([
+            createElement('bpmn:ServiceTask', {
+              id: 'ServiceTask_1',
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    outputParameters: [
+                      createElement('zeebe:Output', { source: '=fromAi(toolCall.foo)', target: 'foo' })
+                    ]
+                  })
+                ]
+              })
+            })
+          ]);
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/agent-fromai-contract');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-output-0-source' ]);
+        });
+
+
+        it('agent-fromai-contract - duplicate fromAi() key', async function() {
+
+          // given
+          const node = createAgenticSubProcess([
+            createElement('bpmn:ServiceTask', {
+              id: 'ServiceTask_1',
+              extensionElements: createElement('bpmn:ExtensionElements', {
+                values: [
+                  createElement('zeebe:IoMapping', {
+                    inputParameters: [
+                      createElement('zeebe:Input', { source: '=fromAi(toolCall.foo)', target: 'a' }),
+                      createElement('zeebe:Input', { source: '=fromAi(toolCall.foo)', target: 'b' })
+                    ]
+                  })
+                ]
+              })
+            })
+          ]);
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/agent-fromai-contract');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'inputs' ]);
+        });
+
+
+        it('agent-fromai-contract - fromAi() in sequence flow condition', async function() {
+
+          // given
+          const node = createAgenticSubProcess([
+            createElement('bpmn:SequenceFlow', {
+              id: 'SequenceFlow_1',
+              conditionExpression: createElement('bpmn:FormalExpression', {
+                body: '=fromAi(toolCall.foo)'
+              })
+            })
+          ]);
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/agent-fromai-contract');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'conditionExpression' ]);
+
+          expectErrorMessage(
+            entryIds[ 0 ],
+            'fromAi() defines a tool input and cannot be used in a sequence flow condition. Define it in an input mapping on the tool\'s entry element.',
+            report
+          );
+        });
+
+
+        it('agent-tool-documentation - missing documentation', async function() {
+
+          // given
+          const node = createAgenticSubProcess([
+            createElement('bpmn:ServiceTask', { id: 'ServiceTask_1' })
+          ]);
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/agent-tool-documentation');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'documentation' ]);
+        });
+
+
+        it('agent-tool-output-key - missing result', async function() {
+
+          // given
+          const node = createAgenticSubProcess([
+            createElement('bpmn:ServiceTask', { id: 'ServiceTask_1' })
+          ]);
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/agent-tool-output-key');
+
+          const report = await getLintError(node, rule, { version: '8.8' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'outputs' ]);
+        });
+
+      });
+
     });
 
 
