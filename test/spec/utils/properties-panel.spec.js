@@ -81,7 +81,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'isExecutable' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Process must be executable.', report);
+        expectErrorMessage('Process must be executable.', report);
       });
 
 
@@ -124,7 +124,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'isExecutable' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'One process must be executable.', report);
+          expectErrorMessage('One process must be executable.', report);
         });
       });
 
@@ -144,7 +144,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'businessRuleImplementation' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Implementation must be defined.', report);
+        expectErrorMessage('Implementation must be defined.', report);
       });
 
 
@@ -163,7 +163,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'scriptImplementation' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Implementation must be defined.', report);
+        expectErrorMessage('Implementation must be defined.', report);
       });
 
 
@@ -186,7 +186,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'errorRef' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Global error reference must be defined.', report);
+        expectErrorMessage('Global error reference must be defined.', report);
       });
 
 
@@ -209,7 +209,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'escalationRef' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Global escalation reference must be defined.', report);
+        expectErrorMessage('Global escalation reference must be defined.', report);
       });
 
 
@@ -232,7 +232,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'messageRef' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Global message reference must be defined.', report);
+        expectErrorMessage('Global message reference must be defined.', report);
       });
 
 
@@ -255,7 +255,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'signalRef' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Global signal reference must be defined.', report);
+        expectErrorMessage('Global signal reference must be defined.', report);
       });
 
 
@@ -282,7 +282,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'decisionId' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Decision ID must be defined.', report);
+        expectErrorMessage('Decision ID must be defined.', report);
       });
 
 
@@ -309,7 +309,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'resultVariable' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Result variable must be defined.', report);
+        expectErrorMessage('Result variable must be defined.', report);
       });
 
 
@@ -336,7 +336,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'scriptExpression' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'FEEL expression must be defined.', report);
+        expectErrorMessage('FEEL expression must be defined.', report);
       });
 
 
@@ -363,7 +363,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'resultVariable' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Result variable must be defined.', report);
+        expectErrorMessage('Result variable must be defined.', report);
       });
 
 
@@ -388,7 +388,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'errorCode' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Code must be defined.', report);
+        expectErrorMessage('Code must be defined.', report);
       });
 
 
@@ -413,7 +413,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'errorCode' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
+        expectErrorMessage('Cannot be an expression.', report);
       });
 
 
@@ -438,7 +438,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'errorCode' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
+        expectErrorMessage('Cannot be an expression.', report);
       });
 
 
@@ -463,7 +463,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'escalationCode' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Code must be defined.', report);
+        expectErrorMessage('Code must be defined.', report);
       });
 
 
@@ -488,7 +488,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'escalationCode' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Cannot be an expression.', report);
+        expectErrorMessage('Cannot be an expression.', report);
       });
 
 
@@ -513,7 +513,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'messageName' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Name must be defined.', report);
+        expectErrorMessage('Name must be defined.', report);
       });
 
 
@@ -536,7 +536,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'multiInstance-inputCollection' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.', report);
+          expectErrorMessage('Input collection must be defined.', report);
         });
 
 
@@ -563,7 +563,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'multiInstance-inputCollection' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Input collection must be defined.', report);
+          expectErrorMessage('Input collection must be defined.', report);
         });
 
       });
@@ -595,7 +595,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'multiInstance-outputCollection' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Output collection must be defined.', report);
+        expectErrorMessage('Output collection must be defined.', report);
       });
 
 
@@ -625,7 +625,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'multiInstance-outputElement' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.', report);
+        expectErrorMessage('Output element must be defined.', report);
       });
 
       describe('ad-hoc-subprocess', function() {
@@ -652,7 +652,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'completionCondition' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.8 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.8 or newer.', report);
         });
 
 
@@ -676,7 +676,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'cancelRemainingInstances' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be checked.', report);
+          expectErrorMessage('Must be checked.', report);
         });
       });
 
@@ -697,7 +697,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'targetProcessId' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.', report);
+          expectErrorMessage('Process ID must be defined.', report);
         });
 
 
@@ -722,7 +722,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'targetProcessId' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Process ID must be defined.', report);
+          expectErrorMessage('Process ID must be defined.', report);
         });
 
       });
@@ -745,7 +745,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskDefinitionType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
+          expectErrorMessage('Type must be defined.', report);
         });
 
 
@@ -770,7 +770,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskDefinitionType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
+          expectErrorMessage('Type must be defined.', report);
         });
 
       });
@@ -795,7 +795,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.', report);
+          expectErrorMessage('Subscription correlation key must be defined.', report);
         });
 
 
@@ -822,7 +822,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Subscription correlation key must be defined.', report);
+          expectErrorMessage('Subscription correlation key must be defined.', report);
         });
 
       });
@@ -849,7 +849,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'formType' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.3 or newer.', report);
+        expectErrorMessage('Only supported by Camunda 8.3 or newer.', report);
       });
 
 
@@ -899,7 +899,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'customFormKey' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Form key must be defined.', report);
+        expectErrorMessage('Form key must be defined.', report);
       });
 
 
@@ -926,7 +926,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'customFormKey' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Form key must be defined.', report);
+        expectErrorMessage('Form key must be defined.', report);
       });
 
 
@@ -953,7 +953,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'formId' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Form ID is only supported by Camunda 8.4 or newer.', report);
+        expectErrorMessage('Form ID is only supported by Camunda 8.4 or newer.', report);
       });
 
 
@@ -980,7 +980,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'formId' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Form ID must be defined.', report);
+        expectErrorMessage('Form ID must be defined.', report);
       });
 
 
@@ -1008,7 +1008,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'formId' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Form ID must be defined.', report);
+        expectErrorMessage('Form ID must be defined.', report);
       });
 
 
@@ -1036,7 +1036,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'externalReference' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'External reference must be defined.', report);
+        expectErrorMessage('External reference must be defined.', report);
       });
 
 
@@ -1076,7 +1076,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'formConfiguration' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Form JSON configuration must be defined.', report);
+        expectErrorMessage('Form JSON configuration must be defined.', report);
       });
 
 
@@ -1110,7 +1110,7 @@ describe('utils/properties-panel', function() {
           'ServiceTask_1-header-1-key'
         ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
+        expectErrorMessage('Must be unique.', report);
       });
 
 
@@ -1151,7 +1151,7 @@ describe('utils/properties-panel', function() {
           'ServiceTask_1-executionListener-0-headers-header-1-key'
         ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
+        expectErrorMessage('Must be unique.', report);
       });
 
 
@@ -1185,7 +1185,7 @@ describe('utils/properties-panel', function() {
           'ServiceTask_1-extensionProperty-1-name'
         ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.1 or newer.', report);
+        expectErrorMessage('Only supported by Camunda 8.1 or newer.', report);
       });
 
 
@@ -1211,7 +1211,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'userTaskImplementation' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.5 or newer.', report);
+        expectErrorMessage('Only supported by Camunda 8.5 or newer.', report);
       });
 
 
@@ -1240,7 +1240,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'conditionExpression' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Condition expression must be defined.', report);
+          expectErrorMessage('Condition expression must be defined.', report);
         });
       });
 
@@ -1262,7 +1262,7 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryIds).to.eql([ 'conditionExpression' ]);
-        expectErrorMessage(entryIds[ 0 ], 'Property <conditionExpression> only allowed if source is of type <bpmn:ExclusiveGateway> or <bpmn:InclusiveGateway>', report);
+        expectErrorMessage('Property <conditionExpression> only allowed if source is of type <bpmn:ExclusiveGateway> or <bpmn:InclusiveGateway>', report);
       });
 
 
@@ -1289,7 +1289,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
+          expectErrorMessage('Type must be defined.', report);
         });
 
 
@@ -1314,7 +1314,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Type is only supported by Camunda 8.3 or newer.', report);
+          expectErrorMessage('Type is only supported by Camunda 8.3 or newer.', report);
         });
 
 
@@ -1341,7 +1341,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
+          expectErrorMessage('Value must be defined.', report);
         });
 
 
@@ -1368,7 +1368,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
+          expectErrorMessage('Value must be defined.', report);
         });
 
 
@@ -1395,7 +1395,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Value must be defined.', report);
+          expectErrorMessage('Value must be defined.', report);
         });
 
 
@@ -1426,7 +1426,7 @@ describe('utils/properties-panel', function() {
             // then
             expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression (cron only supported by Camunda 8.1 or newer).', report);
+            expectErrorMessage('Must be an expression, an ISO 8601 repeating interval, or a cron expression (cron only supported by Camunda 8.1 or newer).', report);
           });
 
 
@@ -1455,7 +1455,7 @@ describe('utils/properties-panel', function() {
             // then
             expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Must be an expression, an ISO 8601 repeating interval, or a cron expression.', report);
+            expectErrorMessage('Must be an expression, an ISO 8601 repeating interval, or a cron expression.', report);
           });
 
         });
@@ -1486,7 +1486,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 date.', report);
+          expectErrorMessage('Must be an expression, or an ISO 8601 date.', report);
         });
 
 
@@ -1515,7 +1515,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an ISO 8601 interval.', report);
+          expectErrorMessage('Must be an expression, or an ISO 8601 interval.', report);
         });
 
       });
@@ -1551,10 +1551,9 @@ describe('utils/properties-panel', function() {
 
           // when
           const report = await getLintError(node, rule);
-          const entryIds = getEntryIds(report);
 
           // then
-          expectErrorMessage(entryIds[ 0 ], 'Unparsable FEEL expression.', report);
+          expectErrorMessage('Unparsable FEEL expression.', report);
         });
 
 
@@ -1716,7 +1715,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'assignmentDefinitionCandidateUsers' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
+        expectErrorMessage('Only supported by Camunda 8.2 or newer.', report);
       });
 
 
@@ -1745,7 +1744,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskScheduleDueDate' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be an ISO 8601 date.', report);
+          expectErrorMessage('Must be an ISO 8601 date.', report);
         });
 
 
@@ -1772,7 +1771,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskScheduleFollowUpDate' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be an ISO 8601 date.', report);
+          expectErrorMessage('Must be an ISO 8601 date.', report);
         });
 
 
@@ -1799,7 +1798,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskScheduleDueDate' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.2 or newer.', report);
         });
 
 
@@ -1826,7 +1825,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'taskScheduleFollowUpDate' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.2 or newer.', report);
         });
 
       });
@@ -1853,7 +1852,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'priorityDefinitionPriority' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+        expectErrorMessage('Only supported by Camunda 8.6 or newer.', report);
       });
 
 
@@ -1880,7 +1879,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'priorityDefinitionPriority' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Must be an expression, or an integer between 0 and 100.', report);
+        expectErrorMessage('Must be an expression, or an integer between 0 and 100.', report);
       });
 
 
@@ -1905,7 +1904,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'jobPriorityDefinitionPriority' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.10 or newer.', report);
+        expectErrorMessage('Only supported by Camunda 8.10 or newer.', report);
       });
 
 
@@ -1932,7 +1931,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'propagateAllParentVariables' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.2 or newer.', report);
+        expectErrorMessage('Only supported by Camunda 8.2 or newer.', report);
       });
 
 
@@ -1963,7 +1962,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'messageSubscriptionCorrelationKey' ]);
 
-          expectNoErrorMessage(entryIds[ 0 ], report);
+          expectNoErrorMessage(report);
         });
 
 
@@ -1995,7 +1994,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
 
-          expectNoErrorMessage(entryIds[ 0 ], report);
+          expectNoErrorMessage(report);
         });
 
 
@@ -2027,7 +2026,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-extensionProperty-0-value' ]);
 
-          expectNoErrorMessage(entryIds[ 0 ], report);
+          expectNoErrorMessage(report);
         });
 
       });
@@ -2063,7 +2062,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Empty variable assignment is only supported by Camunda 8.8 or newer.', report);
+          expectErrorMessage('Empty variable assignment is only supported by Camunda 8.8 or newer.', report);
         });
 
 
@@ -2093,7 +2092,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-input-0-target' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Variable name must be defined.', report);
+          expectErrorMessage('Variable name must be defined.', report);
         });
 
 
@@ -2125,7 +2124,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-output-0-source' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Variable assignment must be defined.', report);
+          expectErrorMessage('Variable assignment must be defined.', report);
         });
 
 
@@ -2157,7 +2156,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-output-0-target' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Variable name must be defined.', report);
+          expectErrorMessage('Variable name must be defined.', report);
         });
 
       });
@@ -2194,7 +2193,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-input-0-target' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+          expectErrorMessage('Must be a valid variable name.', report);
         });
 
 
@@ -2227,7 +2226,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-output-0-target' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+          expectErrorMessage('Must be a valid variable name.', report);
         });
 
 
@@ -2255,7 +2254,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'resultVariable' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+          expectErrorMessage('Must be a valid variable name.', report);
         });
 
 
@@ -2283,7 +2282,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'resultVariable' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+          expectErrorMessage('Must be a valid variable name.', report);
         });
 
 
@@ -2313,7 +2312,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'multiInstance-inputElement' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+          expectErrorMessage('Must be a valid variable name.', report);
         });
 
 
@@ -2343,7 +2342,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'multiInstance-outputCollection' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+          expectErrorMessage('Must be a valid variable name.', report);
         });
 
 
@@ -2374,7 +2373,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'adHocOutputCollection' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be a valid variable name.', report);
+          expectErrorMessage('Must be a valid variable name.', report);
         });
 
       });
@@ -2401,7 +2400,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'linkName' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be defined.', report);
+          expectErrorMessage('Must be defined.', report);
         });
 
 
@@ -2438,7 +2437,7 @@ describe('utils/properties-panel', function() {
             // then
             expect(entryIds).to.eql([ 'linkName' ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
+            expectErrorMessage('Must be unique.', report);
           });
         });
 
@@ -2466,7 +2465,7 @@ describe('utils/properties-panel', function() {
         // then
         expect(entryIds).to.eql([ 'waitForCompletion' ]);
 
-        expectErrorMessage(entryIds[ 0 ], 'Must wait for completion.', report);
+        expectErrorMessage('Must wait for completion.', report);
       });
 
 
@@ -2500,7 +2499,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-executionListener-0-listenerType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be defined.', report);
+          expectErrorMessage('Must be defined.', report);
         });
 
 
@@ -2541,7 +2540,7 @@ describe('utils/properties-panel', function() {
               'ServiceTask_1-executionListener-1-listenerType'
             ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Must be unique.', report);
+            expectErrorMessage('Must be unique.', report);
           });
         });
 
@@ -2576,7 +2575,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'ServiceTask_1-executionListener-0-eventType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.10 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.10 or newer.', report);
         });
 
 
@@ -2610,7 +2609,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'Process_1-executionListener-0-eventType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.10 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.10 or newer.', report);
         });
 
       });
@@ -2647,7 +2646,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'UserTask_1-taskListener-0-listenerType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Must be defined.', report);
+          expectErrorMessage('Must be defined.', report);
         });
 
       });
@@ -2678,7 +2677,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'bindingType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.6 or newer.', report);
         });
 
 
@@ -2705,7 +2704,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'bindingType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.6 or newer.', report);
         });
 
 
@@ -2732,7 +2731,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'bindingType' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Only supported by Camunda 8.6 or newer.', report);
+          expectErrorMessage('Only supported by Camunda 8.6 or newer.', report);
         });
 
       });
@@ -2764,7 +2763,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'versionTag' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Version tag must be defined.', report);
+          expectErrorMessage('Version tag must be defined.', report);
         });
 
 
@@ -2792,7 +2791,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'versionTag' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Version tag expression is only supported by Camunda 8.10 or newer.', report);
+          expectErrorMessage('Version tag expression is only supported by Camunda 8.10 or newer.', report);
         });
 
 
@@ -2820,7 +2819,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'versionTag' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Version tag must be defined.', report);
+          expectErrorMessage('Version tag must be defined.', report);
         });
 
 
@@ -2848,7 +2847,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'versionTag' ]);
 
-          expectErrorMessage(entryIds[ 0 ], 'Version tag must be defined.', report);
+          expectErrorMessage('Version tag must be defined.', report);
         });
 
 
@@ -2880,7 +2879,7 @@ describe('utils/properties-panel', function() {
             // then
             expect(entryIds).to.eql([ 'adHocOutputCollection' ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Output collection must be defined.', report);
+            expectErrorMessage('Output collection must be defined.', report);
           });
 
 
@@ -2910,7 +2909,7 @@ describe('utils/properties-panel', function() {
             // then
             expect(entryIds).to.eql([ 'adHocOutputElement' ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Output element must be defined.', report);
+            expectErrorMessage('Output element must be defined.', report);
           });
 
 
@@ -2940,7 +2939,7 @@ describe('utils/properties-panel', function() {
             // then
             expect(entryIds).to.eql([ 'adHocOutputCollection' ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Output collection is only supported by Camunda 8.8 or newer.', report);
+            expectErrorMessage('Output collection is only supported by Camunda 8.8 or newer.', report);
           });
 
 
@@ -2970,7 +2969,7 @@ describe('utils/properties-panel', function() {
             // then
             expect(entryIds).to.eql([ 'adHocOutputElement' ]);
 
-            expectErrorMessage(entryIds[ 0 ], 'Output element is only supported by Camunda 8.8 or newer.', report);
+            expectErrorMessage('Output element is only supported by Camunda 8.8 or newer.', report);
           });
 
         });
@@ -3008,7 +3007,7 @@ describe('utils/properties-panel', function() {
           // then
           expect(entryIds).to.eql([ 'condition' ]);
 
-          expectErrorMessage(entryIds[0], 'Condition expression must be defined.', report);
+          expectErrorMessage('Condition expression must be defined.', report);
         });
 
       });
@@ -3117,6 +3116,39 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(errors).to.be.empty;
+      });
+
+
+      it('should return adjusted message for an entry id resolved via the properties panel API', async function() {
+
+        // given
+        const node = createElement('bpmn:ServiceTask', {
+          extensionElements: createElement('bpmn:ExtensionElements', {
+            values: [
+              createElement('zeebe:TaskDefinition')
+            ]
+          })
+        });
+
+        const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/implementation');
+
+        const report = await getLintError(node, rule, { version: '1.0' });
+
+        // assume
+        expect(report.path).to.exist;
+
+        // simulate an element template shadowing the standard entry
+        const propertiesPanel = {
+          getEntryId: () => 'custom-entry-someTemplate-0'
+        };
+
+        // when
+        const errors = getErrors([ report ], node, propertiesPanel);
+
+        // then
+        expect(errors).to.eql({
+          'custom-entry-someTemplate-0': 'Type must be defined.'
+        });
       });
 
     });
@@ -3314,15 +3346,15 @@ describe('utils/properties-panel', function() {
 });
 
 
-function expectErrorMessage(id, expectedErrorMessage, report) {
+function expectErrorMessage(expectedErrorMessage, report) {
 
   // when
-  const errorMessage = getErrorMessage(id, report);
+  const errorMessage = getErrorMessage(report);
 
   // then
   expect(errorMessage).to.equal(expectedErrorMessage);
 }
 
-function expectNoErrorMessage(id, report) {
-  expectErrorMessage(id, undefined, report);
+function expectNoErrorMessage(report) {
+  expectErrorMessage(undefined, report);
 }
