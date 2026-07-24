@@ -8,8 +8,9 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 3.53.0
 
-* `FEAT`: integrate call activity business ID rules (`no-business-id`, extended `called-element`) with inline error messages ([#169](https://github.com/camunda/linting/pull/169)) 
+* `FEAT`: integrate call activity business ID rules (`no-business-id`, extended `called-element`) with inline error messages ([#169](https://github.com/camunda/linting/pull/169))
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.58.0`
+* `DEPS`: update to `zeebe-bpmn-moddle@1.17.0`
 
 ## 3.52.0
 
