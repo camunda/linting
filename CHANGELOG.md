@@ -6,6 +6,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.52.0
+
+* `FEAT`: integrate agent tool contract rules ([#170](https://github.com/camunda/linting/pull/170))
+* `FIX`: don't override conditionExpression message for non-PROPERTY_REQUIRED errors ([#165](https://github.com/camunda/linting/issues/165))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.57.0`
+
 ## 3.51.0
 
 * `FEAT`: integrate job priority definition rule ([#160](https://github.com/camunda/linting/pull/160))
