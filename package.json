@@ -45,7 +45,7 @@
   "devDependencies": {
     "bpmn-js": "^18.19.0",
     "bpmn-js-element-templates": "^2.26.0",
-    "bpmn-js-properties-panel": "^5.60.0",
+    "bpmn-js-properties-panel": "^5.62.0",
     "camunda-bpmn-js-behaviors": "^1.17.0",
     "chai": "^6.2.2",
     "cross-env": "^10.1.0",
