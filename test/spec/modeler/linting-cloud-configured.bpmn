@@ -100,15 +100,23 @@
           </zeebe:taskHeaders>
         </bpmn:extensionElements>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Tool_Bedrock" name="Summarize" zeebe:modelerTemplate="io.camunda.connectors.aws.bedrock.v1" zeebe:modelerTemplateVersion="4">
+      <bpmn:serviceTask id="Tool_Bedrock" name="LLM Summarize" zeebe:modelerTemplate="io.camunda.connectors.aws.bedrock.v1" zeebe:modelerTemplateVersion="4">
         <bpmn:extensionElements>
           <zeebe:taskDefinition type="io.camunda:aws-bedrock:1" />
+          <zeebe:taskHeaders>
+            <zeebe:header key="resultExpression" value="={&#10;  llm_summary: fromAi(toolCall.summary)&#10;}" />
+          </zeebe:taskHeaders>
+        </bpmn:extensionElements>
+      </bpmn:serviceTask>
+      <bpmn:task id="Tool_Note" name="Take note" />
+      <bpmn:serviceTask id="Tool_LocalSummarize" name="Summarize">
+        <bpmn:extensionElements>
+          <zeebe:taskDefinition type="my-summary-job" />
           <zeebe:ioMapping>
             <zeebe:output source="=fromAi(toolCall.summary)" target="summary" />
           </zeebe:ioMapping>
         </bpmn:extensionElements>
       </bpmn:serviceTask>
-      <bpmn:task id="Tool_Note" name="Take note" />
     </bpmn:adHocSubProcess>
     <bpmn:sequenceFlow id="Flow_AI_end" sourceRef="AiAgent_1" targetRef="EndEvent_AI" />
     <bpmn:endEvent id="EndEvent_AI">
@@ -170,33 +178,37 @@
         <di:waypoint x="742" y="160" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_AiAgent_di" bpmnElement="Participant_AiAgent" isHorizontal="true">
-        <dc:Bounds x="160" y="280" width="820" height="260" />
+        <dc:Bounds x="160" y="280" width="910" height="260" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_AI_di" bpmnElement="StartEvent_AI">
         <dc:Bounds x="212" y="392" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="AiAgent_1_di" bpmnElement="AiAgent_1" isExpanded="true">
-        <dc:Bounds x="300" y="320" width="480" height="200" />
+        <dc:Bounds x="300" y="320" width="620" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Tool_Search_di" bpmnElement="Tool_Search">
         <dc:Bounds x="330" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Tool_Bedrock_di" bpmnElement="Tool_Bedrock">
         <dc:Bounds x="470" y="380" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Tool_Note_di" bpmnElement="Tool_Note">
+        <dc:Bounds x="750" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1htv3zy" bpmnElement="Tool_LocalSummarize">
         <dc:Bounds x="610" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_AI_di" bpmnElement="EndEvent_AI">
-        <dc:Bounds x="862" y="392" width="36" height="36" />
+        <dc:Bounds x="972" y="392" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_AI_start_di" bpmnElement="Flow_AI_start">
         <di:waypoint x="248" y="410" />
         <di:waypoint x="300" y="410" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_AI_end_di" bpmnElement="Flow_AI_end">
-        <di:waypoint x="780" y="410" />
-        <di:waypoint x="862" y="410" />
+        <di:waypoint x="920" y="410" />
+        <di:waypoint x="972" y="410" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_AdHoc_di" bpmnElement="Participant_AdHoc" isHorizontal="true">
         <dc:Bounds x="160" y="580" width="760" height="200" />
