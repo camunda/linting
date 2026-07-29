@@ -1,0 +1,64 @@
+[
+  {
+    "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+    "name": "Linting Service Task",
+    "id": "linting.service",
+    "appliesTo": [ "bpmn:ServiceTask" ],
+    "properties": [
+      {
+        "label": "Task type",
+        "type": "String",
+        "binding": { "type": "zeebe:taskDefinition", "property": "type" }
+      },
+      {
+        "label": "Retries",
+        "type": "String",
+        "feel": "optional",
+        "binding": { "type": "zeebe:taskDefinition", "property": "retries" }
+      },
+      {
+        "label": "Input source",
+        "type": "String",
+        "feel": "optional",
+        "binding": { "type": "zeebe:input", "name": "inputVar" }
+      }
+    ]
+  },
+  {
+    "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+    "name": "Linting Call Activity",
+    "id": "linting.call",
+    "appliesTo": [ "bpmn:CallActivity" ],
+    "properties": [
+      {
+        "label": "Process id",
+        "type": "String",
+        "feel": "optional",
+        "binding": { "type": "zeebe:calledElement", "property": "processId" }
+      }
+    ]
+  },
+  {
+    "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+    "name": "Linting Message Event",
+    "id": "linting.message",
+    "appliesTo": [ "bpmn:Event" ],
+    "elementType": {
+      "value": "bpmn:IntermediateCatchEvent",
+      "eventDefinition": "bpmn:MessageEventDefinition"
+    },
+    "properties": [
+      {
+        "label": "Message name",
+        "type": "String",
+        "binding": { "type": "bpmn:Message#property", "name": "name" }
+      },
+      {
+        "label": "Correlation key",
+        "type": "String",
+        "feel": "optional",
+        "binding": { "type": "bpmn:Message#zeebe:subscription#property", "name": "correlationKey" }
+      }
+    ]
+  }
+]

@@ -20,9 +20,11 @@ import {
 } from 'bpmn-js-properties-panel';
 
 import {
-  CloudElementTemplatesPropertiesProviderModule as cloudElementTemplatesPropertiesProvider,
+  CloudElementTemplatesPropertiesProviderModule as cloudElementTemplatesPropertiesProviderModule,
   ElementTemplatesPropertiesProviderModule as elementTemplatesPropertiesProviderModule
 } from 'bpmn-js-element-templates';
+import elementTemplateChooserModule from '@bpmn-io/element-template-chooser';
+import elementTemplateIconRendererModule from '@bpmn-io/element-template-icon-renderer';
 
 import camundaCloudBehaviors from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 
@@ -43,9 +45,12 @@ import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
 import bpmnFont from 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
 import propertiesPanelCSS from '@bpmn-io/properties-panel/dist/assets/properties-panel.css';
 import elementTemplatesCSS from 'bpmn-js-element-templates/dist/assets/element-templates.css';
+import elementTemplateChooserCSS from '@bpmn-io/element-template-chooser/dist/element-template-chooser.css';
 import lintingCSS from '../../../assets/linting.css';
 
 import diagramXMLCloud from './linting-cloud.bpmn';
+import diagramCloudConfiguredXML from './linting-cloud-configured.bpmn';
+import elementTemplates from './linting-element-templates-corpus';
 import diagramCollaborationXMLCloud from './linting-collaboration-cloud.bpmn';
 import diagramCollaborationELXMLCloud from './linting-collaboration-el.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
@@ -56,6 +61,7 @@ insertCSS('bpmn-js.css', bpmnCSS);
 insertCSS('bpmn-embedded.css', bpmnFont);
 insertCSS('properties-panel.css', propertiesPanelCSS);
 insertCSS('element-templates.css', elementTemplatesCSS);
+insertCSS('element-template-chooser.css', elementTemplateChooserCSS);
 insertCSS('linting.css', lintingCSS);
 
 insertCSS('test.css', `
@@ -119,19 +125,25 @@ const linter = new Linter();
 
 describe('Linting', function() {
 
-  function createModeler(diagramXML, additionalModules, moddleExtensions) {
+  function createModeler(diagramXML, options = {}) {
+    const {
+      additionalModules = [],
+      moddleExtensions = {},
+      ...rest
+    } = options;
+
     return bootstrapModeler(diagramXML, {
       additionalModules: [
         lintingModule,
         propertiesPanelModule,
         bpmnPropertiesProviderModule,
-        camundaCloudBehaviors,
         ...additionalModules
       ],
       moddleExtensions: {
         modeler: modelerModdleExtension,
         ...moddleExtensions
-      }
+      },
+      ...rest
     });
   }
 
@@ -272,19 +284,15 @@ describe('Linting', function() {
 
   describe('Camunda Cloud', function() {
 
-    beforeEach(createModeler(diagramXMLCloud,
-      [
+    beforeEach(createModeler(diagramXMLCloud, {
+      additionalModules: [
+        camundaCloudBehaviors,
         zeebePropertiesProviderModule,
-        cloudElementTemplatesPropertiesProvider
+        cloudElementTemplatesPropertiesProviderModule
       ],
-      {
+      moddleExtensions: {
         zeebe: zeebeModdleExtension
-      })
-    );
-
-    (singleStart === 'cloud' ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
-
-      lintingExample(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel);
+      }
     }));
 
 
@@ -293,27 +301,6 @@ describe('Linting', function() {
       // then
       expect(linting.isActive()).to.be.false;
     }));
-
-
-    describe('config', function() {
-
-      beforeEach(bootstrapModeler(diagramXMLCloud, {
-        additionalModules: [
-          lintingModule
-        ],
-        linting: {
-          active: true
-        }
-      }));
-
-
-      it('should be active if configured', inject(function(linting) {
-
-        // then
-        expect(linting.isActive()).to.be.true;
-      }));
-
-    });
 
 
     it('should activate', inject(
@@ -633,15 +620,16 @@ describe('Linting', function() {
 
       describe('collaboration', function() {
 
-        beforeEach(createModeler(diagramCollaborationXMLCloud,
-          [
+        beforeEach(createModeler(diagramCollaborationXMLCloud, {
+          additionalModules: [
+            camundaCloudBehaviors,
             zeebePropertiesProviderModule,
-            cloudElementTemplatesPropertiesProvider
+            cloudElementTemplatesPropertiesProviderModule
           ],
-          {
+          moddleExtensions: {
             zeebe: zeebeModdleExtension
-          })
-        );
+          }
+        }));
 
 
         it('should select participant', inject(
@@ -674,15 +662,16 @@ describe('Linting', function() {
 
       describe('collaboration with execution listener', function() {
 
-        beforeEach(createModeler(diagramCollaborationELXMLCloud,
-          [
+        beforeEach(createModeler(diagramCollaborationELXMLCloud, {
+          additionalModules: [
+            camundaCloudBehaviors,
             zeebePropertiesProviderModule,
-            cloudElementTemplatesPropertiesProvider
+            cloudElementTemplatesPropertiesProviderModule
           ],
-          {
+          moddleExtensions: {
             zeebe: zeebeModdleExtension
-          })
-        );
+          }
+        }));
 
 
         it('should show error on participant', inject(
@@ -734,15 +723,16 @@ describe('Linting', function() {
 
     describe('canvas scrolling', function() {
 
-      beforeEach(createModeler(diagramXMLCloudScroll,
-        [
+      beforeEach(createModeler(diagramXMLCloudScroll, {
+        additionalModules: [
+          camundaCloudBehaviors,
           zeebePropertiesProviderModule,
-          cloudElementTemplatesPropertiesProvider
+          cloudElementTemplatesPropertiesProviderModule
         ],
-        {
+        moddleExtensions: {
           zeebe: zeebeModdleExtension
-        })
-      );
+        }
+      }));
 
       it('should scroll', inject(
         function(canvas, linting) {
@@ -871,22 +861,62 @@ describe('Linting', function() {
   });
 
 
+  describe('Camunda Cloud - end-to-end example', function() {
+
+    beforeEach(createModeler(diagramCloudConfiguredXML, {
+      additionalModules: [
+        camundaCloudBehaviors,
+        zeebePropertiesProviderModule,
+        cloudElementTemplatesPropertiesProviderModule,
+        elementTemplateIconRendererModule,
+        elementTemplateChooserModule
+      ],
+      moddleExtensions: {
+        zeebe: zeebeModdleExtension
+      },
+      elementTemplates
+    }));
+
+
+    (singleStart === 'cloud' ? it.only : it)('example', inject(lintingExample));
+
+  });
+
+
+  describe('Camunda Cloud - config', function() {
+
+    beforeEach(bootstrapModeler(diagramXMLCloud, {
+      additionalModules: [
+        lintingModule
+      ],
+      linting: {
+        active: true
+      }
+    }));
+
+
+    it('should be active if configured', inject(function(linting) {
+
+      // then
+      expect(linting.isActive()).to.be.true;
+    }));
+
+  });
+
+
   describe('Camunda', function() {
 
-    beforeEach(createModeler(diagramXMLPlatform,
-      [
+    beforeEach(createModeler(diagramXMLPlatform, {
+      additionalModules: [
         camundaPlatformPropertiesProviderModule,
         elementTemplatesPropertiesProviderModule
       ],
-      {
+      moddleExtensions: {
         camunda: camundaModdleExtension
-      })
-    );
-
-    (singleStart === 'platform' ? it.only : it)('example', inject(function(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel) {
-
-      lintingExample(bpmnjs, canvas, eventBus, linting, modeling, propertiesPanel);
+      }
     }));
+
+    (singleStart === 'platform' ? it.only : it)('example', inject(lintingExample));
 
   });
 

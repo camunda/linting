@@ -43,6 +43,8 @@
     "zeebe-bpmn-moddle": "^1.17.0"
   },
   "devDependencies": {
+    "@bpmn-io/element-template-chooser": "^3.0.0",
+    "@bpmn-io/element-template-icon-renderer": "^1.0.0",
     "bpmn-js": "^18.19.0",
     "bpmn-js-element-templates": "^2.26.0",
     "bpmn-js-properties-panel": "^5.62.0",
