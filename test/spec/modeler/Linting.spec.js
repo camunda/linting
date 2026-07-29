@@ -83,21 +83,23 @@ insertCSS('test.css', `
     display: flex;
     flex-direction: column;
     background-color: #f7f7f8;
-    padding: 5px;
     box-sizing: border-box;
     border-top: solid 1px #ccc;
     font-family: sans-serif;
   }
 
+  .panel > * {
+    padding: 5px;
+  }
   .panel .errorContainer {
     resize: none;
     flex-grow: 1;
     background-color: #f7f7f8;
-    border: none;
-    margin-bottom: 5px;
+    border-bottom: solid 1px #CCC;
     font-family: sans-serif;
     line-height: 1.5;
     outline: none;
+    overflow: auto;
   }
 
   .panel .errorItem {
