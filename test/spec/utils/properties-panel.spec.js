@@ -3152,7 +3152,14 @@ describe('utils/properties-panel', function() {
           const entryIds = getEntryIds(report);
 
           // then
-          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+          // fromAi findings resolve render-agnostically via the properties panel
+          // (propertiesPanel.getEntryId); linting derives no static entry id and
+          // carries the moddle path the provider resolves instead
+          expect(entryIds).to.be.empty;
+
+          expect(report.path).to.eql([
+            'extensionElements', 'values', 0, 'inputParameters', 0, 'source'
+          ]);
         });
 
 
@@ -3182,7 +3189,11 @@ describe('utils/properties-panel', function() {
           const entryIds = getEntryIds(report);
 
           // then
-          expect(entryIds).to.eql([ 'ServiceTask_1-output-0-source' ]);
+          expect(entryIds).to.be.empty;
+
+          expect(report.path).to.eql([
+            'extensionElements', 'values', 0, 'outputParameters', 0, 'source'
+          ]);
         });
 
 
@@ -3213,7 +3224,12 @@ describe('utils/properties-panel', function() {
           const entryIds = getEntryIds(report);
 
           // then
-          expect(entryIds).to.eql([ 'inputs' ]);
+          expect(entryIds).to.be.empty;
+
+          expect(report.paths).to.eql([
+            [ 'extensionElements', 'values', 0, 'inputParameters', 0, 'source' ],
+            [ 'extensionElements', 'values', 0, 'inputParameters', 1, 'source' ]
+          ]);
         });
 
 
@@ -3237,13 +3253,11 @@ describe('utils/properties-panel', function() {
           const entryIds = getEntryIds(report);
 
           // then
-          expect(entryIds).to.eql([ 'conditionExpression' ]);
+          // fromAi in a sequence flow condition resolves to the condition entry
+          // via the properties panel; linting derives no static entry id
+          expect(entryIds).to.be.empty;
 
-          expectErrorMessage(
-            entryIds[ 0 ],
-            'fromAi() defines a tool input and cannot be used in a sequence flow condition. Define it in an input mapping on the tool\'s entry element.',
-            report
-          );
+          expect(report.path).to.eql([ 'conditionExpression' ]);
         });
 
 
@@ -3262,7 +3276,12 @@ describe('utils/properties-panel', function() {
           const entryIds = getEntryIds(report);
 
           // then
-          expect(entryIds).to.eql([ 'documentation' ]);
+          // missing documentation resolves to the documentation entry via the
+          // properties panel (standard bpmn provider); linting derives no static
+          // entry id
+          expect(entryIds).to.be.empty;
+
+          expect(report.path).to.eql([ 'documentation' ]);
         });
 
 
@@ -3281,7 +3300,11 @@ describe('utils/properties-panel', function() {
           const entryIds = getEntryIds(report);
 
           // then
-          expect(entryIds).to.eql([ 'outputs' ]);
+          // linting derives no static entry id; with no output mapping to point
+          // at, the finding carries no path and degrades to element selection
+          expect(entryIds).to.be.empty;
+
+          expect(report.path).not.to.exist;
         });
 
       });
@@ -3318,6 +3341,39 @@ describe('utils/properties-panel', function() {
         // then
         expect(errors).to.eql({
           targetProcessId: 'Process ID must be defined.'
+        });
+      });
+
+
+      it('should key the message off the finding, not the resolved entry id', async function() {
+
+        // given
+        // a finding as baked by the headless linter: a moddle `path` plus the
+        // statically derived (render-agnostic) logical id
+        const report = {
+          id: 'BusinessRuleTask_1',
+          category: 'error',
+          message: 'A raw diagram message.',
+          path: [ 'extensionElements', 'values', 0, 'decisionId' ],
+          propertiesPanel: {
+            entryIds: [ 'decisionId' ]
+          }
+        };
+
+        const element = createElement('bpmn:BusinessRuleTask', { id: 'BusinessRuleTask_1' });
+
+        // a template-bound field: the panel resolves the finding's location to a
+        // custom element-template entry rather than the standard `decisionId`
+        const resolveEntryId = () => 'custom-entry-my.template-1';
+
+        // when
+        const errors = getErrors([ report ], element, resolveEntryId);
+
+        // then
+        // the corrected message travels to the template entry unchanged — it is
+        // derived from the finding, not from the (render-specific) entry id
+        expect(errors).to.eql({
+          'custom-entry-my.template-1': 'Decision ID must be defined.'
         });
       });
 
