@@ -1207,17 +1207,17 @@ describe('Linting', function() {
         async function(bpmnjs, elementRegistry, propertiesPanel) {
 
           // given
-          const tool = elementRegistry.get('Tool_Bedrock');
+          const tool = elementRegistry.get('Tool_LocalSummarize');
 
           const reports = await linter.lint(bpmnjs.getDefinitions());
 
           const report = reports.find(
-            report => report.id === 'Tool_Bedrock'
+            report => report.id === 'Tool_LocalSummarize'
               && report.rule === 'camunda-compat/agent-tool-output-key'
           );
 
           // assume
-          expect(report, 'expected an output-key finding on Tool_Bedrock').to.exist;
+          expect(report, 'expected an output-key finding on Tool_LocalSummarize').to.exist;
           expect(report.path, 'expected a leaf path on the finding').to.be.an('array');
 
           // when
@@ -1227,7 +1227,7 @@ describe('Linting', function() {
           // the misdirected output write resolves render-agnostically to the
           // standard output field entry (the bedrock template does not bind this
           // output, so the zeebe provider answers) — never a static fallback
-          expect(entryId).to.equal('Tool_Bedrock-output-0-target');
+          expect(entryId).to.equal('Tool_LocalSummarize-output-0-target');
         }
       ));
 
