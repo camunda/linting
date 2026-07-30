@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: trim verbose agentic `fromAi()` error messages shown in the properties panel while keeping the offending token
+
 ## 3.54.0
 
 * `FEAT`: translate linting generated paths to entry ids ([#172](https://github.com/camunda/linting/pull/172))

@@ -3160,6 +3160,8 @@ describe('utils/properties-panel', function() {
           expect(report.path).to.eql([
             'extensionElements', 'values', 0, 'inputParameters', 0, 'source'
           ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'fromAi() key must be a FEEL path, not a string literal. Remove the quotes around "foo".', report);
         });
 
 
@@ -3194,6 +3196,8 @@ describe('utils/properties-panel', function() {
           expect(report.path).to.eql([
             'extensionElements', 'values', 0, 'outputParameters', 0, 'source'
           ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'fromAi() defines a tool input and has no effect in an output mapping.', report);
         });
 
 
@@ -3230,6 +3234,8 @@ describe('utils/properties-panel', function() {
             [ 'extensionElements', 'values', 0, 'inputParameters', 0, 'source' ],
             [ 'extensionElements', 'values', 0, 'inputParameters', 1, 'source' ]
           ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'fromAi() key toolCall.foo is declared more than once in this tool.', report);
         });
 
 
@@ -3258,6 +3264,8 @@ describe('utils/properties-panel', function() {
           expect(entryIds).to.be.empty;
 
           expect(report.path).to.eql([ 'conditionExpression' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'fromAi() defines a tool input and cannot be used in a sequence flow condition.', report);
         });
 
 
@@ -3305,6 +3313,83 @@ describe('utils/properties-panel', function() {
           expect(entryIds).to.be.empty;
 
           expect(report.path).not.to.exist;
+        });
+
+
+        describe('simplified fromAi() messages', function() {
+
+          // A fromAi() finding validates one call inside a possibly larger FEEL
+          // expression. In the panel the message sits next to the field, so the
+          // offending token stays (it pinpoints the call) while the trailing
+          // "how to fix" / "why" guidance is dropped. Messages mirror the real
+          // ones emitted by agent-fromai-contract.
+          [
+            {
+              description: 'drops "declare once" guidance, keeps the key',
+              type: 'camunda.agentFeelKeyDuplicate',
+              message: 'fromAi() key toolCall.foo is declared more than once in this tool. Declare it once and reference it directly elsewhere.',
+              expected: 'fromAi() key toolCall.foo is declared more than once in this tool.'
+            },
+            {
+              description: 'drops "define in input mapping" guidance (output mapping)',
+              type: 'camunda.agentFeelWrongContext',
+              message: 'fromAi() defines a tool input and has no effect in an output mapping. Define it in an input mapping on the tool\'s entry element.',
+              expected: 'fromAi() defines a tool input and has no effect in an output mapping.'
+            },
+            {
+              description: 'drops "define in input mapping" guidance (sequence flow condition)',
+              type: 'camunda.agentFeelWrongContext',
+              message: 'fromAi() defines a tool input and cannot be used in a sequence flow condition. Define it in an input mapping on the tool\'s entry element.',
+              expected: 'fromAi() defines a tool input and cannot be used in a sequence flow condition.'
+            },
+            {
+              description: 'drops "define it there" guidance (non-entry element)',
+              type: 'camunda.agentFeelNonEntryElement',
+              message: 'fromAi() is ignored here: only the tool\'s entry element defines AI inputs. Define it there and read the toolCall variable directly.',
+              expected: 'fromAi() is ignored here: only the tool\'s entry element defines AI inputs.'
+            },
+            {
+              description: 'drops "connector requires a plain reference" guidance',
+              type: 'camunda.agentFeelKeyTypeInvalid',
+              message: 'fromAi() key must be a FEEL path starting with "toolCall.", not a conditional expression. The connector requires a plain reference regardless of which branch would apply at runtime.',
+              expected: 'fromAi() key must be a FEEL path starting with "toolCall.", not a conditional expression.'
+            },
+            {
+              description: 'drops the trailing description elaboration',
+              type: 'camunda.agentFeelDescriptionTypeInvalid',
+              message: 'fromAi() description must be a string literal: a quoted string describing what the agent should provide.',
+              expected: 'fromAi() description must be a string literal.'
+            },
+            {
+              description: 'keeps a message with the offending token but no guidance tail',
+              type: 'camunda.agentFeelKeyPrefixMissing',
+              message: 'fromAi() key must start with "toolCall.". Use toolCall.foo instead of a bare name.',
+              expected: 'fromAi() key must start with "toolCall.". Use toolCall.foo instead of a bare name.'
+            },
+            {
+              description: 'keeps the wrong function name',
+              type: 'camunda.agentFeelFunctionNameInvalid',
+              message: 'Wrong function name "FromAI". Use fromAi (case-sensitive).',
+              expected: 'Wrong function name "FromAI". Use fromAi (case-sensitive).'
+            }
+          ].forEach(({ description, type, message, expected }) => {
+
+            it(`should ${ description }`, function() {
+
+              // given
+              const report = {
+                id: 'ServiceTask_1',
+                category: 'error',
+                message,
+                data: { type }
+              };
+
+              // then
+              expectErrorMessage(undefined, expected, report);
+            });
+
+          });
+
         });
 
       });
