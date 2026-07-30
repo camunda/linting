@@ -6,6 +6,11 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.54.0
+
+* `FEAT`: translate linting generated paths to entry ids ([#172](https://github.com/camunda/linting/pull/172))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.59.0`
+
 ## 3.53.0
 
 * `FEAT`: integrate call activity business ID rules (`no-business-id`, extended `called-element`) with inline error messages ([#169](https://github.com/camunda/linting/pull/169))
