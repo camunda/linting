@@ -1398,6 +1398,169 @@ describe('Linting', function() {
   });
 
 
+  describe('Camunda Cloud - entry resolution fallback', function() {
+
+    // a finding as baked by the headless linter: a moddle `path` plus the
+    // statically derived (render-agnostic) fallback id
+    const report = {
+      id: 'ServiceTask_1',
+      category: 'error',
+      message: 'Invalid.',
+      path: [ 'extensionElements', 'values', 0, 'inputParameters', 0, 'source' ],
+      propertiesPanel: {
+        entryIds: [ 'ServiceTask_1-input-0-source' ]
+      }
+    };
+
+
+    describe('without a properties panel', function() {
+
+      // the properties panel is an optional peer dependency; without it,
+      // `injector.get('propertiesPanel', false)` yields nothing and resolution
+      // degrades to the statically derived ids
+      beforeEach(bootstrapModeler(diagramXMLCloud, {
+        additionalModules: [
+          lintingModule
+        ],
+        moddleExtensions: {
+          zeebe: zeebeModdleExtension
+        }
+      }));
+
+
+      it('should fall back to static ids for panel errors', inject(
+        function(elementRegistry, linting, selection, eventBus) {
+
+          // given
+          const serviceTask = elementRegistry.get('ServiceTask_1');
+
+          linting.setErrors([ report ]);
+          linting.activate();
+
+          const propertiesPanelSetErrorSpy = sinon.spy();
+
+          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+
+          // when
+          selection.select(serviceTask);
+
+          // then
+          expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
+            errors: {
+              'ServiceTask_1-input-0-source': 'Invalid.'
+            }
+          });
+        }
+      ));
+
+
+      it('should fall back to static ids for shown entry', inject(
+        function(linting, eventBus) {
+
+          // given
+          const clock = sinon.useFakeTimers();
+
+          linting.setErrors([ report ]);
+          linting.activate();
+
+          const propertiesPanelShowEntrySpy = sinon.spy();
+
+          eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
+
+          // when
+          linting.showError(report);
+
+          clock.tick();
+
+          // then
+          expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
+            id: 'ServiceTask_1-input-0-source'
+          });
+
+          clock.restore();
+        }
+      ));
+
+    });
+
+
+    describe('with a properties panel lacking #getEntryId', function() {
+
+      // the supported peer range (`>= 2.0.0`) predates the `#getEntryId` API;
+      // an older panel without it must degrade to the statically derived ids
+      beforeEach(createModeler(diagramXMLCloud, {
+        additionalModules: [
+          zeebePropertiesProviderModule
+        ],
+        moddleExtensions: {
+          zeebe: zeebeModdleExtension
+        }
+      }));
+
+
+      it('should fall back to static ids for panel errors', inject(
+        function(elementRegistry, propertiesPanel, linting, selection, eventBus) {
+
+          // given
+          // simulate an older panel that has no resolution API
+          propertiesPanel.getEntryId = undefined;
+
+          const serviceTask = elementRegistry.get('ServiceTask_1');
+
+          linting.setErrors([ report ]);
+          linting.activate();
+
+          const propertiesPanelSetErrorSpy = sinon.spy();
+
+          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+
+          // when
+          selection.select(serviceTask);
+
+          // then
+          expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
+            errors: {
+              'ServiceTask_1-input-0-source': 'Invalid.'
+            }
+          });
+        }
+      ));
+
+
+      it('should fall back to static ids for shown entry', inject(
+        function(propertiesPanel, linting, eventBus) {
+
+          // given
+          const clock = sinon.useFakeTimers();
+
+          propertiesPanel.getEntryId = undefined;
+
+          linting.setErrors([ report ]);
+          linting.activate();
+
+          const propertiesPanelShowEntrySpy = sinon.spy();
+
+          eventBus.on('propertiesPanel.showEntry', propertiesPanelShowEntrySpy);
+
+          // when
+          linting.showError(report);
+
+          clock.tick();
+
+          // then
+          expect(propertiesPanelShowEntrySpy).to.have.been.calledWithMatch({
+            id: 'ServiceTask_1-input-0-source'
+          });
+
+          clock.restore();
+        }
+      ));
+
+    });
+
+  });
+
+
   describe('Camunda', function() {
 
     beforeEach(createModeler(diagramXMLPlatform, {
