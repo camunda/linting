@@ -71,16 +71,28 @@ insertCSS('element-template-chooser.css', elementTemplateChooserCSS);
 insertCSS('linting.css', lintingCSS);
 
 insertCSS('test.css', `
+  body, html {
+    height: calc(100% - 16px);
+  }
+
   .test-container {
     display: flex;
     flex-direction: column;
+  }
+
+  .test-container.example {
+    height: 100%;
+  }
+  .test-container.example .test-content-container {
+    flex-grow: 1;
+    position: relative;
   }
 
   .properties-panel-container {
     position: absolute;
     top: 0;
     right: 0;
-    width: 250px;
+    width: max(300px, 25vw);
     height: 100%;
     border-left: solid 1px #ccc;
     background-color: #f7f7f8;
@@ -90,7 +102,7 @@ insertCSS('test.css', `
     position: absolute;
     bottom: 0;
     left: 0;
-    width: calc(100% - 250px - 1px);
+    width: calc(100% - max(300px, 25vw) - 1px);
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -215,6 +227,13 @@ describe('Linting', function() {
 
   function lintingExample(bpmnjs, canvas, elementRegistry, eventBus, linting, modeling, propertiesPanel) {
 
+    const bpmnjsParent = bpmnjs._container;
+
+    const testContentContainer = bpmnjsParent.closest('.test-content-container');
+
+    // .test-container parent
+    bpmnjsParent.closest('.test-container').classList.add('example');
+
     // given
     const FooPlugin = {
       config: {
@@ -335,7 +354,7 @@ describe('Linting', function() {
 
     const propertiesPanelParent = domify('<div class="properties-panel-container"></div>');
 
-    bpmnjs._container.appendChild(propertiesPanelParent);
+    testContentContainer.appendChild(propertiesPanelParent);
 
     propertiesPanel.attachTo(propertiesPanelParent);
 
@@ -355,7 +374,7 @@ describe('Linting', function() {
       </div>
     `);
 
-    bpmnjs._container.appendChild(panel);
+    testContentContainer.appendChild(panel);
 
     panel.querySelector('input').value = bpmnjs.getDefinitions().get('executionPlatformVersion');
 
