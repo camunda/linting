@@ -2,6 +2,7 @@ import { expect } from 'chai';
 
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject,
   insertCSS
 } from 'bpmn-js/test/helper';
@@ -29,6 +30,10 @@ import elementTemplateIconRendererModule from '@bpmn-io/element-template-icon-re
 import camundaCloudBehaviors from 'camunda-bpmn-js-behaviors/lib/camunda-cloud';
 
 import { domify } from 'min-dom';
+
+import fileDrop from 'file-drops';
+
+import download from 'downloadjs';
 
 import sinon from 'sinon';
 
@@ -130,6 +135,54 @@ insertCSS('test.css', `
     width: 200px;
   }
 `);
+
+
+// drop a BPMN diagram into the playground
+document.documentElement.addEventListener('dragover', fileDrop('Drop a BPMN diagram to open it in the currently active test.', function(files) {
+  const bpmnJS = getBpmnJS();
+
+  if (bpmnJS && files.length === 1) {
+    bpmnJS.importXML(files[0].contents).catch((err) => {
+      console.error('Failed to import dropped diagram', err);
+    });
+  }
+}));
+
+insertCSS('file-drops.css', `
+  .drop-overlay .box {
+    background: orange;
+    border-radius: 3px;
+    display: inline-block;
+    font-family: sans-serif;
+    padding: 4px 10px;
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+`);
+
+// download diagrams using CTRL/CMD+S
+document.addEventListener('keydown', function(event) {
+  const bpmnJS = getBpmnJS();
+
+  if (!bpmnJS) {
+    return;
+  }
+
+  if (!(event.ctrlKey || event.metaKey) || event.code !== 'KeyS') {
+    return;
+  }
+
+  event.preventDefault();
+
+  bpmnJS.saveXML({ format: true }).then(function(result) {
+    download(result.xml, 'diagram.bpmn', 'application/xml');
+  }).catch(function(err) {
+    console.error('Failed to download diagram', err);
+  });
+});
 
 
 const singleStart = window.__env__ && window.__env__.SINGLE_START;
@@ -276,6 +329,7 @@ describe('Linting', function() {
     lint();
 
     eventBus.on('elements.changed', lint);
+    eventBus.on('import.done', lint);
 
     linting.activate();
 
