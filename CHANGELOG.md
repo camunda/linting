@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: preserve FEEL unsupported function message in properties panel ([#177](https://github.com/camunda/linting/pull/177))
+
 ## 3.54.0
 
 * `FEAT`: translate linting generated paths to entry ids ([#172](https://github.com/camunda/linting/pull/172))
