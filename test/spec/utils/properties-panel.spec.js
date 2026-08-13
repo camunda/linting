@@ -770,6 +770,34 @@ describe('utils/properties-panel', function() {
           expectErrorMessage(entryIds[ 0 ], 'Type must be defined.', report);
         });
 
+
+        it('Type (unsupported FEEL function)', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:TaskDefinition', {
+                  type: '=from json(100)'
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/feel-compatibility');
+
+          const report = await getLintError(node, rule, { version: '8.5' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'taskDefinitionType' ]);
+
+          expectErrorMessage(entryIds[ 0 ], report.message, report);
+          expect(report.message).to.match(/^FEEL function <.*> requires Camunda/);
+        });
+
       });
 
 
