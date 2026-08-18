@@ -1,2 +1,2 @@
 export { Linter } from './lib/Linter';
-export { applyFix } from './lib/utils/apply-fix';
+export { applyFix, hasFix, getFixLabel, canApplyFix } from './lib/utils/apply-fix';

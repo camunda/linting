@@ -353,6 +353,72 @@ describe('Linting', function() {
     ));
 
 
+    it('should publish reports before updating properties-panel errors', inject(
+      async function(bpmnjs, eventBus, linting) {
+
+        const reports = await linter.lint(bpmnjs.getDefinitions());
+        const events = [];
+
+        eventBus.on('linting.reportsChanged', () => events.push('reports'));
+        eventBus.on('propertiesPanel.setErrors', () => events.push('propertiesPanel'));
+
+        linting.setErrors(reports);
+
+        expect(events).to.eql([ 'reports', 'propertiesPanel' ]);
+      }
+    ));
+
+
+    it('should show the output target entry for a path-targeted report', inject(
+      async function(elementRegistry, eventBus, linting) {
+
+        // given
+        const serviceTask = elementRegistry.get('ServiceTask_1');
+        const showEntrySpy = sinon.spy();
+
+        eventBus.on('propertiesPanel.showEntry', showEntrySpy);
+
+        // when
+        linting.showError({
+          id: serviceTask.id,
+          path: [ 'extensionElements', 'values', 0, 'outputParameters', 0, 'target' ]
+        });
+
+        await new Promise(resolve => setTimeout(resolve));
+
+        // then
+        expect(showEntrySpy).to.have.been.calledWithMatch({
+          id: `${serviceTask.id}-output-0-target`
+        });
+      }
+    ));
+
+
+    it('should show the condition expression entry for a sequence-flow report', inject(
+      async function(elementRegistry, eventBus, linting) {
+
+        // given
+        const sequenceFlow = elementRegistry.get('Flow_192e6hp');
+        const showEntrySpy = sinon.spy();
+
+        eventBus.on('propertiesPanel.showEntry', showEntrySpy);
+
+        // when
+        linting.showError({
+          id: sequenceFlow.id,
+          path: [ 'conditionExpression' ]
+        });
+
+        await new Promise(resolve => setTimeout(resolve));
+
+        // then
+        expect(showEntrySpy).to.have.been.calledWithMatch({
+          id: 'conditionExpression'
+        });
+      }
+    ));
+
+
     it('should deactivate', inject(
       async function(bpmnjs, elementRegistry, eventBus, linting, lintingAnnotations, overlays, selection) {
 
