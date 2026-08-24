@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.54.1
+
 * `FIX`: preserve FEEL unsupported function message in properties panel ([#177](https://github.com/camunda/linting/pull/177))
 
 ## 3.54.0
