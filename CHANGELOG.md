@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: accept `fromAi()` named arguments in `agent-fromai-contract` ([camunda/bpmnlint-plugin-camunda-compat#261](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/261))
+* `FIX`: detect agentic ad-hoc sub-process by AI Agent job worker type ([camunda/bpmnlint-plugin-camunda-compat#260](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/260))
+
 ## 3.54.1
 
 * `FIX`: preserve FEEL unsupported function message in properties panel ([#177](https://github.com/camunda/linting/pull/177))
