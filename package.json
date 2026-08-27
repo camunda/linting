@@ -48,7 +48,7 @@
     "bpmn-js": "^18.25.1",
     "bpmn-js-element-templates": "^2.33.0",
     "bpmn-js-properties-panel": "^5.65.0",
-    "camunda-bpmn-js-behaviors": "^1.17.0",
+    "camunda-bpmn-js-behaviors": "^1.18.0",
     "chai": "^6.2.2",
     "cross-env": "^10.1.0",
     "downloadjs": "^1.4.7",
