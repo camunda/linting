@@ -45,7 +45,7 @@
   "devDependencies": {
     "@bpmn-io/element-template-chooser": "^3.0.0",
     "@bpmn-io/element-template-icon-renderer": "^1.0.0",
-    "bpmn-js": "^18.19.0",
+    "bpmn-js": "^18.25.1",
     "bpmn-js-element-templates": "^2.29.0",
     "bpmn-js-properties-panel": "^5.63.0",
     "camunda-bpmn-js-behaviors": "^1.17.0",
