@@ -30,7 +30,7 @@
   "license": "MIT",
   "dependencies": {
     "@bpmn-io/diagram-js-ui": "^0.2.4",
-    "bpmn-moddle": "^10.0.0",
+    "bpmn-moddle": "^10.2.0",
     "bpmnlint": "^11.12.1",
     "bpmnlint-plugin-camunda-compat": "^2.59.0",
     "bpmnlint-utils": "^1.1.1",
