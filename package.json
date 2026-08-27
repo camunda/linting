@@ -47,7 +47,7 @@
     "@bpmn-io/element-template-icon-renderer": "^1.0.0",
     "bpmn-js": "^18.25.1",
     "bpmn-js-element-templates": "^2.33.0",
-    "bpmn-js-properties-panel": "^5.63.0",
+    "bpmn-js-properties-panel": "^5.65.0",
     "camunda-bpmn-js-behaviors": "^1.17.0",
     "chai": "^6.2.2",
     "cross-env": "^10.1.0",
