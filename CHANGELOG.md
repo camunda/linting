@@ -6,8 +6,14 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.55.0
+
 * `FIX`: accept `fromAi()` named arguments in `agent-fromai-contract` ([camunda/bpmnlint-plugin-camunda-compat#261](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/261))
 * `FIX`: detect agentic ad-hoc sub-process by AI Agent job worker type ([camunda/bpmnlint-plugin-camunda-compat#260](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/260))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.59.2`
+* `DEPS`: update to `bpmn-moddle@10.2.0`
+* `DEPS`: update to `camunda-bpmn-moddle@8.0.1`
+* `DEPS`: update to `zeebe-bpmn-moddle@2.0.0`
 
 ## 3.54.1
 
