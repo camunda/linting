@@ -7,11 +7,12 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: source colors from `@bpmn-io/theme` tokens ([#183](https://github.com/camunda/linting/pull/183))
+* `FEAT`: derive info annotation color from the host `--accent-color` ([#179](https://github.com/camunda/linting/pull/179))
 
 ### Breaking Changes
 
 * The `--cl-color-*` variables moved from `:root` to `.cl-icon`, so overriding them on `:root` no longer wins. Override them on `.cl-icon` or target `--bio-*` tokens instead.
-* `--cl-color-white` and `--cl-color-success` are removed. Neither was read by any rule.
+* `--cl-color-white` is removed. It was not read by any rule.
 
 ## 3.57.0
 
