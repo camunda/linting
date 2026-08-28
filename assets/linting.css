@@ -11,6 +11,7 @@
   --bio-surface-inverted: hsl(0, 0%, 22%);
   --bio-danger: hsl(360, 100%, 45%);
   --bio-warning: hsl(35, 84%, 62%);
+  --bio-success: hsl(150, 86%, 44%);
   --bio-info: hsl(205, 100%, 40%);
 }
 
@@ -22,6 +23,7 @@
   --cl-color-info: var(--bio-info);
   --cl-color-warning: var(--bio-warning);
   --cl-color-error: var(--bio-danger);
+  --cl-color-success: var(--bio-success);
 
   --icon-color: var(--bio-text-on-primary);
   --icon-bg-color: var(--bio-surface-inverted);
@@ -46,5 +48,9 @@
 }
 
 .cl-icon-info {
-  --icon-bg-color: var(--cl-color-info);
+  --icon-bg-color: var(--accent-color, var(--cl-color-info));
+}
+
+.cl-icon-success {
+  --icon-bg-color: var(--cl-color-success);
 }
