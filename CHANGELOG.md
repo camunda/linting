@@ -8,6 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: source colors from `@bpmn-io/theme` tokens ([#183](https://github.com/camunda/linting/pull/183))
 * `FEAT`: derive info annotation color from the host `--accent-color` ([#179](https://github.com/camunda/linting/pull/179))
+* `FEAT`: use filled severity markers for lint annotations ([#179](https://github.com/camunda/linting/pull/179))
 
 ### Breaking Changes
 
