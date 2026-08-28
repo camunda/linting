@@ -1,10 +1,10 @@
 :root {
   --cl-color-white: hsl(0, 0%, 100%);
 
-  --cl-color-info: #0f62fe;
-  --cl-color-warning: #ff832b;
-  --cl-color-error: #da1e26;
-  --cl-color-success: #52b415;
+  --cl-color-info: hsl(205, 100%, 40%);
+  --cl-color-warning: hsl(28, 100%, 45%);
+  --cl-color-error: hsl(360, 100%, 45%);
+  --cl-color-success: hsl(150, 86%, 30%);
 }
 
 .cl-icon, .cl-icon * {
@@ -34,5 +34,9 @@
 }
 
 .cl-icon-info {
-  --icon-bg-color: var(--cl-color-info);
+  --icon-bg-color: var(--accent-color, var(--cl-color-info));
+}
+
+.cl-icon-success {
+  --icon-bg-color: var(--cl-color-success);
 }

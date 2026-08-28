@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: use WCAG AA compliant colors for lint annotations ([#179](https://github.com/camunda/linting/pull/179))
+* `FEAT`: derive info annotation color from the host `--accent-color` ([#179](https://github.com/camunda/linting/pull/179))
+
 ## 3.55.0
 
 * `FIX`: accept `fromAi()` named arguments in `agent-fromai-contract` ([camunda/bpmnlint-plugin-camunda-compat#261](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/261))
