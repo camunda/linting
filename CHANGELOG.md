@@ -8,6 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FIX`: use WCAG AA compliant colors for lint annotations ([#179](https://github.com/camunda/linting/pull/179))
 * `FEAT`: derive info annotation color from the host `--accent-color` ([#179](https://github.com/camunda/linting/pull/179))
+* `FEAT`: use filled severity markers for lint annotations ([#179](https://github.com/camunda/linting/pull/179))
 
 ## 3.55.0
 

@@ -43,6 +43,8 @@ import { Linter } from '../../..';
 
 import lintingModule from '../../../modeler';
 
+import { renderIcon } from '../../../lib/modeler/OverlayComponent';
+
 import { getErrors } from '../../../lib/utils/properties-panel';
 
 import diagramCSS from 'bpmn-js/dist/assets/diagram-js.css';
@@ -128,6 +130,13 @@ insertCSS('test.css', `
 
   .panel .errorItem {
     cursor: pointer;
+  }
+
+  .panel .errorItem .reportIcon {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-right: 4px;
+    --cl-icon-size: 14px;
   }
 
   .panel .errorDiagnostics {
@@ -311,11 +320,19 @@ describe('Linting', function() {
         reports.map((report) => {
           const { id, message, category, rule, meta } = report;
 
+          const iconCategory = category === 'rule-error' ? 'error' : category;
+
           if (category === 'rule-error') {
-            return domify(`<div class="errorItem"><strong>${ category }</strong> Rule <${ escapeHTML(rule) }> errored with the following message: ${ escapeHTML(message) }</div>`);
+            const ruleErrorItem = domify(`<div class="errorItem"><span class="reportIcon"></span> Rule <${ escapeHTML(rule) }> errored with the following message: ${ escapeHTML(message) }</div>`);
+
+            renderIcon(ruleErrorItem.querySelector('.reportIcon'), { category: iconCategory });
+
+            return ruleErrorItem;
           }
 
-          const element = domify(`<div class="errorItem"><strong>${ category }</strong> ${ id }: ${escapeHTML(message) } </div>`);
+          const element = domify(`<div class="errorItem"><span class="reportIcon"></span> ${ id }: ${escapeHTML(message) } </div>`);
+
+          renderIcon(element.querySelector('.reportIcon'), { category: iconCategory });
 
           if (meta?.documentation?.url) {
             const documentationLink = domify(`<a href="${ meta?.documentation?.url }" rel="noopener" target="_blank">ref</a>`);
