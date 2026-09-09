@@ -4,6 +4,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ## Unreleased
 
+* `FIX`: recommend `camunda.secrets.*` for legacy secret expressions from Camunda 8.10 ([camunda/camunda-modeler#6156](https://github.com/camunda/camunda-modeler/issues/6156))
+
 ___Note:__ Yet to be released changes appear here._
 
 ## 3.56.0

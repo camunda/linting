@@ -1,5 +1,7 @@
 import { expect } from 'chai';
 
+import { ERROR_TYPES } from 'bpmnlint-plugin-camunda-compat/rules/utils/element';
+
 import {
   getErrorMessage,
   getExecutionPlatformLabel
@@ -3303,6 +3305,44 @@ describe('utils/error-messages', function() {
 
           // when
           const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
+        });
+
+
+        it('should recommend camunda.secrets.SECRET from Camunda 8.10', function() {
+
+          // given
+          const report = {
+            data: {
+              type: ERROR_TYPES.SECRET_EXPRESSION_FORMAT_DEPRECATED,
+              property: 'value',
+              allowedVersion: '8.10'
+            }
+          };
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.10');
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET or {{secrets.SECRET}}, use camunda.secrets.SECRET instead');
+        });
+
+
+        it('should not recommend camunda.secrets.SECRET below Camunda 8.10', function() {
+
+          // given
+          const report = {
+            data: {
+              type: ERROR_TYPES.SECRET_EXPRESSION_FORMAT_DEPRECATED,
+              property: 'value',
+              allowedVersion: '8.10'
+            }
+          };
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.9');
 
           // then
           expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
