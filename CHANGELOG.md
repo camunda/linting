@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.56.0
+
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.60.0`
+
 ## 3.55.0
 
 * `FIX`: accept `fromAi()` named arguments in `agent-fromai-contract` ([camunda/bpmnlint-plugin-camunda-compat#261](https://github.com/camunda/bpmnlint-plugin-camunda-compat/issues/261))
