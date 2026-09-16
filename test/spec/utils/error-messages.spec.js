@@ -3332,7 +3332,7 @@ describe('utils/error-messages', function() {
           const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.10');
 
           // then
-          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET or {{secrets.SECRET}}, use camunda.secrets.SECRET instead');
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET or {{secrets.SECRET}}, migrate to secret resolution: https://docs.camunda.io/docs/next/components/concepts/secret-resolution/');
         });
 
 
