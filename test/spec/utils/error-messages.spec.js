@@ -3354,6 +3354,25 @@ describe('utils/error-messages', function() {
           expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
         });
 
+
+        it('should not throw when execution platform version is missing', function() {
+
+          // given
+          const report = {
+            data: {
+              type: ERROR_TYPES.SECRET_EXPRESSION_FORMAT_DEPRECATED,
+              property: 'value',
+              allowedVersion: '8.10'
+            }
+          };
+
+          // when
+          const errorMessage = getErrorMessage(report);
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
+        });
+
       });
 
 
