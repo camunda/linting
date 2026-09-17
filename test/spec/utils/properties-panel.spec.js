@@ -5,7 +5,7 @@ import { Linter } from '../../..';
 import {
   getEntryIds,
   getErrorMessage,
-  getErrors
+  getDiagnostics
 } from '../../../lib/utils/properties-panel';
 
 import {
@@ -3340,9 +3340,9 @@ describe('utils/properties-panel', function() {
     });
 
 
-    describe('#getErrors', function() {
+    describe('#getDiagnostics', function() {
 
-      it('should return errors', async function() {
+      it('should return diagnostics', async function() {
 
         // given
         const linter = new Linter();
@@ -3354,21 +3354,21 @@ describe('utils/properties-panel', function() {
         // when
         let element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'ServiceTask_1');
 
-        let errors = getErrors(reports, element);
+        let diagnostics = getDiagnostics(reports, element);
 
         // then
-        expect(errors).to.eql({
-          taskDefinitionType: 'Type must be defined.'
+        expect(diagnostics).to.eql({
+          taskDefinitionType: [ { severity: 'error', message: 'Type must be defined.' } ]
         });
 
         // when
         element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'CallActivity_1');
 
-        errors = getErrors(reports, element);
+        diagnostics = getDiagnostics(reports, element);
 
         // then
-        expect(errors).to.eql({
-          targetProcessId: 'Process ID must be defined.'
+        expect(diagnostics).to.eql({
+          targetProcessId: [ { severity: 'error', message: 'Process ID must be defined.' } ]
         });
       });
 
@@ -3395,18 +3395,18 @@ describe('utils/properties-panel', function() {
         const resolveEntryId = () => 'custom-entry-my.template-1';
 
         // when
-        const errors = getErrors([ report ], element, resolveEntryId);
+        const diagnostics = getDiagnostics([ report ], element, resolveEntryId);
 
         // then
         // the corrected message travels to the template entry unchanged — it is
         // derived from the finding, not from the (render-specific) entry id
-        expect(errors).to.eql({
-          'custom-entry-my.template-1': 'Decision ID must be defined.'
+        expect(diagnostics).to.eql({
+          'custom-entry-my.template-1': [ { severity: 'error', message: 'Decision ID must be defined.' } ]
         });
       });
 
 
-      it('should return errors for participant (expanded participant)', async function() {
+      it('should return diagnostics for participant (expanded participant)', async function() {
 
         // given
         const linter = new Linter();
@@ -3420,35 +3420,16 @@ describe('utils/properties-panel', function() {
 
         const participant = collaboration.participants.find(({ id }) => id === 'Participant_1');
 
-        const errors = getErrors(reports, participant);
+        const diagnostics = getDiagnostics(reports, participant);
 
         // then
-        expect(errors).to.eql({
-          'Participant_1-executionListener-0-listenerType': 'Must be defined.'
+        expect(diagnostics).to.eql({
+          'Participant_1-executionListener-0-listenerType': [ { severity: 'error', message: 'Must be defined.' } ]
         });
       });
 
 
-      it('should not return errors for category info', async function() {
-
-        // given
-        const linter = new Linter();
-
-        const { root } = await createModdle(propertiesPanelInfoXML);
-
-        const reports = await linter.lint(root);
-
-        // when
-        let element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'Task_1');
-
-        let errors = getErrors(reports, element);
-
-        // then
-        expect(errors).to.be.empty;
-      });
-
-
-      it('should not return errors for category warn', async function() {
+      it('should map category warn to severity warning', async function() {
 
         // given
         const linter = new Linter({
@@ -3468,12 +3449,96 @@ describe('utils/properties-panel', function() {
         const reports = await linter.lint(root);
 
         // when
-        let element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'Task_1');
+        const element = root.rootElements[ 0 ].flowElements.find(({ id }) => id === 'Task_1');
 
-        let errors = getErrors(reports, element);
+        const diagnostics = getDiagnostics(reports, element);
 
         // then
-        expect(errors).to.be.empty;
+        expect(diagnostics).to.eql({
+          'Task_1-extensionProperty-0-value': [ {
+            severity: 'warning',
+            message: 'Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead'
+          } ]
+        });
+      });
+
+
+      it('should not return diagnostics for category rule-error', function() {
+
+        // given
+        const report = {
+          id: 'Task_1',
+          category: 'rule-error',
+          message: 'Rule crashed.',
+          path: [ 'condition' ]
+        };
+
+        const element = createElement('bpmn:Task', { id: 'Task_1' });
+
+        // when
+        const diagnostics = getDiagnostics([ report ], element);
+
+        // then
+        expect(diagnostics).to.be.empty;
+      });
+
+
+      it('should collect every matching report per entry', function() {
+
+        // given
+        const reports = [
+          {
+            id: 'Task_1',
+            category: 'error',
+            message: 'A first problem.',
+            propertiesPanel: {
+              entryIds: [ 'custom-entry-1' ]
+            }
+          },
+          {
+            id: 'Task_1',
+            category: 'warn',
+            message: 'A second problem.',
+            propertiesPanel: {
+              entryIds: [ 'custom-entry-1' ]
+            }
+          }
+        ];
+
+        const element = createElement('bpmn:Task', { id: 'Task_1' });
+
+        // when
+        const diagnostics = getDiagnostics(reports, element);
+
+        // then
+        expect(diagnostics).to.eql({
+          'custom-entry-1': [
+            { severity: 'error', message: 'A first problem.' },
+            { severity: 'warning', message: 'A second problem.' }
+          ]
+        });
+      });
+
+
+      it('should resolve historyTimeToLive to an entry id', function() {
+
+        // given
+        const report = {
+          id: 'Process_1',
+          category: 'info',
+          message: 'Property <historyTimeToLive> should be configured on <bpmn:Process> or engine level.',
+          path: [ 'historyTimeToLive' ]
+        };
+
+        const element = createElement('bpmn:Process', { id: 'Process_1' });
+
+        // when
+        const diagnostics = getDiagnostics([ report ], element);
+
+        // then
+        expect(diagnostics).to.eql({
+          historyTimeToLive: [ { severity: 'info', message: report.message } ]
+        });
       });
 
     });
