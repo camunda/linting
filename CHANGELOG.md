@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: source colors from `@bpmn-io/theme` tokens ([#183](https://github.com/camunda/linting/pull/183))
+
+### Breaking Changes
+
+* The `--cl-color-*` variables moved from `:root` to `.cl-icon`, so overriding them on `:root` no longer wins. Override them on `.cl-icon` or target `--bio-*` tokens instead.
+* `--cl-color-white` and `--cl-color-success` are removed. Neither was read by any rule.
+
 ## 3.57.0
 
 * `FEAT`: flag secret references invalid in input mappings from Camunda 8.10 ([camunda/bpmnlint-plugin-camunda-compat#272](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/272))
