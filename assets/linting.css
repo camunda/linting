@@ -1,10 +1,17 @@
-:root {
-  --cl-color-white: hsl(0, 0%, 100%);
-
-  --cl-color-info: #0f62fe;
-  --cl-color-warning: #ff832b;
-  --cl-color-error: #da1e26;
-  --cl-color-success: #52b415;
+/**
+ * Semantic tokens, copied from `@bpmn-io/theme` to style the components
+ * according to this theme.
+ *
+ * Names and values of the tokens should stay intact with the `@bpmn-io/theme`
+ * source of truth, to ensure matching styles and allow overrides with an
+ * alternative theme.
+ */
+.bio-theme-parent {
+  --bio-text-on-primary: hsl(0, 0%, 100%);
+  --bio-surface-inverted: hsl(0, 0%, 22%);
+  --bio-danger: hsl(360, 100%, 45%);
+  --bio-warning: hsl(35, 84%, 62%);
+  --bio-info: hsl(205, 100%, 40%);
 }
 
 .cl-icon, .cl-icon * {
@@ -12,8 +19,13 @@
 }
 
 .cl-icon {
-  --icon-color: white;
-  --icon-bg-color: #333;
+  --cl-color-info: var(--bio-info);
+  --cl-color-warning: var(--bio-warning);
+  --cl-color-error: var(--bio-danger);
+
+  --icon-color: var(--bio-text-on-primary);
+  --icon-bg-color: var(--bio-surface-inverted);
+
   background: var(--icon-bg-color);
   color: var(--icon-color);
   border-radius: 100%;

@@ -4,7 +4,7 @@
   "description": "Linting for Camunda",
   "main": "index.js",
   "scripts": {
-    "all": "npm run lint && npm test",
+    "all": "npm run lint && npm run lint:theme && npm test",
     "dev": "npm run test:watch",
     "lint": "eslint .",
     "start": "npm run start:cloud",
@@ -13,7 +13,8 @@
     "test": "npm run compile-config && karma start",
     "test:watch": "npm test -- --auto-watch --no-single-run",
     "compile-config": "node tasks/compile-config.js",
-    "prepublish": "npm run compile-config"
+    "prepublish": "npm run compile-config",
+    "lint:theme": "bpmn-io-theme-validate assets/linting.css"
   },
   "keywords": [
     "bpmnlint",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@bpmn-io/element-template-chooser": "^3.0.0",
     "@bpmn-io/element-template-icon-renderer": "^1.0.0",
+    "@bpmn-io/theme": "^0.2.0",
     "bpmn-js": "^18.25.1",
     "bpmn-js-element-templates": "^2.33.0",
     "bpmn-js-properties-panel": "^5.65.0",
