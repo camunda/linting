@@ -4,6 +4,7 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ## Unreleased
 
+* `FIX`: recommend `camunda.secrets.*` for legacy and deprecated secret expressions from Camunda 8.10 ([camunda/camunda-modeler#6156](https://github.com/camunda/camunda-modeler/issues/6156))
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.60.4`
 
 ___Note:__ Yet to be released changes appear here._

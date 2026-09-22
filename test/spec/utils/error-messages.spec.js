@@ -1,5 +1,7 @@
 import { expect } from 'chai';
 
+import { ERROR_TYPES } from 'bpmnlint-plugin-camunda-compat/rules/utils/element';
+
 import {
   getErrorMessage,
   getExecutionPlatformLabel
@@ -3222,6 +3224,8 @@ describe('utils/error-messages', function() {
         it('should adjust (correlation key)', async function() {
 
           // given
+          const executionPlatformVersion = '8.9';
+
           const node = createElement('bpmn:IntermediateCatchEvent', {
             eventDefinitions: [
               createElement('bpmn:MessageEventDefinition', {
@@ -3241,10 +3245,10 @@ describe('utils/error-messages', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report);
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
           expect(errorMessage).to.equal('Property <correlationKey> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
@@ -3254,6 +3258,8 @@ describe('utils/error-messages', function() {
         it('should adjust (input source)', async function() {
 
           // given
+          const executionPlatformVersion = '8.9';
+
           const node = createElement('bpmn:ServiceTask', {
             extensionElements: createElement('bpmn:ExtensionElements', {
               values: [
@@ -3270,10 +3276,10 @@ describe('utils/error-messages', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
 
           // when
-          const errorMessage = getErrorMessage(report);
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
 
           // then
           expect(errorMessage).to.equal('Property <source> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
@@ -3283,6 +3289,8 @@ describe('utils/error-messages', function() {
         it('should adjust (property value)', async function() {
 
           // given
+          const executionPlatformVersion = '8.9';
+
           const node = createElement('bpmn:ServiceTask', {
             extensionElements: createElement('bpmn:ExtensionElements', {
               values: [
@@ -3299,13 +3307,123 @@ describe('utils/error-messages', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
+        });
+
+
+        it('should recommend camunda.secrets.SECRET from Camunda 8.10', function() {
+
+          // given
+          const report = {
+            data: {
+              type: ERROR_TYPES.SECRET_EXPRESSION_FORMAT_DEPRECATED,
+              property: 'value',
+              allowedVersion: '8.10'
+            }
+          };
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.10');
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, migrate to camunda.secrets format');
+        });
+
+
+        it('should not recommend camunda.secrets.SECRET below Camunda 8.10', function() {
+
+          // given
+          const report = {
+            data: {
+              type: ERROR_TYPES.SECRET_EXPRESSION_FORMAT_DEPRECATED,
+              property: 'value',
+              allowedVersion: '8.10'
+            }
+          };
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.9');
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
+        });
+
+
+        it('should not throw when execution platform version is missing', function() {
+
+          // given
+          const report = {
+            data: {
+              type: ERROR_TYPES.SECRET_EXPRESSION_FORMAT_DEPRECATED,
+              property: 'value',
+              allowedVersion: '8.10'
+            }
+          };
 
           // when
           const errorMessage = getErrorMessage(report);
 
           // then
           expect(errorMessage).to.equal('Property <value> uses deprecated secret expression format secrets.SECRET, use {{secrets.SECRET}} instead');
+        });
+
+      });
+
+
+      describe('secret expression format legacy', function() {
+
+        it('should adjust (property value)', async function() {
+
+          // given
+          const executionPlatformVersion = '8.10';
+
+          const node = createElement('bpmn:ServiceTask', {
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:Properties', {
+                  properties: [
+                    createElement('zeebe:Property', {
+                      value: '{{secrets.FOO}}'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
+
+          const report = await getLintError(node, rule, { version: executionPlatformVersion });
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', executionPlatformVersion);
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses legacy secret expression format {{secrets.SECRET}}, migrate to camunda.secrets format');
+        });
+
+
+        it('should adjust (report only)', function() {
+
+          // given
+          const report = {
+            data: {
+              type: ERROR_TYPES.SECRET_EXPRESSION_FORMAT_LEGACY,
+              property: 'value'
+            }
+          };
+
+          // when
+          const errorMessage = getErrorMessage(report, 'Camunda Cloud', '8.10');
+
+          // then
+          expect(errorMessage).to.equal('Property <value> uses legacy secret expression format {{secrets.SECRET}}, migrate to camunda.secrets format');
         });
 
       });
