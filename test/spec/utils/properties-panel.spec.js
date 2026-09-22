@@ -1980,7 +1980,7 @@ describe('utils/properties-panel', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.9' });
 
           // when
           const entryIds = getEntryIds(report);
@@ -2012,7 +2012,7 @@ describe('utils/properties-panel', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.9' });
 
           // when
           const entryIds = getEntryIds(report);
@@ -2044,7 +2044,7 @@ describe('utils/properties-panel', function() {
 
           const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/secrets');
 
-          const report = await getLintError(node, rule);
+          const report = await getLintError(node, rule, { version: '8.9' });
 
           // when
           const entryIds = getEntryIds(report);
@@ -3456,7 +3456,7 @@ describe('utils/properties-panel', function() {
             {
               config: {
                 rules: {
-                  'camunda-compat/secrets': 'warn'
+                  'camunda-compat/secrets': [ 'warn', { version: '8.9' } ]
                 }
               }
             }
