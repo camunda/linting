@@ -4,6 +4,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ## Unreleased
 
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.60.4`
+
 ___Note:__ Yet to be released changes appear here._
 
 ## 3.56.0
