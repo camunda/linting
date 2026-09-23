@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.57.0
+
 * `FEAT`: flag secret references invalid in input mappings from Camunda 8.10 ([camunda/bpmnlint-plugin-camunda-compat#272](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/272))
 * `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.61.0`
 
