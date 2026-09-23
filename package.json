@@ -76,6 +76,9 @@
       "optional": true
     }
   },
+  "overrides": {
+    "@bpmn-io/properties-panel": "github:bpmn-io/properties-panel#claude/tool-error-action-label-13478f"
+  },
   "files": [
     "assets",
     "lib",

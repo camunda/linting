@@ -43,7 +43,7 @@ import { Linter } from '../../..';
 
 import lintingModule from '../../../modeler';
 
-import { getErrors } from '../../../lib/utils/properties-panel';
+import { getDiagnostics } from '../../../lib/utils/properties-panel';
 
 import diagramCSS from 'bpmn-js/dist/assets/diagram-js.css';
 import bpmnCSS from 'bpmn-js/dist/assets/bpmn-js.css';
@@ -443,7 +443,7 @@ describe('Linting', function() {
 
         // assume
         expect(reports).to.have.length(1);
-        expect(getErrors(reports, serviceTask)).not.to.be.empty;
+        expect(getDiagnostics(reports, serviceTask)).not.to.be.empty;
 
         linting.setErrors(reports);
 
@@ -451,7 +451,7 @@ describe('Linting', function() {
 
         const propertiesPanelSetErrorSpy = sinon.spy();
 
-        eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+        eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
         // when
         linting.activate();
@@ -462,7 +462,7 @@ describe('Linting', function() {
 
         expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
         expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-          errors: getErrors(reports, serviceTask)
+          diagnostics: getDiagnostics(reports, serviceTask)
         });
 
         expect(overlays.get({ type: 'linting' })).to.have.length(1);
@@ -482,7 +482,7 @@ describe('Linting', function() {
 
         // assume
         expect(reports).to.have.length(1);
-        expect(getErrors(reports, serviceTask)).not.to.be.empty;
+        expect(getDiagnostics(reports, serviceTask)).not.to.be.empty;
 
         linting.setErrors(reports);
 
@@ -495,7 +495,7 @@ describe('Linting', function() {
 
         const propertiesPanelSetErrorSpy = sinon.spy();
 
-        eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+        eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
         // when
         linting.deactivate();
@@ -506,7 +506,7 @@ describe('Linting', function() {
 
         expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
         expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-          errors: getErrors(reports, serviceTask)
+          diagnostics: getDiagnostics(reports, serviceTask)
         });
 
         expect(overlays.get({ type: 'linting' })).to.have.length(0);
@@ -533,7 +533,7 @@ describe('Linting', function() {
 
         const propertiesPanelSetErrorSpy = sinon.spy();
 
-        eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+        eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
         // when
         selection.select(serviceTask);
@@ -544,7 +544,7 @@ describe('Linting', function() {
 
         expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
         expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-          errors: getErrors(reports, serviceTask)
+          diagnostics: getDiagnostics(reports, serviceTask)
         });
 
         expect(overlays.get({ type: 'linting' })).to.have.length(1);
@@ -592,7 +592,7 @@ describe('Linting', function() {
 
         const propertiesPanelSetErrorSpy = sinon.spy();
 
-        eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+        eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
         // when
         selection.select(serviceTask);
@@ -603,7 +603,7 @@ describe('Linting', function() {
 
         expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
         expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-          errors: getErrors(reports, serviceTask)
+          diagnostics: getDiagnostics(reports, serviceTask)
         });
 
         expect(overlays.get({ type: 'linting' })).to.have.length(0);
@@ -642,7 +642,7 @@ describe('Linting', function() {
 
           const propertiesPanelSetErrorSpy = sinon.spy();
 
-          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+          eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
           const propertiesPanelShowEntrySpy = sinon.spy();
 
@@ -658,7 +658,7 @@ describe('Linting', function() {
 
           expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
           expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-            errors: getErrors(reports, serviceTask)
+            diagnostics: getDiagnostics(reports, serviceTask)
           });
 
           expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
@@ -742,7 +742,7 @@ describe('Linting', function() {
 
           const propertiesPanelSetErrorSpy = sinon.spy();
 
-          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+          eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
           // when
           selection.select(serviceTask);
@@ -751,8 +751,8 @@ describe('Linting', function() {
           expect(getEntryIdSpy).to.have.been.calledWith(serviceTask, path);
 
           expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-            errors: {
-              'custom-entry-my.template-1': 'Invalid.'
+            diagnostics: {
+              'custom-entry-my.template-1': [ { severity: 'error', message: 'Invalid.' } ]
             }
           });
         }
@@ -791,7 +791,7 @@ describe('Linting', function() {
 
           const propertiesPanelSetErrorSpy = sinon.spy();
 
-          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+          eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
           // when
           selection.select(serviceTask);
@@ -801,9 +801,9 @@ describe('Linting', function() {
           expect(getEntryIdSpy).to.have.been.calledTwice;
 
           expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-            errors: {
-              'custom-entry-my.template-0': 'Duplicate.',
-              'custom-entry-my.template-1': 'Duplicate.'
+            diagnostics: {
+              'custom-entry-my.template-0': [ { severity: 'error', message: 'Duplicate.' } ],
+              'custom-entry-my.template-1': [ { severity: 'error', message: 'Duplicate.' } ]
             }
           });
         }
@@ -859,7 +859,7 @@ describe('Linting', function() {
 
           const propertiesPanelSetErrorSpy = sinon.spy();
 
-          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+          eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
           const propertiesPanelShowEntrySpy = sinon.spy();
 
@@ -876,7 +876,7 @@ describe('Linting', function() {
 
           expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
           expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-            errors: getErrors(reports, serviceTask)
+            diagnostics: getDiagnostics(reports, serviceTask)
           });
 
           expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
@@ -959,7 +959,7 @@ describe('Linting', function() {
 
             const propertiesPanelSetErrorSpy = sinon.spy();
 
-            eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+            eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
             const propertiesPanelShowEntrySpy = sinon.spy();
 
@@ -975,7 +975,7 @@ describe('Linting', function() {
 
             expect(propertiesPanelSetErrorSpy).to.have.been.calledOnce;
             expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-              errors: getErrors(reports, participant)
+              diagnostics: getDiagnostics(reports, participant)
             });
 
             expect(propertiesPanelShowEntrySpy).to.have.been.calledOnce;
@@ -1182,7 +1182,7 @@ describe('Linting', function() {
           expect(report.path, 'expected a leaf path on the report').to.be.an('array');
 
           // when
-          const errors = getErrors(
+          const diagnostics = getDiagnostics(
             reports,
             adHocSubProcess,
             (element, path) => propertiesPanel.getEntryId(element, path)
@@ -1191,7 +1191,7 @@ describe('Linting', function() {
           // then
           // the finding resolves to the rendered entry (render-agnostic path,
           // falling back to the statically derived id when no provider answers)
-          expect(errors).to.have.property('adHocOutputElement');
+          expect(diagnostics).to.have.property('adHocOutputElement');
         }
       ));
 
@@ -1232,7 +1232,7 @@ describe('Linting', function() {
           expect(report, 'expected a fromAi() finding on Tool_Search').to.exist;
 
           // when
-          const errors = getErrors(
+          const diagnostics = getDiagnostics(
             reports,
             tool,
             (element, path) => propertiesPanel.getEntryId(element, path)
@@ -1241,7 +1241,7 @@ describe('Linting', function() {
           // then
           // the finding resolves to an entry (render-agnostic path, falling back
           // to the statically derived id when no provider answers)
-          expect(Object.keys(errors)).not.to.be.empty;
+          expect(Object.keys(diagnostics)).not.to.be.empty;
         }
       ));
 
@@ -1329,7 +1329,7 @@ describe('Linting', function() {
             expect(report, `expected a report on ${ elementId } at ${ JSON.stringify(path) }`).to.exist;
 
             // when
-            const errors = getErrors(
+            const diagnostics = getDiagnostics(
               [ report ],
               element,
               (element, path) => propertiesPanel.getEntryId(element, path)
@@ -1338,7 +1338,7 @@ describe('Linting', function() {
             // then
             // the finding resolves render-agnostically to the template entry, not
             // the statically derived fallback id
-            expect(errors).to.have.property(expectedEntryId);
+            expect(diagnostics).to.have.property(expectedEntryId);
           });
         }
 
@@ -1433,7 +1433,7 @@ describe('Linting', function() {
         // when
         // resolve render-agnostically through the `propertiesPanel#getEntryId`
         // API, falling back to the statically derived ids when no provider answers
-        const errors = getErrors(
+        const diagnostics = getDiagnostics(
           reports,
           serviceTask,
           (element, path) => propertiesPanel.getEntryId(element, path)
@@ -1442,8 +1442,8 @@ describe('Linting', function() {
         // then
         // each offending header key maps to its own entry, both flagged with the
         // same finding-derived message
-        expect(errors).to.have.property('ServiceTask_1-header-0-key', 'Must be unique.');
-        expect(errors).to.have.property('ServiceTask_1-header-1-key', 'Must be unique.');
+        expect(diagnostics[ 'ServiceTask_1-header-0-key' ]).to.eql([ { severity: 'error', message: 'Must be unique.' } ]);
+        expect(diagnostics[ 'ServiceTask_1-header-1-key' ]).to.eql([ { severity: 'error', message: 'Must be unique.' } ]);
       }
     ));
 
@@ -1512,15 +1512,15 @@ describe('Linting', function() {
 
           const propertiesPanelSetErrorSpy = sinon.spy();
 
-          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+          eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
           // when
           selection.select(serviceTask);
 
           // then
           expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-            errors: {
-              'ServiceTask_1-input-0-source': 'Invalid.'
+            diagnostics: {
+              'ServiceTask_1-input-0-source': [ { severity: 'error', message: 'Invalid.' } ]
             }
           });
         }
@@ -1585,15 +1585,15 @@ describe('Linting', function() {
 
           const propertiesPanelSetErrorSpy = sinon.spy();
 
-          eventBus.on('propertiesPanel.setErrors', propertiesPanelSetErrorSpy);
+          eventBus.on('propertiesPanel.setDiagnostics', propertiesPanelSetErrorSpy);
 
           // when
           selection.select(serviceTask);
 
           // then
           expect(propertiesPanelSetErrorSpy).to.have.been.calledWithMatch({
-            errors: {
-              'ServiceTask_1-input-0-source': 'Invalid.'
+            diagnostics: {
+              'ServiceTask_1-input-0-source': [ { severity: 'error', message: 'Invalid.' } ]
             }
           });
         }
