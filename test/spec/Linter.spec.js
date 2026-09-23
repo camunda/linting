@@ -29,6 +29,8 @@ import camundaCloud81XML from './camunda-cloud-8-1.bpmn';
 import camundaCloud81ErrorsXML from './camunda-cloud-8-1-errors.bpmn';
 import camundaCloud82XML from './camunda-cloud-8-2.bpmn';
 import camundaCloud82ErrorsXML from './camunda-cloud-8-2-errors.bpmn';
+import unresolvableSecretReference89XML from './unresolvable-secret-reference-8-9.bpmn';
+import unresolvableSecretReference810XML from './unresolvable-secret-reference-8-10.bpmn';
 import camundaPlatform717XML from './camunda-platform-7-17.bpmn';
 import camundaPlatform719XML from './camunda-platform-7-19.bpmn';
 import camundaPlatform719ErrorsXML from './camunda-platform-7-19-errors.bpmn';
@@ -365,6 +367,41 @@ describe('Linter', function() {
 
         });
 
+      });
+
+    });
+
+
+    describe('rule versioning', function() {
+
+      let linter;
+
+      beforeEach(function() {
+        linter = new Linter({ type: 'cloud' });
+      });
+
+
+      it('should flag unresolvable secret reference from Camunda 8.10', async function() {
+
+        // when
+        const reports = await linter.lint(unresolvableSecretReference810XML);
+
+        // then
+        const report = reports.find(report => report.rule === 'camunda-compat/unresolvable-secret-reference');
+
+        expect(report).to.exist;
+      });
+
+
+      it('should not flag unresolvable secret reference before Camunda 8.10', async function() {
+
+        // when
+        const reports = await linter.lint(unresolvableSecretReference89XML);
+
+        // then
+        const report = reports.find(report => report.rule === 'camunda-compat/unresolvable-secret-reference');
+
+        expect(report).not.to.exist;
       });
 
     });

@@ -2058,6 +2058,138 @@ describe('utils/properties-panel', function() {
       });
 
 
+      describe('unresolvable secret reference', function() {
+
+        it('input source as string literal', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      source: '="camunda.secrets.API_TOKEN"'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/unresolvable-secret-reference');
+
+          const report = await getLintError(node, rule, { version: '8.10' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Secret reference must be an expression, not a string literal.', report);
+        });
+
+
+        it('property value as string literal', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:Properties', {
+                  properties: [
+                    createElement('zeebe:Property', {
+                      value: '="camunda.secrets.API_TOKEN"'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/unresolvable-secret-reference');
+
+          const report = await getLintError(node, rule, { version: '8.10' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-extensionProperty-0-value' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Secret reference must be an expression, not a string literal.', report);
+        });
+
+
+        it('input source with reference nested in a list', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      source: '=[camunda.secrets.API_TOKEN]'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/unresolvable-secret-reference');
+
+          const report = await getLintError(node, rule, { version: '8.10' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Secret reference must not be nested in a list.', report);
+        });
+
+
+        it('input source with reference nested in an if-branch context', async function() {
+
+          // given
+          const node = createElement('bpmn:ServiceTask', {
+            id: 'ServiceTask_1',
+            extensionElements: createElement('bpmn:ExtensionElements', {
+              values: [
+                createElement('zeebe:IoMapping', {
+                  inputParameters: [
+                    createElement('zeebe:Input', {
+                      source: '=if true then {x: camunda.secrets.API_TOKEN} else null'
+                    })
+                  ]
+                })
+              ]
+            })
+          });
+
+          const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/unresolvable-secret-reference');
+
+          const report = await getLintError(node, rule, { version: '8.10' });
+
+          // when
+          const entryIds = getEntryIds(report);
+
+          // then
+          expect(entryIds).to.eql([ 'ServiceTask_1-input-0-source' ]);
+
+          expectErrorMessage(entryIds[ 0 ], 'Secret reference must not be nested in an if branch.', report);
+        });
+
+      });
+
+
       describe('io mapping',function() {
 
         it('missing input source (<=8.7)', async function() {
