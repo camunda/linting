@@ -10,6 +10,7 @@
     "start": "npm run start:cloud",
     "start:platform": "cross-env SINGLE_START=platform npm run test:watch",
     "start:cloud": "cross-env SINGLE_START=cloud npm run test:watch",
+    "start:styles": "cross-env SINGLE_START=styles npm run test:watch",
     "test": "npm run compile-config && karma start",
     "test:watch": "npm test -- --auto-watch --no-single-run",
     "compile-config": "node tasks/compile-config.js",
@@ -46,7 +47,7 @@
   "devDependencies": {
     "@bpmn-io/element-template-chooser": "^3.0.0",
     "@bpmn-io/element-template-icon-renderer": "^1.0.0",
-    "@bpmn-io/theme": "^0.2.0",
+    "@bpmn-io/theme": "^0.3.0",
     "bpmn-js": "^18.25.1",
     "bpmn-js-element-templates": "^2.33.0",
     "bpmn-js-properties-panel": "^5.65.0",
