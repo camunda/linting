@@ -1287,7 +1287,7 @@ describe('utils/properties-panel', function() {
 
         // then
         expect(entryIds).to.eql([ 'conditionExpression' ]);
-        expectErrorMessage(entryIds[ 0 ], 'Property <conditionExpression> only allowed if source is of type <bpmn:ExclusiveGateway> or <bpmn:InclusiveGateway>', report);
+        expectErrorMessage(entryIds[ 0 ], 'Condition expression is not supported.', report);
       });
 
 
