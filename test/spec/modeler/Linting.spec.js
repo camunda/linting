@@ -377,7 +377,7 @@ describe('Linting', function() {
 
     const panel = domify(`
       <div class="panel">
-        <div class="errorContainer"></div>
+        <div class="errorContainer bio-theme-parent"></div>
         <div>
           <label>Execution Platform Version</label>
           <input type="text" />

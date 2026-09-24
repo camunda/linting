@@ -125,7 +125,7 @@ describe('styling', function() {
 
   function stylingExample() {
     const board = domify(`
-      <div class="cl-styling">
+      <div class="cl-styling bio-theme-parent">
         <h2>Linting badges &mdash; colors &amp; glyphs</h2>
         <p class="intro">
           Severity markers as rendered by the library (<code>renderIcon</code>).
