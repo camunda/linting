@@ -6,9 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.0.0
+
 * `FEAT`: source colors from `@bpmn-io/theme` tokens ([#183](https://github.com/camunda/linting/pull/183))
 * `FEAT`: use accessible colors for lint annotations, sourced from the `--bio-*-marker` tokens ([#179](https://github.com/camunda/linting/pull/179))
 * `FEAT`: use filled severity markers for lint annotations ([#179](https://github.com/camunda/linting/pull/179))
+* `DEPS`: update to `bpmn-moddle@10.3.1`
+* `DEPS`: update to `bpmnlint@11.14.0`
 
 ### Breaking Changes
 
