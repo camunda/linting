@@ -72,10 +72,14 @@
     "webpack": "^5.111.1"
   },
   "peerDependencies": {
-    "bpmn-js-properties-panel": ">= 2.0.0"
+    "bpmn-js-properties-panel": ">= 2.0.0",
+    "@bpmn-io/properties-panel": ">= 3.56.0"
   },
   "peerDependenciesMeta": {
     "bpmn-js-properties-panel": {
+      "optional": true
+    },
+    "@bpmn-io/properties-panel": {
       "optional": true
     }
   },
