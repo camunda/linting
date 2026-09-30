@@ -1,4 +1,4 @@
-import { getErrors } from '../../../lib/utils/properties-panel';
+import { getDiagnostics } from '../../../lib/utils/properties-panel';
 
 import { expect } from 'chai';
 
@@ -52,11 +52,11 @@ describe('utils/properties-panel - resolveEntryId adapter', function() {
     };
 
     // when
-    const errors = getErrors([ report ], element, resolveEntryId);
+    const diagnostics = getDiagnostics([ report ], element, resolveEntryId);
 
     // then
-    expect(errors).to.have.property('custom-entry-my.template-1');
-    expect(errors).not.to.have.property('Task_1-input-0-source');
+    expect(diagnostics).to.have.property('custom-entry-my.template-1');
+    expect(diagnostics).not.to.have.property('Task_1-input-0-source');
   });
 
 
@@ -69,10 +69,10 @@ describe('utils/properties-panel - resolveEntryId adapter', function() {
     const resolveEntryId = () => null;
 
     // when
-    const errors = getErrors([ report ], element, resolveEntryId);
+    const diagnostics = getDiagnostics([ report ], element, resolveEntryId);
 
     // then
-    expect(errors).to.have.property('Task_1-input-0-source');
+    expect(diagnostics).to.have.property('Task_1-input-0-source');
   });
 
 
@@ -83,10 +83,10 @@ describe('utils/properties-panel - resolveEntryId adapter', function() {
     const report = createReport('Task_1');
 
     // when
-    const errors = getErrors([ report ], element);
+    const diagnostics = getDiagnostics([ report ], element);
 
     // then
-    expect(errors).to.have.property('Task_1-input-0-source');
+    expect(diagnostics).to.have.property('Task_1-input-0-source');
   });
 
 
@@ -129,13 +129,13 @@ describe('utils/properties-panel - resolveEntryId adapter', function() {
       };
 
       // when
-      const errors = getErrors([ report ], element, resolveEntryId);
+      const diagnostics = getDiagnostics([ report ], element, resolveEntryId);
 
       // then
       expect(seen).to.eql(paths);
-      expect(errors).to.have.property('custom-entry-my.template-0');
-      expect(errors).to.have.property('custom-entry-my.template-1');
-      expect(errors).not.to.have.property('Task_1-header-0-key');
+      expect(diagnostics).to.have.property('custom-entry-my.template-0');
+      expect(diagnostics).to.have.property('custom-entry-my.template-1');
+      expect(diagnostics).not.to.have.property('Task_1-header-0-key');
     });
 
 
@@ -151,12 +151,12 @@ describe('utils/properties-panel - resolveEntryId adapter', function() {
       };
 
       // when
-      const errors = getErrors([ report ], element, resolveEntryId);
+      const diagnostics = getDiagnostics([ report ], element, resolveEntryId);
 
       // then
-      expect(errors).to.have.property('Task_1-header-0-key');
-      expect(errors).to.have.property('Task_1-header-1-key');
-      expect(errors).not.to.have.property('custom-entry-my.template-0');
+      expect(diagnostics).to.have.property('Task_1-header-0-key');
+      expect(diagnostics).to.have.property('Task_1-header-1-key');
+      expect(diagnostics).not.to.have.property('custom-entry-my.template-0');
     });
 
 
@@ -175,11 +175,11 @@ describe('utils/properties-panel - resolveEntryId adapter', function() {
       };
 
       // when
-      const errors = getErrors([ report ], element, resolveEntryId);
+      const diagnostics = getDiagnostics([ report ], element, resolveEntryId);
 
       // then
       expect(seen).to.have.length(1);
-      expect(errors).to.have.property('custom-entry-my.template-1');
+      expect(diagnostics).to.have.property('custom-entry-my.template-1');
     });
 
   });
