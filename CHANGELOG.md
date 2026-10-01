@@ -6,6 +6,13 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.1.0
+
+* `FEAT`: display messages of all severities in the properties panel ([#182](https://github.com/camunda/linting/pull/182))
+* `FEAT`: support `history-time-to-live` rule in the properties panel ([#182](https://github.com/camunda/linting/pull/182))
+* `DEPS`: require `@bpmn-io/properties-panel@3.56.0` or newer
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.61.1`
+
 ## 4.0.0
 
 * `FEAT`: source colors from `@bpmn-io/theme` tokens ([#183](https://github.com/camunda/linting/pull/183))
