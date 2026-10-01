@@ -20,6 +20,7 @@ import {
 
 import propertiesPanelXML from './properties-panel.bpmn';
 import propertiesPanelInfoXML from './properties-panel-info.bpmn';
+import propertiesPanelPlatformXML from './properties-panel-platform.bpmn';
 import collaborationELXML from '../modeler/linting-collaboration-el.bpmn';
 
 describe('utils/properties-panel', function() {
@@ -3648,6 +3649,38 @@ describe('utils/properties-panel', function() {
             { severity: 'error', message: 'A first problem.' },
             { severity: 'warning', message: 'A second problem.' }
           ]
+        });
+      });
+
+    });
+
+  });
+
+
+  describe('Camunda Platform (Camunda 7)', function() {
+
+    describe('#getDiagnostics', function() {
+
+      it('should resolve historyTimeToLive to an entry id', async function() {
+
+        // given
+        const linter = new Linter();
+
+        const { root } = await createModdle(propertiesPanelPlatformXML, 'camunda-platform');
+
+        const reports = await linter.lint(root);
+
+        // when
+        const element = root.rootElements[ 0 ];
+
+        const diagnostics = getDiagnostics(reports, element);
+
+        // then
+        expect(diagnostics).to.eql({
+          historyTimeToLive: [ {
+            severity: 'info',
+            message: 'Should be set locally or at engine level.'
+          } ]
         });
       });
 
