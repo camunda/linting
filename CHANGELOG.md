@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: offer fixes for reports via `report.action`, applied with `Linting#applyAction` ([camunda/camunda-modeler#6112](https://github.com/camunda/camunda-modeler/issues/6112))
+* `FEAT`: add fix action for `executable-process` and `wait-for-completion` reports ([camunda/camunda-modeler#6112](https://github.com/camunda/camunda-modeler/issues/6112))
+
 ## 4.1.0
 
 * `FEAT`: display messages of all severities in the properties panel ([#182](https://github.com/camunda/linting/pull/182))

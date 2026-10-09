@@ -4,6 +4,7 @@
     <bpmn:participant id="Participant_ElementTemplates" name="Element templates" processRef="Process_ElementTemplates" />
     <bpmn:participant id="Participant_AiAgent" name="AI Agent (configured with tools)" processRef="Process_AiAgent" />
     <bpmn:participant id="Participant_AdHoc" name="Ad-hoc sub-process (unconfigured)" processRef="Process_AdHoc" />
+    <bpmn:participant id="Participant_Fixable" name="Fixable findings" processRef="Process_Fixable" />
   </bpmn:collaboration>
   <bpmn:process id="Process_ElementTemplates" isExecutable="true">
     <bpmn:startEvent id="StartEvent_ET">
@@ -141,6 +142,22 @@
       <bpmn:incoming>Flow_AH_end</bpmn:incoming>
     </bpmn:endEvent>
   </bpmn:process>
+  <bpmn:process id="Process_Fixable" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_FX">
+      <bpmn:outgoing>Flow_FX_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_FX_1" sourceRef="StartEvent_FX" targetRef="CompensationThrowEvent_FX" />
+    <bpmn:intermediateThrowEvent id="CompensationThrowEvent_FX" name="Compensate">
+      <bpmn:incoming>Flow_FX_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_FX_2</bpmn:outgoing>
+      <bpmn:compensateEventDefinition id="CompensateEventDefinition_FX_1" waitForCompletion="false" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_FX_2" sourceRef="CompensationThrowEvent_FX" targetRef="CompensationEndEvent_FX" />
+    <bpmn:endEvent id="CompensationEndEvent_FX" name="Compensate and end">
+      <bpmn:incoming>Flow_FX_2</bpmn:incoming>
+      <bpmn:compensateEventDefinition id="CompensateEventDefinition_FX_2" waitForCompletion="false" />
+    </bpmn:endEvent>
+  </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
       <bpmndi:BPMNShape id="Participant_ElementTemplates_di" bpmnElement="Participant_ElementTemplates" isHorizontal="true">
@@ -232,6 +249,32 @@
       <bpmndi:BPMNEdge id="Flow_AH_end_di" bpmnElement="Flow_AH_end">
         <di:waypoint x="650" y="680" />
         <di:waypoint x="732" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_Fixable_di" bpmnElement="Participant_Fixable" isHorizontal="true">
+        <dc:Bounds x="160" y="820" width="760" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_FX_di" bpmnElement="StartEvent_FX">
+        <dc:Bounds x="232" y="882" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CompensationThrowEvent_FX_di" bpmnElement="CompensationThrowEvent_FX">
+        <dc:Bounds x="342" y="882" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="329" y="925" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CompensationEndEvent_FX_di" bpmnElement="CompensationEndEvent_FX">
+        <dc:Bounds x="452" y="882" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="423" y="925" width="94" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_FX_1_di" bpmnElement="Flow_FX_1">
+        <di:waypoint x="268" y="900" />
+        <di:waypoint x="342" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_FX_2_di" bpmnElement="Flow_FX_2">
+        <di:waypoint x="378" y="900" />
+        <di:waypoint x="452" y="900" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

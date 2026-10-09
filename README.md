@@ -11,6 +11,7 @@ The BPMN linter used by the Camunda Desktop and Web Modeler. Batteries included.
 * creates error messages to be shown in desktop and web modeler
 * creates errors to be shown in properties panel
 * creates error overlays to be shown on canvas 
+* offers fix actions
 
 ## Usage
 
@@ -48,6 +49,9 @@ modeler.get('linting').setErrors(reports);
 
 // show error by selecting element and properties panel entry
 modeler.get('linting').showError(report);
+
+// apply the fix of a report (`report.action`) as a single undoable change
+modeler.get('linting').applyAction(report);
 
 // activate and deactivate errors on canvas
 modeler.get('linting').activate();
