@@ -49,6 +49,49 @@ describe('utils/actions', function() {
       expect(action).to.be.null;
     });
 
+
+    describe('property value required', function() {
+
+      it('should get action (process executable)', function() {
+
+        // given
+        const report = createReport(ERROR_TYPES.PROPERTY_VALUE_REQUIRED, createElement('bpmn:Process', { id: 'Process_1' }), 'isExecutable', true);
+
+        // when
+        const action = getAction(report);
+
+        // then
+        expect(action.label).to.equal('Make executable');
+      });
+
+
+      it('should get action (wait for completion)', function() {
+
+        // given
+        const report = createReport(ERROR_TYPES.PROPERTY_VALUE_REQUIRED, createElement('bpmn:CompensateEventDefinition', { id: 'CompensateEventDefinition_1' }), 'waitForCompletion', true);
+
+        // when
+        const action = getAction(report);
+
+        // then
+        expect(action.label).to.equal('Set "Wait for completion"');
+      });
+
+
+      it('should not get action (unsupported property)', function() {
+
+        // given
+        const report = createReport(ERROR_TYPES.PROPERTY_VALUE_REQUIRED, createElement('bpmn:StartEvent', { id: 'StartEvent_1' }), 'isInterrupting', false);
+
+        // when
+        const action = getAction(report);
+
+        // then
+        expect(action).to.be.null;
+      });
+
+    });
+
   });
 
 });

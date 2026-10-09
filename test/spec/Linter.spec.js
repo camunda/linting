@@ -167,6 +167,23 @@ describe('Linter', function() {
 
     describe('actions', function() {
 
+      it('should add action', async function() {
+
+        // given
+        const { root } = await createModdle(actionsXML);
+
+        // when
+        const reports = await linter.lint(root);
+
+        // then
+        const report = reports.find(report => report.rule === 'camunda-compat/wait-for-completion');
+
+        expect(report).to.exist;
+        expect(report.action.label).to.equal('Set "Wait for completion"');
+        expect(report.action.execute).to.be.a('function');
+      });
+
+
       it('should not add action', async function() {
 
         // given

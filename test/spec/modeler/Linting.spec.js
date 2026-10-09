@@ -64,6 +64,8 @@ import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
 import diagramDuplicateHeadersXMLCloud from './linting-duplicate-headers-cloud.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
 import diagramActionsXMLCloud from './linting-actions-cloud.bpmn';
+import diagramActionsCollaborationXMLCloud from './linting-actions-collaboration-cloud.bpmn';
+import diagramActionsProcessXMLCloud from './linting-actions-process-cloud.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
 insertCSS('bpmn-js.css', bpmnCSS);
@@ -1518,6 +1520,12 @@ describe('Linting', function() {
       }
     };
 
+    async function getReport(bpmnjs, rule) {
+      const reports = await linter.lint(bpmnjs.getDefinitions());
+
+      return reports.find(report => report.rule === rule);
+    }
+
 
     describe('element', function() {
 
@@ -1526,6 +1534,19 @@ describe('Linting', function() {
       function getEventDefinition(elementRegistry) {
         return getBusinessObject(elementRegistry.get('CompensationThrowEvent_1')).get('eventDefinitions')[ 0 ];
       }
+
+
+      it('should apply action', inject(async function(bpmnjs, elementRegistry, linting) {
+
+        // given
+        const report = await getReport(bpmnjs, 'camunda-compat/wait-for-completion');
+
+        // when
+        linting.applyAction(report);
+
+        // then
+        expect(getEventDefinition(elementRegistry).get('waitForCompletion')).to.be.true;
+      }));
 
 
       it('should undo all changes of an action at once', inject(function(commandStack, elementRegistry, linting) {
@@ -1627,6 +1648,48 @@ describe('Linting', function() {
 
         // then
         expect(executeSpy).not.to.have.been.called;
+      }));
+
+    });
+
+
+    describe('process', function() {
+
+      beforeEach(createModeler(diagramActionsProcessXMLCloud, options));
+
+
+      it('should apply action', inject(async function(bpmnjs, canvas, linting) {
+
+        // given
+        const report = await getReport(bpmnjs, 'camunda-compat/executable-process');
+
+        // when
+        linting.applyAction(report);
+
+        // then
+        expect(getBusinessObject(canvas.getRootElement()).get('isExecutable')).to.be.true;
+      }));
+
+    });
+
+
+    describe('collaboration', function() {
+
+      beforeEach(createModeler(diagramActionsCollaborationXMLCloud, options));
+
+
+      it('should apply action', inject(async function(bpmnjs, elementRegistry, linting) {
+
+        // given
+        const report = await getReport(bpmnjs, 'camunda-compat/executable-process');
+
+        // when
+        linting.applyAction(report);
+
+        // then
+        const process = getBusinessObject(elementRegistry.get('Participant_1')).get('processRef');
+
+        expect(process.get('isExecutable')).to.be.true;
       }));
 
     });
