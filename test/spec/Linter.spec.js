@@ -15,6 +15,7 @@ import missingDiXML from './simple-no-di.bpmn';
 import correctnessXML from './correctness.bpmn';
 import noExecutionPlatformXML from './no-execution-platform.bpmn';
 import collaborationELXML from './modeler/linting-collaboration-el.bpmn';
+import actionsXML from './modeler/linting-actions-cloud.bpmn';
 import camundaCloud10XML from './camunda-cloud-1-0.bpmn';
 import camundaCloud10ErrorsXML from './camunda-cloud-1-0-errors.bpmn';
 import camundaCloud11XML from './camunda-cloud-1-1.bpmn';
@@ -161,6 +162,70 @@ describe('Linter', function() {
 
       expect(report).to.exist;
       expect(report.propertiesPanel.entryIds).to.eql([ 'Participant_1-executionListener-0-listenerType' ]);
+    });
+
+
+    describe('actions', function() {
+
+      it('should not add action', async function() {
+
+        // given
+        const { root } = await createModdle(collaborationELXML);
+
+        // when
+        const reports = await linter.lint(root);
+
+        // then
+        const report = reports.find(report => report.rule === 'camunda-compat/execution-listener');
+
+        expect(report).to.exist;
+        expect(report.action).not.to.exist;
+      });
+
+
+      it('should keep action provided by rule', async function() {
+
+        // given
+        const action = {
+          label: 'Custom',
+          execute() {}
+        };
+
+        const linter = new Linter({
+          plugins: [
+            {
+              config: {
+                rules: {
+                  'foo/custom': 'error'
+                }
+              },
+              resolver: new StaticResolver({
+                'rule:bpmnlint-plugin-foo/custom': () => {
+                  return {
+                    check(node, reporter) {
+                      if (node.$type === 'bpmn:Process') {
+                        reporter.report(node.id, 'Custom', { action });
+                      }
+                    }
+                  };
+                }
+              })
+            }
+          ]
+        });
+
+        const { root } = await createModdle(actionsXML);
+
+        // when
+        const reports = await linter.lint(root);
+
+        // then
+        const report = reports.find(report => report.rule === 'foo/custom');
+
+        expect(report).to.exist;
+        expect(report.action).to.equal(action);
+      });
+
     });
 
 

@@ -63,6 +63,7 @@ import diagramCollaborationELXMLCloud from './linting-collaboration-el.bpmn';
 import diagramXMLCloudScroll from './linting-cloud-scroll.bpmn';
 import diagramDuplicateHeadersXMLCloud from './linting-duplicate-headers-cloud.bpmn';
 import diagramXMLPlatform from './linting-platform.bpmn';
+import diagramActionsXMLCloud from './linting-actions-cloud.bpmn';
 
 insertCSS('diagram-js.css', diagramCSS);
 insertCSS('bpmn-js.css', bpmnCSS);
@@ -154,6 +155,11 @@ insertCSS('test.css', `
   .panel button,
   .panel input {
     width: 200px;
+  }
+
+  .panel .errorItem .errorAction {
+    width: auto;
+    margin-left: 6px;
   }
 `);
 
@@ -340,6 +346,18 @@ describe('Linting', function() {
             documentationLink.addEventListener('click', e => e.stopPropagation());
 
             element.appendChild(documentationLink);
+          }
+
+          if (report.action) {
+            const actionButton = domify(`<button class="errorAction">${ escapeHTML(report.action.label) }</button>`);
+
+            actionButton.addEventListener('click', e => {
+              e.stopPropagation();
+
+              linting.applyAction(report);
+            });
+
+            element.appendChild(actionButton);
           }
 
           element.addEventListener('click', () => {
@@ -1484,6 +1502,134 @@ describe('Linting', function() {
       // then
       expect(linting.isActive()).to.be.true;
     }));
+
+  });
+
+
+  describe('Camunda Cloud - actions', function() {
+
+    const options = {
+      additionalModules: [
+        camundaCloudBehaviors,
+        zeebePropertiesProviderModule
+      ],
+      moddleExtensions: {
+        zeebe: zeebeModdleExtension
+      }
+    };
+
+
+    describe('element', function() {
+
+      beforeEach(createModeler(diagramActionsXMLCloud, options));
+
+      function getEventDefinition(elementRegistry) {
+        return getBusinessObject(elementRegistry.get('CompensationThrowEvent_1')).get('eventDefinitions')[ 0 ];
+      }
+
+
+      it('should undo all changes of an action at once', inject(function(commandStack, elementRegistry, linting) {
+
+        // given
+        const element = elementRegistry.get('CompensationThrowEvent_1');
+
+        const report = {
+          id: 'CompensationThrowEvent_1',
+          message: 'foo',
+          action: {
+            label: 'Custom',
+            execute({ element, businessObject, injector }) {
+              const modeling = injector.get('modeling');
+
+              modeling.updateProperties(element, { name: 'Foo' });
+              modeling.updateModdleProperties(element, businessObject.get('eventDefinitions')[ 0 ], {
+                waitForCompletion: true
+              });
+            }
+          }
+        };
+
+        linting.applyAction(report);
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(getBusinessObject(element).get('name')).not.to.exist;
+        expect(getEventDefinition(elementRegistry).get('waitForCompletion')).to.be.false;
+        expect(commandStack.canUndo()).to.be.false;
+      }));
+
+
+      it('should execute action with live context', inject(function(elementRegistry, injector, linting) {
+
+        // given
+        const execute = sinon.spy();
+
+        const report = {
+          id: 'CompensationThrowEvent_1',
+          message: 'foo',
+          action: {
+            label: 'Custom',
+            execute
+          }
+        };
+
+        const element = elementRegistry.get('CompensationThrowEvent_1');
+
+        // when
+        linting.applyAction(report);
+
+        // then
+        expect(execute).to.have.been.calledOnceWith({
+          element,
+          businessObject: getBusinessObject(element),
+          report,
+          injector
+        });
+      }));
+
+
+      it('should not apply action (no action)', inject(function(commandStack, linting) {
+
+        // given
+        const report = {
+          id: 'CompensationThrowEvent_1',
+          message: 'foo'
+        };
+
+        // when
+        linting.applyAction(report);
+
+        // then
+        expect(commandStack.canUndo()).to.be.false;
+      }));
+
+
+      it('should not apply action (element removed)', inject(function(commandStack, elementRegistry, linting, modeling) {
+
+        // given
+        const report = {
+          id: 'CompensationThrowEvent_1',
+          message: 'foo',
+          action: {
+            label: 'Custom',
+            execute() {}
+          }
+        };
+
+        modeling.removeElements([ elementRegistry.get('CompensationThrowEvent_1') ]);
+
+        const executeSpy = sinon.spy(commandStack, 'execute');
+
+        // when
+        linting.applyAction(report);
+
+        // then
+        expect(executeSpy).not.to.have.been.called;
+      }));
+
+    });
 
   });
 
