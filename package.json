@@ -33,7 +33,7 @@
   "dependencies": {
     "@bpmn-io/diagram-js-ui": "^0.2.4",
     "bpmn-moddle": "^10.3.1",
-    "bpmnlint": "^11.14.0",
+    "bpmnlint": "^11.15.0",
     "bpmnlint-plugin-camunda-compat": "^2.61.1",
     "bpmnlint-utils": "^1.1.1",
     "camunda-bpmn-moddle": "^8.0.1",
@@ -72,8 +72,8 @@
     "webpack": "^5.111.1"
   },
   "peerDependencies": {
-    "bpmn-js-properties-panel": ">= 2.0.0",
-    "@bpmn-io/properties-panel": ">= 3.56.0"
+    "@bpmn-io/properties-panel": ">= 3.56.0",
+    "bpmn-js-properties-panel": ">= 2.0.0"
   },
   "peerDependenciesMeta": {
     "bpmn-js-properties-panel": {

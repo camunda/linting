@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `DEPS`: update to `bpmnlint@11.15.0`
+
 ## 4.1.0
 
 * `FEAT`: display messages of all severities in the properties panel ([#182](https://github.com/camunda/linting/pull/182))
