@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.2.0
+
 * `FEAT`: add Camunda 8.11 config ([camunda/bpmnlint-plugin-camunda-compat#278](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/278))
 * `FIX`: exempt AI agent gateway tools (`io.camunda.agenticai.gateway.type`) from `agent-tool-documentation` ([camunda/bpmnlint-plugin-camunda-compat#276](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/276))
 * `FIX`: require documentation for intermediate event tools in `agent-tool-documentation` ([camunda/bpmnlint-plugin-camunda-compat#276](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/276))
