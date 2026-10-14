@@ -6,6 +6,10 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.2.1
+
+* `FIX`: clarify unsupported condition message in properties panel ([#186](https://github.com/camunda/linting/pull/186))
+
 ## 4.2.0
 
 * `FEAT`: add Camunda 8.11 config ([camunda/bpmnlint-plugin-camunda-compat#278](https://github.com/camunda/bpmnlint-plugin-camunda-compat/pull/278))
