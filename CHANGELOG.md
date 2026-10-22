@@ -6,6 +6,9 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add `timer-past-date` rule and navigate to timer value for `TIMER_DATE_IN_PAST` reports ([#188](https://github.com/camunda/linting/issues/188))
+* `DEPS`: update to `bpmnlint-plugin-camunda-compat@2.63.0`
+
 ## 4.2.1
 
 * `FIX`: clarify unsupported condition message in properties panel ([#186](https://github.com/camunda/linting/pull/186))

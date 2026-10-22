@@ -1516,6 +1516,44 @@ describe('utils/properties-panel', function() {
         });
 
 
+        describe('time date in the past', function() {
+
+          [
+            [ 'timeDate', '2020-01-01T00:00:00Z' ],
+            [ 'timeCycle', 'R/2020-01-01T00:00:00Z/P1D' ]
+          ].forEach(function([ property, body ]) {
+
+            it(property, async function() {
+
+              // given
+              const node = createElement('bpmn:StartEvent', {
+                eventDefinitions: [
+                  createElement('bpmn:TimerEventDefinition', {
+                    [ property ]: createElement('bpmn:FormalExpression', { body })
+                  })
+                ]
+              });
+
+              createElement('bpmn:Process', { flowElements: [ node ] });
+
+              const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer-past-date');
+
+              const report = await getLintError(node, rule, { version: '8.6' });
+
+              // when
+              const entryIds = getEntryIds(report);
+
+              // then
+              expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
+
+              expectErrorMessage(entryIds[ 0 ], report.message, report);
+            });
+
+          });
+
+        });
+
+
         it('invalid time duration value', async function() {
 
           // given
