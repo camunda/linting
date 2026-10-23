@@ -1548,6 +1548,35 @@ describe('utils/properties-panel', function() {
               expectErrorMessage('timerEventDefinitionValue', message, report);
             });
 
+
+            it(`${ property } diagnostics via resolved entry id`, async function() {
+
+              // given
+              const node = createElement('bpmn:StartEvent', {
+                id: 'StartEvent_1',
+                eventDefinitions: [
+                  createElement('bpmn:TimerEventDefinition', {
+                    [ property ]: createElement('bpmn:FormalExpression', { body })
+                  })
+                ]
+              });
+
+              createElement('bpmn:Process', { flowElements: [ node ] });
+
+              const { default: rule } = await import('bpmnlint-plugin-camunda-compat/rules/camunda-cloud/timer-past-date');
+
+              const report = await getLintError(node, rule, { version: '8.6' });
+
+              // when
+              const diagnostics = getDiagnostics([ report ], { businessObject: node }, () => 'timerEventDefinitionValue');
+
+              // then
+              expect(diagnostics.timerEventDefinitionValue).to.have.length(1);
+              expect(diagnostics.timerEventDefinitionValue[ 0 ].message).to.equal(
+                property === 'timeCycle' ? 'Should start in the future.' : 'Should be in the future.'
+              );
+            });
+
           });
 
         });
