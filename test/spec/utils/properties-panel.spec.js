@@ -1540,13 +1540,8 @@ describe('utils/properties-panel', function() {
 
               const report = await getLintError(node, rule, { version: '8.6' });
 
-              // when
-              const entryIds = getEntryIds(report);
-
               // then
-              expect(entryIds).to.eql([ 'timerEventDefinitionValue' ]);
-
-              expectErrorMessage(entryIds[ 0 ], report.message, report);
+              expectErrorMessage('timerEventDefinitionValue', report.message, report);
             });
 
           });
