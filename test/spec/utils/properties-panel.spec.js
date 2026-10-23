@@ -1541,7 +1541,11 @@ describe('utils/properties-panel', function() {
               const report = await getLintError(node, rule, { version: '8.6' });
 
               // then
-              expectErrorMessage('timerEventDefinitionValue', report.message, report);
+              const message = property === 'timeCycle'
+                ? 'Should start in the future.'
+                : 'Should be in the future.';
+
+              expectErrorMessage('timerEventDefinitionValue', message, report);
             });
 
           });
