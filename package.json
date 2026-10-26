@@ -36,7 +36,7 @@
     "bpmnlint": "^11.15.0",
     "bpmnlint-plugin-camunda-compat": "^2.63.0",
     "bpmnlint-utils": "^1.1.1",
-    "camunda-bpmn-moddle": "^8.0.1",
+    "camunda-bpmn-moddle": "^8.0.2",
     "clsx": "^2.0.0",
     "min-dash": "^5.0.0",
     "min-dom": "^5.2.0",
