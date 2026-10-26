@@ -50,7 +50,7 @@
     "@bpmn-io/theme": "^0.3.0",
     "bpmn-js": "^18.31.1",
     "bpmn-js-element-templates": "^2.40.1",
-    "bpmn-js-properties-panel": "^5.65.1",
+    "bpmn-js-properties-panel": "^5.65.3",
     "camunda-bpmn-js-behaviors": "^1.18.0",
     "chai": "^6.3.0",
     "cross-env": "^10.1.0",
