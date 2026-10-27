@@ -6,6 +6,8 @@ All notable changes to [@camunda/linting](https://github.com/camunda/linting) ar
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.4.0
+
 * `DEPS`: update to `camunda-bpmn-moddle@8.0.2`
 * `DEPS`: update to `bpmnlint@12.0.0`
 
